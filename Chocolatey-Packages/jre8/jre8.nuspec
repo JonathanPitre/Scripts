@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>jre8</id>
+    <version>8.0.211</version>
+    <title>Java Runtime Environment</title>
+    <authors>Oracle</authors>
+    <owners>Oracle</owners>
+    <licenseUrl>http://www.oracle.com/technetwork/java/javase/terms/license/index.html</licenseUrl>
+    <projectUrl>http://www.java.com</projectUrl>
+    <packageSourceUrl>https://github.com/JonathanPitre/Scripts/Chocolatey-Packages/jre8</packageSourceUrl>
+    <iconUrl>http://cdn.rawgit.com/chocolatey/chocolatey-coreteampackages/50fd97744110dcbce1acde889c0870599c9d5584/icons/java.svg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Java allows you to play online games, chat with people around the world, calculate your mortgage interest, and view images in 3D, just to name a few. It's also integral to the intranet applications and other e-business solutions that are the foundation of corporate computing. Please note you now need a Java License from Oracle to use unless installed for Personal Use and Development Use. 
+
+### Note
+
+This package installs the Java version offered at https://www.java.com. It also sets `SPONSORS=0`  ([see docs](http://docs.oracle.com/javase/7/docs/webnotes/install/windows/jre-installer-options.html#running)).
+
+If you wish to only install the 32-bit version of Java use the /exclude parameter. The switch to exclude 32-bit is /exclude:32 and to exclude 64-bit /exclude:64 
+For example: choco install jre8 -PackageParameters "/exclude:64" -y
+This package no longer manually adds an environment variable. 
+x86 installs of Windows you can expect to see an error while reading the registry, but the script will still function normally. 
+
+This package can install 32-bit, 64-bit, or both versions. Find on [GitHub](https://github.com/JonathanPitre/Scripts/Chocolatey-Packages/jre8)</description>
+    <releaseNotes />
+    <tags>java runtime environment</tags>
+  </metadata>
+</package>
