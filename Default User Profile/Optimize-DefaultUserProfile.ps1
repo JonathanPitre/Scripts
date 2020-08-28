@@ -6,13 +6,15 @@
 # Example 3 Uninstall MSI:
 # Remove-MSIApplications -Name "appName" -Parameters "/QB"
 
-Clear-Host
-Set-ExecutionPolicy -ExecutionPolicy Bypass -Force -Scope Process
+#Requires -Version 5.1
 
 # Custom package providers list
-$PackageProviders = @("PowerShellGet","Nuget")
+$PackageProviders = @("Nuget")
+
 # Custom modules list
-$Modules = @("InstallModuleFromGitHub")
+$Modules = @("PSADT", "Evergreen")
+
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Force
 
 # Checking for elevated permissions...
 If (-not([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
@@ -23,40 +25,52 @@ Else {
 	Write-Verbose -Message "Importing custom modules..." -Verbose
 
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    [System.Net.WebRequest]::DefaultWebProxy.Credentials =  [System.Net.CredentialCache]::DefaultCredentials
-	Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+	[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
 
 	# Install custom package providers list
 	Foreach ($PackageProvider in $PackageProviders) {
-		If (-not(Get-PackageProvider -Name $PackageProvider)) {Find-PackageProvider -Name $PackageProvider -ForceBootstrap -IncludeDependencies | Install-PackageProvider -Force -Confirm:$False}
-    }
+		If (-not(Get-PackageProvider -ListAvailable -Name $PackageProvider -ErrorAction SilentlyContinue)) { Install-PackageProvider -Name $PackageProvider -Force }
+	}
+
+	# Add the Powershell Gallery as trusted repository
+	Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+
+	# Update PowerShellGet
+	$InstalledPSGetVersion = (Get-PackageProvider -Name PowerShellGet).Version
+	$PSGetVersion = [version](Find-PackageProvider -Name PowerShellGet).Version
+	If ($PSGetVersion -gt $InstalledPSGetVersion) { Install-PackageProvider -Name PowerShellGet -Force }
 
 	# Install and import custom modules list
 	Foreach ($Module in $Modules) {
-		If (-not(Get-Module -ListAvailable -Name $Module)) {Install-Module -Name $Module -Force | Import-Module -Name $Module}
-        Else {Update-Module -Name $Module -Force}
-    }
-
-    # Install custom PSAppDeployToolkit module from a GitHub repo
-	$GitHubUser = "JonathanPitre"
-	$GitHubRepo = "PSAppDeployToolkit"
-	If (-not(Test-Path -Path $env:ProgramFiles\WindowsPowerShell\Modules\$GitHubRepo)) {Install-ModuleFromGitHub -GitHubRepo $GitHubUser/$GitHubRepo | Import-Module -Name $GitHubRepo}
-	Else {Import-Module -Name $env:ProgramFiles\WindowsPowerShell\Modules\$GitHubRepo}
+		If (-not(Get-Module -ListAvailable -Name $Module)) { Install-Module -Name $Module -AllowClobber -Force | Import-Module -Name $Module -Force }
+		Else {
+			$InstalledModuleVersion = (Get-InstalledModule -Name $Module).Version
+			$ModuleVersion = (Find-Module -Name $Module).Version
+			$ModulePath = (Get-InstalledModule -Name $Module).InstalledLocation
+			$ModulePath = (Get-Item -Path $ModulePath).Parent.FullName
+			If ([version]$ModuleVersion -gt [version]$InstalledModuleVersion) {
+				Update-Module -Name $Module -Force
+				Remove-Item -Path $ModulePath\$InstalledModuleVersion -Force -Recurse
+			}
+		}
+	}
 
 	Write-Verbose -Message "Custom modules were successfully imported!" -Verbose
 }
 
 Function Get-ScriptDirectory {
-    If ($psISE) {Split-Path $psISE.CurrentFile.FullPath}
-    Else {$Global:PSScriptRoot}
+	If ($PSScriptRoot) { $PSScriptRoot } # Windows PowerShell 3.0-5.1
+	ElseIf ($psISE) { Split-Path $psISE.CurrentFile.FullPath } # Windows PowerShell ISE Host
+	ElseIf ($psEditor) { Split-Path $psEditor.GetEditorContext().CurrentFile.Path } # Visual Studio Code Host
 }
 
 # Variables Declaration
 # Generic
 $ProgressPreference = "SilentlyContinue"
 $ErrorActionPreference = "SilentlyContinue"
-$appScriptDirectory = Get-ScriptDirectory
 $env:SEE_MASK_NOZONECHECKS = 1
+$appScriptDirectory = Get-ScriptDirectory
+
 # Application related
 ##*===============================================
 
@@ -119,7 +133,7 @@ Set-RegistryKey -Key "HKEY_USERS\DefaultHive\Keyboard Layout\Substitutes" -Name 
 #Set-RegistryKey -Key "HKEY_USERS\DefaultHive\Keyboard Layout\Preload" -Name "2" -Type String -Value "00001009"
 #Set-RegistryKey -Key "HKEY_USERS\DefaultHive\Keyboard Layout\Substitutes" -Name "00001009" -Type String -Value "00000409"
 
-# Disable swith input language hotkey -https://windowsreport.com/windows-10-switches-keyboard-language
+# Disable input language switch hotkey -https://windowsreport.com/windows-10-switches-keyboard-language
 Set-RegistryKey -Key "HKEY_USERS\DefaultHive\Keyboard Layout\Toggle"  -Name "Hotkey" -Type DWord -Value "3"
 Set-RegistryKey -Key "HKEY_USERS\DefaultHive\Keyboard Layout\Toggle"  -Name "Language Hotkey" -Type DWord -Value "3"
 Set-RegistryKey -Key "HKEY_USERS\DefaultHive\Keyboard Layout\Toggle"  -Name "Layout Hotkey" -Type DWord -Value "3"
