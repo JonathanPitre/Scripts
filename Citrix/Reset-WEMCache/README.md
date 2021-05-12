@@ -4,7 +4,7 @@
 Reset-WEMCache.ps1 is a powershell script to refresh Citrix Workspace Environment Agent cache.
 I took the original script from the article [CTX247927](https://support.citrix.com/article/CTX247927) and made it better.
 
-Reset-WEMCache.xml is a schedule task that will trigger the powershell script Reset-WEMCache.ps1 when Event ID 0 'Cache sync failed with error: SyncFailed' occurs.
+**Reset-WEMCache.xml** is a schedule task that will trigger the powershell script Reset-WEMCache.ps1 when _**Event ID 0 'Cache sync failed with error: SyncFailed'**_ occurs.
 
 ## Supported Powershell Versions
 This has been tested with Powershell 5.1. Other versions may work but have not been tested, YMMV.
