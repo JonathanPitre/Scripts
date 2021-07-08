@@ -1,0 +1,14 @@
+{
+	"appPreferenceSettings": {
+		"openAsHidden": true,
+		"runningOnClose": false,
+		"disableGpu": true,
+		"registerAsIMProvider": true,
+		"callingMWEnabledPreferenceKey": false,
+		"enableMediaLoggingPreferenceKey": false
+	},
+	"currentWebLanguage": "fr-FR",
+	"isForeground": false,
+	"theme": "default",
+	"notificationWindowOnClose": true
+}
