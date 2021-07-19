@@ -137,6 +137,7 @@
   <Association Identifier=".xpm" ProgId="ImageGlass.AssocFile.XPM" ApplicationName="ImageGlass" />
   <Association Identifier=".xps" ProgId="Windows.XPSReachViewer" ApplicationName="XPS Viewer" />
   <Association Identifier="CALLTO" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="IM" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
   <Association Identifier="MMS" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier="SIP" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
   <Association Identifier="SIPS" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
