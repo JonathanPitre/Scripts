@@ -331,7 +331,7 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Expl
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Explorer" -Name "NoNewAppAlert" -Type DWord -Value "1"
 
 # Makes Citrix Director reports logons slightly faster - https://james-rankin.com/articles/how-to-get-the-fastest-possible-citrix-logon-times
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows \CurrentVersion\Explorer\Serialize" -Name "StartupDelayInMSec" -Type String -Value "0"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Name "StartupDelayInMSec" -Type String -Value "0"
 
 # Microsoft Office 365/2016/2019
 # Removes the First Things First (EULA) - https://social.technet.microsoft.com/Forums/ie/en-US/d8867a27-894b-44ff-898d-24e0d0c6838a/office-2016-proplus-first-things-first-eula-wont-go-away?forum=Office2016setupdeploy
