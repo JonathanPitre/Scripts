@@ -13,5 +13,5 @@ If ((Get-ADUser $User -Properties memberof).memberof -like "CN=$AD_Group_AdobeAc
     }
 Else
     {
-        .\SetUserFTA.exe "Adobe Acrobat Reader.txt"
+        .\SetUserFTA.exe "CommonExt.txt"
     }

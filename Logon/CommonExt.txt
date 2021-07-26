@@ -1,3 +1,17 @@
+# Adobe Acrobat Reader
+.pdf, Acrobat.Document.DC
+.pdfxml, Acrobat.pdfxml
+.acrobatsecuritysettings, Acrobat.acrobatsecuritysettings
+.fdf, Acrobat.FDFDoc
+.xfdf, Acrobat.XFDFDoc
+.xdp, Acrobat.XDPDoc
+.pdx, PDXFileType
+.api, Acrobat.Plugin
+.secstore, Acrobat.SecStore
+.sequ, Acrobat.Sequence
+.rmf, Acrobat.RMFFile
+.bpdx, AcrobatBPDXFileType
+# Image Glass
 .b64, ImageGlass.AssocFile.B64
 .bay, ImageGlass.AssocFile.BAY
 .bmp, ImageGlass.AssocFile.BMP
