@@ -1,3 +1,4 @@
+# Adobe Acrobat Reader
 .pdf, AcroExch.Document.DC
 .pdfxml, AcroExch.pdfxml
 .acrobatsecuritysettings, AcroExch.acrobatsecuritysettings
