@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Copies FSLogix Rules from from a network location to the FSLogix Rule location on the local computer
+    Copies FSLogix Rules from a network location to the FSLogix Rule location on the local computer
 .DESCRIPTION
     This script is used to copy FSLogix Rules from a network location to the FSLogix Rule location on the local computer.  The script is intended to be used with
-    a GPO that runs the script at startup.  
+    a GPO that runs the script at startup.
     The script includes error handling that will write errors to the local Application Event Log.  Modify the Write Event Log variables as needed.
 .NOTES
     Author      : Jonathan Pitre, original script by Travis Roberts www.ciraltos.com
@@ -11,6 +11,10 @@
 #>
 
 ######## Variables ##########
+# Generic
+$ProgressPreference = "SilentlyContinue"
+$ErrorActionPreference = "SilentlyContinue"
+$env:SEE_MASK_NOZONECHECKS = 1
 # Source path for FSLogix App Masking rules
 $sourcePath = "\\%DomainName%\NETLOGON\FSLogix\Rules"
 # Destination path for FSLogix App Masking rules
@@ -34,7 +38,7 @@ If ([System.Diagnostics.EventLog]::SourceExists($eventSource) -eq $False) {
 # Write EventLog Function
 Function Write-AppEventLog {
     Param($errorMessage)
-    Write-EventLog -LogName $eventLog -EventID $eventID -EntryType $entryType -Source $eventSource -Message $errorMessage 
+    Write-EventLog -LogName $eventLog -EventID $eventID -EntryType $entryType -Source $eventSource -Message $errorMessage
 }
 
 # Check the source path
@@ -43,7 +47,7 @@ if ((Test-Path $SourcePath) -eq $False) {
 }
 
 # Check the destination path
-If ((Test-Path $destinationPath) -eq $False) {
+If ((Test-Path -Path $destinationPath) -eq $False) {
     Write-AppEventLog 'Destination path not found or not accessible'
 }
 
@@ -60,4 +64,4 @@ Catch {
 
 
 # Copy File Association xml
-Copy-Item -ErrorAction Stop -Path "$sourcePath2\FileAssociation2019.xml" -Destination "$destinationPath2\FileAssociation.xml" -Force
+Copy-Item -Path "$sourcePath2\FileAssociation2019.xml" -Destination "$destinationPath2\FileAssociation.xml" -Force
