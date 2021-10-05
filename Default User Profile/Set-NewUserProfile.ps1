@@ -44,7 +44,7 @@ If (Test-Path -Path "$($UserProperties.ProfilePath)AppData\Roaming\Microsoft\Sig
 # Copy and Assign Outlook signature
 If (Test-Path -Path $OutlookSignature\*.htm)
 {
-    Copy-Item -Path $OutlookSignature -Destination "$env:APPDATA\Microsoft" -Force -Recurse
+    #Copy-Item -Path $OutlookSignature -Destination "$env:APPDATA\Microsoft" -Force -Recurse
     Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Office\16.0\Outlook\Setup" -Name "First-Run" -Force
     $SigPath = (Get-ChildItem -Path "$env:APPDATA\Microsoft\Signatures\*.htm" | Select-Object -ExpandProperty Name).Split(".")[0]
     New-Item -Path "HKCU:\Software\Microsoft\Office\16.0\Common\MailSettings" -Value "default value" -Force
@@ -97,5 +97,5 @@ If (!(Test-Path -Path "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe"))
 Else
 {
     Write-Verbose -Message 'Starting OneDrive application...'
-    Start-Process -FilePath "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/background /setautostart"
+    Start-Process -FilePath "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/background"
 }
