@@ -1,0 +1,7 @@
+# Microsoft Edge
+.pdf, MSEdgePDF
+.pdfxml, MSEdgePDF
+.fdf, MSEdgePDF
+.xfdf, MSEdgePDF
+.xdp, MSEdgePDF
+.pdx, MSEdgePDF
