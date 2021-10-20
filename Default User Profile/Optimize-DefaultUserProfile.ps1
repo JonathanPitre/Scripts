@@ -80,7 +80,7 @@ $appScriptDirectory = Get-ScriptDirectory
 # Application related
 ##*===============================================
 $appProcesses = @("regedit", "reg")
-$appTeamsConfigURL = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Default%20User%20Profile/desktop-config.json"
+$appTeamsConfigURL = "https://raw.githubusercontent.com/JonathanPitre/Apps/raw/master/Microsoft/Teams/desktop-config.json"
 $appTeamsConfig = Split-Path -Path $appTeamsConfigURL -Leaf
 $NewUserScript = "\\$env:USERDNSDOMAIN\NETLOGON\NewUserProfile\Set-NewUserProfile.ps1" # Modify according to your environment
 ##*===============================================
@@ -317,15 +317,15 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersio
 # Visual effects - Disable "Aero Peek" - https://virtualfeller.com/2015/11/19/windows-10-optimization-part-4-user-interface
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "EnableAeroPeek" -Type DWord -Value "0"
 
+# Visual effects - Disable "Save taskbar thumbnail previews" - https://virtualfeller.com/2015/11/19/windows-10-optimization-part-4-user-interface
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "AlwaysHibernateThumbnails" -Type DWord -Value "0"
+
 # Set the Title And Border Color to black - https://dybbugt.no/2020/1655 - https://winaero.com/blog/enable-dark-title-bars-custom-accent-color-windows-10
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "AccentColor" -Type DWord -Value "4292311040"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "ColorizationColor" -Type DWord -Value "4292311040"
 
 # Enable the Border and title bar coloring - https://dybbugt.no/2020/1655
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "ColorPrevalence" -Type DWord -Value "1"
-
-# Visual effects - Disable "Save taskbar thumbnail previews" - https://virtualfeller.com/2015/11/19/windows-10-optimization-part-4-user-interface
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "AlwaysHibernateThumbnails" -Type DWord -Value "0"
 
 # Remove "Recently added" list from Start Menu
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Explorer" -Name "HideRecentlyAddedApps" -Type DWord -Value "1"
