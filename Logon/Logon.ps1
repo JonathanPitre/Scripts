@@ -9,7 +9,14 @@ Start-Process -FilePath "$env:windir\System32\dsregcmd.exe" -ArgumentList "/join
 # https://docs.microsoft.com/en-us/office365/troubleshoot/authentication/automatic-authentication-fails
 If (-not (Get-AppxPackage Microsoft.AAD.BrokerPlugin)) { Add-AppxPackage -Register "$env:windir\SystemApps\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy\Appxmanifest.xml" -DisableDevelopmentMode -ForceApplicationShutdown } Get-AppxPackage Microsoft.AAD.BrokerPlugin
 
-# Remote Server Administration Tools must be installed - https://adamtheautomator.com/powershell-import-active-directory/
+# Launch OneDrive only after Microsoft AAD Broker Plugin is repaired
+If (Test-Path -Path "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe") {
+    Start-Process -FilePath "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/background" -WindowStyle Hidden
+}
+
+# FSLogix should already show the app based on AD group and loading the Active Directory module is slowing down the login process
+
+# Remote Server Administration Tools must be installed - https://adamtheautomator.com/powershell-import-active-directory
 # or https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/active-directory-enumeration-with-ad-module-without-rsat-or-admin-privileges
 #Import-Module ActiveDirectory
 #$User = "$env:UserName"
