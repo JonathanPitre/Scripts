@@ -10,7 +10,7 @@ $JsonFile = [System.IO.Path]::Combine($env:AppData, 'Microsoft', 'Teams', 'deskt
 If (Test-Path -Path $JsonFile) {
     $ConfigFile = Get-Content -Path $JsonFile -Raw | ConvertFrom-Json
     Get-Process -Name Teams | Stop-Process -Force
-    $ConfigFile.appPreferenceSettings.disableGpu = a$True
+    $ConfigFile.appPreferenceSettings.disableGpu = $True
     $ConfigFile.appPreferenceSettings.openAtLogin = $True
     $ConfigFile.appPreferenceSettings.openAsHidden = $True
     $ConfigFile.appPreferenceSettings.runningOnClose = $False
