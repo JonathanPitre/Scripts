@@ -1,8 +1,16 @@
+
 # Hide powershell prompt
 Add-Type -Name win -MemberDefinition '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' -Namespace native
 [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle,0)
 
 $ErrorActionPreference = 'SilentlyContinue'
+
+# Close OneDrive gracefully
+# https://docs.microsoft.com/en-us/answers/questions/208676/onedrive-randomly-promting-to-removerestore-files.html?page=2&pageSize=10&sort=oldest
+If (Test-Path -Path "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe")
+{
+	Start-Process -FilePath "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/shutdown" -WindowStyle Hidden
+}
 
 # Configure Microsoft Teams config file
 $JsonFile = [System.IO.Path]::Combine($env:AppData, 'Microsoft', 'Teams', 'desktop-config.json')
