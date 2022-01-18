@@ -1,7 +1,7 @@
 
 # Hide powershell prompt
 Add-Type -Name win -MemberDefinition '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' -Namespace native
-[native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle,0)
+[native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0)
 
 $ErrorActionPreference = 'SilentlyContinue'
 
@@ -15,18 +15,21 @@ If (Test-Path -Path "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe")
 # Configure Microsoft Teams config file
 $JsonFile = [System.IO.Path]::Combine($env:AppData, 'Microsoft', 'Teams', 'desktop-config.json')
 
-If (Test-Path -Path $JsonFile) {
-    $ConfigFile = Get-Content -Path $JsonFile -Raw | ConvertFrom-Json
-    Get-Process -Name Teams | Stop-Process -Force
-    $ConfigFile.appPreferenceSettings.disableGpu = $True
-    $ConfigFile.appPreferenceSettings.openAtLogin = $True
-    $ConfigFile.appPreferenceSettings.openAsHidden = $True
-    $ConfigFile.appPreferenceSettings.runningOnClose = $False
-    $ConfigFile.appPreferenceSettings.registerAsIMProvider = $True
-    $ConfigFile.currentWebLanguage = "fr-CA"
-    $ConfigFile | ConvertTo-Json -Compress | Set-Content -Path $JsonFile -Force
-} Else {
-    Write-Host  "JSON file doesn't exist"
+If (Test-Path -Path $JsonFile)
+{
+	$ConfigFile = Get-Content -Path $JsonFile -Raw | ConvertFrom-Json
+	Get-Process -Name Teams | Stop-Process -Force
+	$ConfigFile.appPreferenceSettings.disableGpu = $True
+	$ConfigFile.appPreferenceSettings.openAtLogin = $True
+	$ConfigFile.appPreferenceSettings.openAsHidden = $True
+	$ConfigFile.appPreferenceSettings.runningOnClose = $False
+	$ConfigFile.appPreferenceSettings.registerAsIMProvider = $True
+	$ConfigFile.currentWebLanguage = "fr-CA"
+	$ConfigFile | ConvertTo-Json -Compress | Set-Content -Path $JsonFile -Force
+}
+Else
+{
+	Write-Host  "JSON file doesn't exist"
 }
 
 # From https://www.KoetzingIT.de, Thomas@koetzingit.de
@@ -79,13 +82,13 @@ Add-Type $Code
 
 If ($OSversion -match "Windows Server")
 {
-    Get-ChildItem $((Get-ChildItem $env:USERPROFILE -Filter "OneDrive -*").FullName) -Exclude "*.url" -Recurse |
-        Where-Object {-Not $_.PSIsContainer } |
-        Select-Object Fullname, @{n = 'Attributes'; e = {[fileAttributesex]$_.Attributes.Value__}} |
-        where-Object { ($_.Attributes -cnotmatch "Unpinned") -or ($_.Attributes -cnotmatch "Offline") -And ($_.Attributes -cnotmatch "RecallOnDataAccess")  } |
-        ForEach-Object { attrib.exe $_.fullname +U -P /S }
+	Get-ChildItem $((Get-ChildItem $env:USERPROFILE -Filter "OneDrive -*").FullName) -Exclude "*.url" -Recurse |
+		Where-Object {-Not $_.PSIsContainer } |
+		Select-Object Fullname, @{n = 'Attributes'; e = {[fileAttributesex]$_.Attributes.Value__}} |
+		where-Object { ($_.Attributes -cnotmatch "Unpinned") -or ($_.Attributes -cnotmatch "Offline") -And ($_.Attributes -cnotmatch "RecallOnDataAccess")  } |
+		ForEach-Object { attrib.exe $_.fullname +U -P /S }
 }
 Else
 {
-    Write-Host "Configure Storage Sense instead!" -Verbose
+	Write-Host "Configure Storage Sense instead!" -Verbose
 }
