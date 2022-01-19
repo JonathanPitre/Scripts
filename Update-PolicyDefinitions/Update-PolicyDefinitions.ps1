@@ -123,18 +123,47 @@ Foreach ($Module in $Modules)
 
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 
-$Windows11Version = "21H2"
+# Must read - https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/windows-10-or-windows-11-gpo-admx-which-one-to-use-for-your/ba-p/3063322
+$Windows10Version = "21H2"
 $Languages = @("en-US", "fr-FR")
 $PolicyStore = "\\$envMachineADDomain\SYSVOL\$envMachineADDomain\Policies\PolicyDefinitions"
-# Zoom ADMX cannot be downloaded at the moment
 $IncludeProducts = @("Windows 11", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe AcrobatReader DC", "BIS-F", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox", "Zoom Desktop Client")
 $WorkingDirectory = "C:\Install\EvergreenADMX"
-$CustomPolicyStore = "C:\Install\Citrix"
+$CustomPolicyStore = "$WorkingDirectory\custom"
+$CitrixADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Citrix_2112.zip"
+$CitrixADMX = Split-Path -Path $CitrixADMXUrl -Leaf
+$ZoomADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Zoom_5.9.0.zip"
+$ZoomADMX = Split-Path -Path $ZoomADMXUrl -Leaf
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
 Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
-Set-Location "C:\Program Files\WindowsPowerShell\Scripts"
-.\EvergreenAdmx.ps1 -Windows11Version $Windows11Version -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
+New-Folder -Path $WorkingDirectory
+New-Folder -Path $CustomPolicyStore
+Set-Location -Path $WorkingDirectory
+
+# Download custom ADMX files
+Write-Log -Message "Downloading custom ADMX files..." -Severity 1 -LogType CMTrace -WriteHost $True
+Invoke-WebRequest -UseBasicParsing -Uri $CitrixADMXUrl -OutFile $CitrixADMX
+Invoke-WebRequest -UseBasicParsing -Uri $ZoomADMXUrl -OutFile $ZoomADMX
+
+# Extract custom ADMX files
+Write-Log -Message "Extracting custom ADMX files..." -Severity 1 -LogType CMTrace -WriteHost $True
+Expand-Archive -Path $CitrixADMX -DestinationPath $CustomPolicyStore
+Expand-Archive -Path $ZoomADMX -DestinationPath $CustomPolicyStore
+
+# Cleanup
+Remove-File -Path $WorkingDirectory\*.zip
+
+Write-Log -Message "Copying ADMX files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+Copy-Item -Path $CustomPolicyStore\* -Destination $PolicyStore -Recurse
+
+Set-Location -Path "$envProgramFiles\WindowsPowerShell\Scripts"
+.\EvergreenAdmx.ps1 -Windows10Version $Windows10Version -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
+
 # Fix for WinStoreUI.admx error https://docs.microsoft.com/en-us/troubleshoot/windows-server/group-policy/winstoreui-conflict-with-windows-10-1151-admx-file
 Remove-File -Path $PolicyStore WinStoreUI.adm* -Recurse -ContinueOnError
+# Remove non admx files
+Remove-Item -Path $PolicyStore -Exclude *.admx, *.adml, $Languages[0], $Languages[1] -Recurse -Force
+
+Write-Log -Message "ADMX files were installed successfully!" -Severity 1 -LogType CMTrace -WriteHost $True
