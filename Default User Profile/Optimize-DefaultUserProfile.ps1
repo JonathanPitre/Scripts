@@ -3,52 +3,15 @@
 #Requires -Version 5.1
 #Requires -RunAsAdministrator
 
-# Custom package providers list
-$PackageProviders = @("Nuget")
-
-# Custom modules list
-$Modules = @("PSADT")
-
-Write-Verbose -Message "Importing custom modules..." -Verbose
+#---------------------------------------------------------[Initialisations]--------------------------------------------------------
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
+$ProgressPreference = "SilentlyContinue"
+$ErrorActionPreference = "SilentlyContinue"
+$env:SEE_MASK_NOZONECHECKS = 1
+$Modules = @("PSADT") # Modules list
 
-# Install custom package providers list
-Foreach ($PackageProvider in $PackageProviders)
-{
-    If (-not(Get-PackageProvider -ListAvailable -Name $PackageProvider -ErrorAction SilentlyContinue)) { Install-PackageProvider -Name $PackageProvider -Force }
-}
-
-# Add the Powershell Gallery as trusted repository
-Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
-
-# Update PowerShellGet
-$InstalledPSGetVersion = (Get-PackageProvider -Name PowerShellGet).Version
-$PSGetVersion = [version](Find-PackageProvider -Name PowerShellGet).Version
-If ($PSGetVersion -gt $InstalledPSGetVersion) { Install-PackageProvider -Name PowerShellGet -Force }
-
-# Install and import custom modules list
-Foreach ($Module in $Modules)
-{
-    If (-not(Get-Module -ListAvailable -Name $Module)) { Install-Module -Name $Module -AllowClobber -Force | Import-Module -Name $Module -Force }
-    Else
-    {
-        $InstalledModuleVersion = (Get-InstalledModule -Name $Module).Version
-        $ModuleVersion = (Find-Module -Name $Module).Version
-        $ModulePath = (Get-InstalledModule -Name $Module).InstalledLocation
-        $ModulePath = (Get-Item -Path $ModulePath).Parent.FullName
-        If ([version]$ModuleVersion -gt [version]$InstalledModuleVersion)
-        {
-            Update-Module -Name $Module -Force
-            Remove-Item -Path $ModulePath\$InstalledModuleVersion -Force -Recurse
-        }
-    }
-}
-
-Write-Verbose -Message "Custom modules were successfully imported!" -Verbose
-
-# Get the current script directory
 Function Get-ScriptDirectory
 {
     Remove-Variable appScriptDirectory
@@ -59,31 +22,113 @@ Function Get-ScriptDirectory
         ElseIf ($PSScriptRoot) { $PSScriptRoot } # Windows PowerShell 3.0-5.1
         Else
         {
-            Write-Host -ForegroundColor Red "Cannot resolve script file's path"
+            Write-Host -Object "Cannot resolve script file's path" -ForegroundColor Red
             Exit 1
         }
     }
     Catch
     {
-        Write-Host -ForegroundColor Red "Caught Exception: $($Error[0].Exception.Message)"
+        Write-Host -Object "Caught Exception: $($Error[0].Exception.Message)" -ForegroundColor Red
         Exit 2
     }
 }
 
-# Variables Declaration
-# Generic
-$ProgressPreference = "SilentlyContinue"
-$ErrorActionPreference = "SilentlyContinue"
-$env:SEE_MASK_NOZONECHECKS = 1
+Function Initialize-Module
+{
+    [CmdletBinding()]
+    Param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$Module
+    )
+    Write-Host -Object  "Importing $Module module..." -ForegroundColor Green
+
+    # If module is imported say that and do nothing
+    If (Get-Module | Where-Object {$_.Name -eq $Module})
+    {
+        Write-Host -Object  "Module $Module is already imported." -ForegroundColor Green
+    }
+    Else
+    {
+        # If module is not imported, but available on disk then import
+        If (Get-Module -ListAvailable | Where-Object {$_.Name -eq $Module})
+        {
+            $InstalledModuleVersion = (Get-InstalledModule -Name $Module).Version
+            $ModuleVersion = (Find-Module -Name $Module).Version
+            $ModulePath = (Get-InstalledModule -Name $Module).InstalledLocation
+            $ModulePath = (Get-Item -Path $ModulePath).Parent.FullName
+            If ([version]$ModuleVersion -gt [version]$InstalledModuleVersion)
+            {
+                Update-Module -Name $Module -Force
+                Remove-Item -Path $ModulePath\$InstalledModuleVersion -Force -Recurse
+                Write-Host -Object "Module $Module was updated." -ForegroundColor Green
+            }
+            Import-Module -Name $Module -Force -Global -DisableNameChecking
+            Write-Host -Object "Module $Module was imported." -ForegroundColor Green
+        }
+        Else
+        {
+            # Install Nuget
+            If (-not(Get-PackageProvider -ListAvailable -Name NuGet))
+            {
+                Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+                Write-Host -Object "Package provider NuGet was installed." -ForegroundColor Green
+            }
+
+            # Add the Powershell Gallery as trusted repository
+            If ((Get-PSRepository -Name "PSGallery").InstallationPolicy -eq "Untrusted")
+            {
+                Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+                Write-Host -Object "PowerShell Gallery is now a trusted repository." -ForegroundColor Green
+            }
+
+            # Update PowerShellGet
+            $InstalledPSGetVersion = (Get-PackageProvider -Name PowerShellGet).Version
+            $PSGetVersion = [version](Find-PackageProvider -Name PowerShellGet).Version
+            If ($PSGetVersion -gt $InstalledPSGetVersion)
+            {
+                Install-PackageProvider -Name PowerShellGet -Force
+                Write-Host -Object "PowerShellGet Gallery was updated." -ForegroundColor Green
+            }
+
+            # If module is not imported, not available on disk, but is in online gallery then install and import
+            If (Find-Module -Name $Module | Where-Object {$_.Name -eq $Module})
+            {
+                # Install and import module
+                Install-Module -Name $Module -AllowClobber -Force -Scope AllUsers
+                Import-Module -Name $Module -Force -Global -DisableNameChecking
+                Write-Host -Object "Module $Module was installed and imported." -ForegroundColor Green
+            }
+            Else
+            {
+                # If the module is not imported, not available and not in the online gallery then abort
+                Write-Host -Object "Module $Module was not imported, not available and not in an online gallery, exiting." -ForegroundColor Red
+                EXIT 1
+            }
+        }
+    }
+}
+
+# Get the current script directory
 $appScriptDirectory = Get-ScriptDirectory
 
-# Application related
-##*===============================================
+# Install and import modules list
+Foreach ($Module in $Modules)
+{
+    Initialize-Module -Module $Module
+}
+
+#-----------------------------------------------------------[Functions]------------------------------------------------------------
+
+#----------------------------------------------------------[Declarations]----------------------------------------------------------
+
 $appProcesses = @("regedit", "reg")
-$appTeamsConfigURL = "https://raw.githubusercontent.com/JonathanPitre/Apps/raw/master/Microsoft/Teams/desktop-config.json"
+$appTeamsConfigURL = "https://raw.githubusercontent.com/JonathanPitre/Apps/master/Microsoft/Teams/desktop-config.json"
 $appTeamsConfig = Split-Path -Path $appTeamsConfigURL -Leaf
-$NewUserScript = "\\$env:USERDNSDOMAIN\NETLOGON\NewUserProfile\Set-NewUserProfile.ps1" # Modify according to your environment
-##*===============================================
+$NewUserScript = "\\$envMachineADDomain\NETLOGON\Citrix\NewUserProfile\Set-NewUserProfile.ps1" # Modify according to your environment
+
+#-----------------------------------------------------------[Execution]------------------------------------------------------------
+
 
 Get-Process -Name $appProcesses | Stop-Process -Force
 Set-Location -Path $appScriptDirectory
@@ -117,15 +162,18 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersio
 
 # Set display language
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "PreferredUILanguages" -Type MultiString -Value "fr-CA"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "PreferredUILanguagesPending" -Type MultiString -Value "fr-CA"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "PreviousPreferredUILanguages" -Type MultiString -Value "en-US"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop\MuiCached" -Name "MachinePreferredUILanguages" -Type MultiString -Value "en-US"
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Recurse -ContinueOnError $True
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile System Backup" -Recurse -ContinueOnError $True
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "Languages" -Type MultiString -Value "fr-CA"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "InputMethodOverride" -Type String -Value "0C0C:00001009"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "Languages" -Type MultiString -Value "fr-CA en-US"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowAutoCorrection" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowCasing" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowShiftLock" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowTextPrediction" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\en-US" -Name "0409:00000409" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\en-US" -Name "CachedLanguageName" -Type String -Value "@Winlangdb.dll,-1121"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "0C0C:00001009" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "CachedLanguageName" -Type String -Value "@Winlangdb.dll,-1160"
 
@@ -134,6 +182,8 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "Loca
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "LocaleName" -Type String -Value "fr-CA"
 
 # Set Country
+# https://www.robvanderwoude.com/icountry.php
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iCountry" -Type String -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sCountry" -Type String -Value "Canada"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sLanguage" -Type String -Value "FRC"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\Geo" -Name "Name" -Type String -Value "CA"
@@ -361,17 +411,21 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CalendarSyncWindowSettingMonths" -Type DWord -Value "1"
 
 # Disable teaching callouts - https://docs.microsoft.com/en-us/answers/questions/186354/outlook-remove-blue-tip-boxes.html
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "AutoSaveTottleOnWord" -Type DWord -Value "2"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "MeetingAllowForwardTeachingCallout" -Type DWord -Value "2"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "AutoSaveFirstSaveWord" -Type DWord -Value "2"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "CommingSoonTeachingCallout" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "AutocreateTeachingCallout_MoreLocations" -Type DWord -Value "2"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "Search.TopResults" -Type DWord -Value "2"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "UseTighterSpacingTeachingCallout" -Type DWord -Value "2"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "SLRToggleReplaceTeachingCalloutID" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "AutoSaveFirstSaveWord" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "AutoSaveTottleOnWord" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "CloudSettingsSyncTeachingCallout" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "CommingSoonTeachingCallout" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "DataVisualizerRibbonTeachingCallout" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "ExportToWordProcessTabTeachingCallout" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "FocusedInboxTeachingCallout_2" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "MeetingAllowForwardTeachingCallout" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "Olk_SearchBoxTitleBar_SLR_Sequence" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "PreviewPlaceUpdate" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "RibbonOverflowTeachingCalloutID" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "Search.TopResults" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "SLRToggleReplaceTeachingCalloutID" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "UseTighterSpacingTeachingCallout" -Type DWord -Value "2"
 
 # Remove the default file types dialog - https://www.blackforce.co.uk/2016/05/11/disable-office-2016-default-file-types-dialog
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\General" -Name "ShownFileFmtPrompt" -Type DWord -Value "1"
@@ -443,7 +497,7 @@ If (-not(Test-Path $RunOnceKey))
 {
     Set-RegistryKey -Key $RunOnceKey
 }
-Set-RegistryKey -Key $RunOnceKey -Name "NewUser" -Type String -Value "C:\Windows\System32\WindowsPowerShell\v1.0\Powershell.exe -ExecutionPolicy ByPass -File $NewUserScript"
+Set-RegistryKey -Key $RunOnceKey -Name "NewUser" -Type String -Value "C:\Windows\System32\WindowsPowerShell\v1.0\Powershell.exe -Ex ByPass -File $NewUserScript"
 
 # Unload the Default User registry hive
 Execute-Process -Path "$envWinDir\System32\reg.exe" -Parameters "UNLOAD HKLM\DefaultUser" -WindowStyle Hidden
@@ -453,8 +507,5 @@ Remove-Item -Path "$envSystemDrive\Users\Default\*.LOG1" -Force
 Remove-Item -Path "$envSystemDrive\Users\Default\*.LOG2" -Force
 Remove-Item -Path "$envSystemDrive\Users\Default\*.blf" -Force
 Remove-Item -Path "$envSystemDrive\Users\Default\*.regtrans-ms" -Force
-
-# Remove Server Manager link
-Remove-File -Path "$envSystemDrive\Users\Default\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\Server Manager.lnk" -ContinueOnError $True
 
 Write-Log -Message "The default user profile was optimized!" -LogType 'CMTrace' -WriteHost $True
