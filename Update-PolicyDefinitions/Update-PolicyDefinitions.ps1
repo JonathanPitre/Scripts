@@ -214,16 +214,12 @@ Expand-Archive -Path $ZoomADMX -DestinationPath $CustomPolicyStore
 # Cleanup
 Remove-File -Path $WorkingDirectory\*.zip -ContinueOnError $True
 
-Write-Log -Message "Copying ADMX files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+Write-Log -Message "Copying custom ADMX files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
 Copy-Item -Path $CustomPolicyStore\* -Destination $PolicyStore -Recurse
 
 Set-Location -Path "$envProgramFiles\WindowsPowerShell\Scripts"
+Write-Log -Message "Downloading and copying ADMX files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
 .\EvergreenAdmx.ps1 -Windows10Version $Windows10Version -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
-
-# Fix for WinStoreUI.admx error https://docs.microsoft.com/en-us/troubleshoot/windows-server/group-policy/winstoreui-conflict-with-windows-10-1151-admx-file
-Remove-File -Path $PolicyStore WinStoreUI.adm* -Recurse -ContinueOnError $True
-# Remove non admx files
-Remove-Item -Path $PolicyStore -Exclude *.admx, *.adml, $Languages[0], $Languages[1] -Recurse -Force
 
 # Uninstall Microsoft OneDrive
 Get-Process -Name "OneDrive" | Stop-Process -Force
@@ -231,6 +227,12 @@ Write-Log -Message "Uninstalling Microsoft OneDrive..." -Severity 1 -LogType CMT
 $appUninstallString = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).Split("/")[0]
 $appUninstallParameters = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).TrimStart($appUninstallString)
 Execute-Process -Path $appUninstallString -Parameters $appUninstallParameters
+
+Write-Log -Message "Cleaning Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+# Fix for WinStoreUI.admx error https://docs.microsoft.com/en-us/troubleshoot/windows-server/group-policy/winstoreui-conflict-with-windows-10-1151-admx-file
+Remove-File -Path $PolicyStore WinStoreUI.adm* -Recurse -ContinueOnError $True
+# Remove non admx files
+Remove-Item -Path $PolicyStore -Exclude *.admx, *.adml, $Languages[0], $Languages[1] -Recurse -Force
 
 # Remove older Office admx files
 Remove-Item -Path $PolicyStore -Include *14*.admx, *14*.adml, *15*.admx, *15*.adml -Recurse -Force
