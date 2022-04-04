@@ -198,7 +198,7 @@ Set-Location -Path $WorkingDirectory
 If (Test-Path -Path "$WorkingDirectory\*")
 {
     Write-Log -Message "Cleaning older files..." -Severity 1 -LogType CMTrace -WriteHost $True
-    Remove-File -Path "$WorkingDirectory\*"
+    Remove-File -Path "$WorkingDirectory\*" -Recurse -ContinueOnError $True
 }
 
 # Download custom ADMX files
@@ -212,7 +212,7 @@ Expand-Archive -Path $CitrixADMX -DestinationPath $CustomPolicyStore
 Expand-Archive -Path $ZoomADMX -DestinationPath $CustomPolicyStore
 
 # Cleanup
-Remove-File -Path $WorkingDirectory\*.zip
+Remove-File -Path $WorkingDirectory\*.zip -ContinueOnError $True
 
 Write-Log -Message "Copying ADMX files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
 Copy-Item -Path $CustomPolicyStore\* -Destination $PolicyStore -Recurse
@@ -221,7 +221,7 @@ Set-Location -Path "$envProgramFiles\WindowsPowerShell\Scripts"
 .\EvergreenAdmx.ps1 -Windows10Version $Windows10Version -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
 
 # Fix for WinStoreUI.admx error https://docs.microsoft.com/en-us/troubleshoot/windows-server/group-policy/winstoreui-conflict-with-windows-10-1151-admx-file
-Remove-File -Path $PolicyStore WinStoreUI.adm* -Recurse -ContinueOnError
+Remove-File -Path $PolicyStore WinStoreUI.adm* -Recurse -ContinueOnError $True
 # Remove non admx files
 Remove-Item -Path $PolicyStore -Exclude *.admx, *.adml, $Languages[0], $Languages[1] -Recurse -Force
 
