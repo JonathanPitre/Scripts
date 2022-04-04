@@ -225,6 +225,13 @@ Remove-File -Path $PolicyStore WinStoreUI.adm* -Recurse -ContinueOnError $True
 # Remove non admx files
 Remove-Item -Path $PolicyStore -Exclude *.admx, *.adml, $Languages[0], $Languages[1] -Recurse -Force
 
+# Uninstall Microsoft OneDrive
+Get-Process -Name "OneDrive" | Stop-Process -Force
+Write-Log -Message "Uninstalling Microsoft OneDrive..." -Severity 1 -LogType CMTrace -WriteHost $True
+$appUninstallString = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).Split("/")[0]
+$appUninstallParameters = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).TrimStart($appUninstallString)
+Execute-Process -Path $appUninstallString -Parameters $appUninstallParameters
+
 # Remove older Office admx files
 Remove-Item -Path $PolicyStore -Include *14*.admx, *14*.adml, *15*.admx, *15*.adml -Recurse -Force
 
