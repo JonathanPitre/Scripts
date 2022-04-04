@@ -153,9 +153,9 @@ Function Get-ZoomADMX
 
     try
     {
-        $url = "https://support.zoom.us/hc/en-us/articles/360039100051"
+        $url = "https://support.zoom.us/hc/en-us/articles/360039100051-Mass-deploying-with-Group-Policy-Objects"
         # grab content
-        $web = Invoke-WebRequest -Uri $url -UseBasicParsing -ErrorAction Ignore
+        $web = Invoke-WebRequest -Uri $url -DisableKeepAlive -UseBasicParsing
         # find ADMX download
         $URI = (($web.Links | Where-Object {$_.href -like "*msi-templates*.zip"})[-1]).href
         # grab version
@@ -182,7 +182,8 @@ $CustomPolicyStore = "$WorkingDirectory\custom"
 $CitrixADMXVersion = (Get-CitrixVADVersion).Version
 $CitrixADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
 $CitrixADMX = Split-Path -Path $CitrixADMXUrl -Leaf
-$ZoomADMXVersion = (Get-ZoomADMX).Version
+#$ZoomADMXVersion = (Get-ZoomADMX).Version
+$ZoomADMXVersion = "5.10.0"
 #$ZoomADMXUrl = (Get-ZoomADMX).URI
 $ZoomADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Zoom_$($ZoomADMXVersion).zip"
 $ZoomADMX = Split-Path -Path $ZoomADMXUrl -Leaf
