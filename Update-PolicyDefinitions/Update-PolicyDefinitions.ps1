@@ -119,7 +119,56 @@ Foreach ($Module in $Modules)
 }
 
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
+Function Get-CitrixVADVersion
+{
+    <#
+    .SYNOPSIS
+    Returns latest Version and Uri for Zoom ADMX files
+    #>
 
+    try
+    {
+        $url = "https://raw.githubusercontent.com/ryancbutler/Citrix_DL_Scrapper/main/ctx_dls.json"
+        # grab content
+        $DownloadText = (Invoke-WebRequest -Uri $url -DisableKeepAlive -UseBasicParsing).Content
+        # grab version
+        $Version = ($DownloadText | Select-String -Pattern "Citrix Virtual Apps and Desktops 7 (\d+)").Matches.Groups[1].Value
+        # return evergreen object
+        return @{ Version = $Version }
+    }
+    catch
+    {
+        Throw $_
+    }
+}
+
+Where-Object $MatchProperty -Match $CurrentPattern | Select-Object -First 1 -ExpandProperty $ReturnProperty
+
+Function Get-ZoomADMX
+{
+    <#
+    .SYNOPSIS
+    Returns latest Version and Uri for Zoom ADMX files
+    #>
+
+    try
+    {
+        $url = "https://support.zoom.us/hc/en-us/articles/360039100051"
+        # grab content
+        $web = Invoke-WebRequest -Uri $url -UseBasicParsing -ErrorAction Ignore
+        # find ADMX download
+        $URI = (($web.Links | Where-Object {$_.href -like "*msi-templates*.zip"})[-1]).href
+        # grab version
+        $Version = ($URI.Split("/")[-1] | Select-String -Pattern "(\d+(\.\d+){1,4})" -AllMatches | ForEach-Object { $_.Matches } | ForEach-Object { $_.Value }).ToString()
+
+        # return evergreen object
+        return @{ Version = $Version; URI = $URI }
+    }
+    catch
+    {
+        Throw $_
+    }
+}
 
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 
@@ -130,9 +179,12 @@ $PolicyStore = "\\$envMachineADDomain\SYSVOL\$envMachineADDomain\Policies\Policy
 $IncludeProducts = @("Windows 10", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe AcrobatReader DC", "BIS-F", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox")
 $WorkingDirectory = "C:\Install\EvergreenADMX"
 $CustomPolicyStore = "$WorkingDirectory\custom"
-$CitrixADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Citrix_2112.zip"
+$CitrixADMXVersion = (Get-CitrixVADVersion).Version
+$CitrixADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
 $CitrixADMX = Split-Path -Path $CitrixADMXUrl -Leaf
-$ZoomADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Zoom_5.9.0.zip"
+$ZoomADMXVersion = (Get-ZoomADMX).Version
+#$ZoomADMXUrl = (Get-ZoomADMX).URI
+$ZoomADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Zoom_$($ZoomADMXVersion).zip"
 $ZoomADMX = Split-Path -Path $ZoomADMXUrl -Leaf
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
@@ -141,6 +193,13 @@ Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
 New-Folder -Path $WorkingDirectory
 New-Folder -Path $CustomPolicyStore
 Set-Location -Path $WorkingDirectory
+
+# Clean older files
+If (Test-Path -Path "$WorkingDirectory\*")
+{
+    Write-Log -Message "Cleaning older files..." -Severity 1 -LogType CMTrace -WriteHost $True
+    Remove-File -Path "$WorkingDirectory\*"
+}
 
 # Download custom ADMX files
 Write-Log -Message "Downloading custom ADMX files..." -Severity 1 -LogType CMTrace -WriteHost $True
