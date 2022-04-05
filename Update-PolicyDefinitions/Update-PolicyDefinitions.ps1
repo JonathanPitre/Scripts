@@ -119,30 +119,36 @@ Foreach ($Module in $Modules)
 }
 
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
-Function Get-CitrixVADVersion
+Function Get-CitrixVDAServer
 {
     <#
     .SYNOPSIS
-    Returns latest Version and Uri for Zoom ADMX files
+    Returns latest Version and Uri for Citrix VDA Server
     #>
 
     try
     {
-        $url = "https://raw.githubusercontent.com/ryancbutler/Citrix_DL_Scrapper/main/ctx_dls.json"
-        # grab content
-        $DownloadText = (Invoke-WebRequest -Uri $url -DisableKeepAlive -UseBasicParsing).Content
-        # grab version
-        $Version = ($DownloadText | Select-String -Pattern "Citrix Virtual Apps and Desktops 7 (\d+)").Matches.Groups[1].Value
+        $DownloadURL = "https://raw.githubusercontent.com/ryancbutler/Citrix_DL_Scrapper/main/ctx_dls.json"
+        # Grab content
+        $DownloadText = (Invoke-WebRequest -Uri $DownloadURL -DisableKeepAlive -UseBasicParsing).Content
+        $RegEx = "(https.+VDAServerSetup_(\d+).exe)"
+        # Grab version
+        $Version = ($DownloadText | Select-String -Pattern $RegEx).Matches.Groups[2].Value
+        $URL = ($DownloadText | Select-String -Pattern $RegEx).Matches.Groups[1].Value
         # return evergreen object
-        return @{ Version = $Version }
+        if ($Version -and $URL)
+        {
+            [PSCustomObject]@{
+                Version = $Version
+                URI     = $URL
+            }
+        }
     }
     catch
     {
         Throw $_
     }
 }
-
-Where-Object $MatchProperty -Match $CurrentPattern | Select-Object -First 1 -ExpandProperty $ReturnProperty
 
 Function Get-ZoomADMX
 {
@@ -153,16 +159,22 @@ Function Get-ZoomADMX
 
     try
     {
-        $url = "https://support.zoom.us/hc/en-us/articles/360039100051-Mass-deploying-with-Group-Policy-Objects"
-        # grab content
-        $web = Invoke-WebRequest -Uri $url -DisableKeepAlive -UseBasicParsing
-        # find ADMX download
-        $URI = (($web.Links | Where-Object {$_.href -like "*msi-templates*.zip"})[-1]).href
-        # grab version
-        $Version = ($URI.Split("/")[-1] | Select-String -Pattern "(\d+(\.\d+){1,4})" -AllMatches | ForEach-Object { $_.Matches } | ForEach-Object { $_.Value }).ToString()
+        $DownloadURL = "https://support.zoom.us/hc/en-us/articles/360039100051-Mass-deploying-with-Group-Policy-Objects"
+        # Grab content
+        $DownloadText = (Invoke-WebRequest -Uri $DownloadURL -DisableKeepAlive -UseBasicParsing).Links
+        # Find ADMX download
+        $URL = (($DownloadText| Where-Object {$_.href -like "*msi-templates*.zip"})[-1]).href
+        # Grab version
+        $Version = ($URL.Split("/")[-1] | Select-String -Pattern "(\d+(\.\d+){1,4})" -AllMatches | ForEach-Object { $_.Matches } | ForEach-Object { $_.Value }).ToString()
 
-        # return evergreen object
-        return @{ Version = $Version; URI = $URI }
+        # Return evergreen object
+        if ($Version -and $URL)
+        {
+            [PSCustomObject]@{
+                Version = $Version
+                URI     = $URL
+            }
+        }
     }
     catch
     {
@@ -179,7 +191,7 @@ $PolicyStore = "\\$envMachineADDomain\SYSVOL\$envMachineADDomain\Policies\Policy
 $IncludeProducts = @("Windows 10", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe AcrobatReader DC", "BIS-F", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox")
 $WorkingDirectory = "C:\Install\EvergreenADMX"
 $CustomPolicyStore = "$WorkingDirectory\custom"
-$CitrixADMXVersion = (Get-CitrixVADVersion).Version
+$CitrixADMXVersion = (Get-CitrixVDAServer).Version
 $CitrixADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
 $CitrixADMX = Split-Path -Path $CitrixADMXUrl -Leaf
 #$ZoomADMXVersion = (Get-ZoomADMX).Version
@@ -187,13 +199,24 @@ $ZoomADMXVersion = "5.10.0"
 #$ZoomADMXUrl = (Get-ZoomADMX).URI
 $ZoomADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Zoom_$($ZoomADMXVersion).zip"
 $ZoomADMX = Split-Path -Path $ZoomADMXUrl -Leaf
+[boolean]$IsAppInstalled = [boolean](Get-InstalledApplication -Name "Microsoft OneDrive")
+$appUninstallString = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).Split("/")[0]
+$appUninstallParameters = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).TrimStart($appUninstallString)
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
+# Install EvergreenAdmx script - https://github.com/msfreaks/EvergreenAdmx
 Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
 New-Folder -Path $WorkingDirectory
 New-Folder -Path $CustomPolicyStore
 Set-Location -Path $WorkingDirectory
+
+# Uninstall Microsoft OneDrive if already installed
+If ($IsAppInstalled)
+{
+    Write-Log -Message "Uninstalling Microsoft OneDrive..." -Severity 1 -LogType CMTrace -WriteHost $True
+    Execute-Process -Path $appUninstallString -Parameters $appUninstallParameters
+}
 
 # Clean older files
 If (Test-Path -Path "$WorkingDirectory\*")
@@ -225,8 +248,6 @@ Write-Log -Message "Downloading and copying ADMX files to Central Policy Store..
 # Uninstall Microsoft OneDrive
 Get-Process -Name "OneDrive" | Stop-Process -Force
 Write-Log -Message "Uninstalling Microsoft OneDrive..." -Severity 1 -LogType CMTrace -WriteHost $True
-$appUninstallString = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).Split("/")[0]
-$appUninstallParameters = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).TrimStart($appUninstallString)
 Execute-Process -Path $appUninstallString -Parameters $appUninstallParameters
 
 Write-Log -Message "Cleaning Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
