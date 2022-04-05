@@ -201,7 +201,7 @@ $ZoomADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-Polic
 $ZoomADMX = Split-Path -Path $ZoomADMXUrl -Leaf
 [boolean]$IsAppInstalled = [boolean](Get-InstalledApplication -Name "Microsoft OneDrive")
 $appUninstallString = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).Split("/")[0]
-$appUninstallParameters = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).TrimStart($appUninstallString)
+$appUninstallParameters = "/uninstall /allusers"
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
@@ -244,10 +244,12 @@ Copy-Item -Path $CustomPolicyStore\* -Destination $PolicyStore -Recurse
 Set-Location -Path "$envProgramFiles\WindowsPowerShell\Scripts"
 Write-Log -Message "Downloading and copying ADMX files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
 .\EvergreenAdmx.ps1 -Windows10Version $Windows10Version -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
+Start-Sleep -Seconds 20
 
 # Uninstall Microsoft OneDrive
 Get-Process -Name "OneDrive" | Stop-Process -Force
 Write-Log -Message "Uninstalling Microsoft OneDrive..." -Severity 1 -LogType CMTrace -WriteHost $True
+$appUninstallString = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).Split("/")[0]
 Execute-Process -Path $appUninstallString -Parameters $appUninstallParameters
 
 Write-Log -Message "Cleaning Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
