@@ -23,7 +23,7 @@ If (Test-Path -Path "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe")
         Write-Host -Object "Microsoft OneDrive sync is completed." -ForegroundColor Green
 
         # Close OneDrive gracefully
-	    Start-Process -FilePath "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/shutdown" -WindowStyle Hidden
+        Start-Process -FilePath "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/shutdown" -WindowStyle Hidden
         Exit
     }
     Else
@@ -33,7 +33,7 @@ If (Test-Path -Path "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe")
 
 
     # Close OneDrive gracefully
-	Start-Process -FilePath "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/shutdown" -WindowStyle Hidden
+    Start-Process -FilePath "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/shutdown" -WindowStyle Hidden
 }
 
 

@@ -234,7 +234,6 @@ If (Test-Path -Path "$env:OneDriveCommercial\Desktop")
     Remove-Item -Path "$env:OneDriveCommercial\Desktop\Se déconnecter -*.lnk" -Force
     Get-ChildItem "$env:OneDriveCommercial\Desktop\*.lnk" -Force -Recurse | ForEach-Object {attrib.exe $_.fullname +P +S}
     Write-Host -Object "Microsoft OneDrive blank icons were fixed." -ForegroundColor Green
-
 }
 If (Test-Path -Path "$env:OneDriveCommercial\Bureau")
 {
