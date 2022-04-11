@@ -76,6 +76,7 @@ function Download-MicrosoftDefenderUpdates
 			Write-Verbose -Message "Extracting $vdmpackage to $vdmpath..." -Verbose
 			Set-Location -Path $vdmpath
 			.\mpam-fe.exe /x
+			Get-ChildItem -Path $Path -Filter "mpam-fe.exe" -Recurse | Remove-Item -Force -Recurse
 		}
 		Catch
 		{
@@ -95,5 +96,5 @@ $MicrosoftDefenderUpdatesPath = "C:\Scripts\MicrosoftDefender"
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
 Write-Verbose -Message "Cleaning old Microsoft Defender Updates ..." -Verbose
-Get-ChildItem –Path $MicrosoftDefenderUpdatesPath -Recurse | Where-Object {($_.CreationTime -lt (Get-Date).AddDays(-3))} | Remove-Item -Recurse -Force
+Get-ChildItem –Path $MicrosoftDefenderUpdatesPath -Recurse | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-3))} | Remove-Item -Recurse -Force
 Download-MicrosoftDefenderUpdates -Path $MicrosoftDefenderUpdatesPath
