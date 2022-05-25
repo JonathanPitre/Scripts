@@ -1,0 +1,15 @@
+<site-list version="1">
+  <created-by>
+    <tool>EMIESiteListManager</tool>
+    <version>12.0.0.0</version>
+    <date-created>03/17/2022 22:20:05</date-created>
+  </created-by>
+  <site url="fabrikam.com">
+    <compat-mode>default</compat-mode>
+    <open-in>IE11</open-in>
+  </site>
+  <site url="fabrikam.com/products">
+    <compat-mode>IE8Enterprise</compat-mode>
+    <open-in>IE11</open-in>
+  </site>
+</site-list>
