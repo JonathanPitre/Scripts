@@ -168,7 +168,7 @@ If ($AADPluginState -ne "Ok")
 
 
 # Launch OneDrive only after Microsoft AAD Broker Plugin is repaired
-If ((Test-Path -Path "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe") -and ($null -eq (Get-Process -Name OneDrive)))
+If ((Test-Path -Path "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe") -and ($null -eq (Get-Process -Name OneDrive | Get-Process -Name OneDrive -IncludeUserName | Where-Object { $_.UserName -eq "$env:COMPUTERNAME\$env:USERNAME" } )))
 {
     Write-Host -Object  "Starting Microsoft OneDrive..." -ForegroundColor Green
     Start-Process -FilePath "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/background" -WindowStyle Hidden
