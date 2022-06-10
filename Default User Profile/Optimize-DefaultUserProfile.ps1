@@ -1,113 +1,114 @@
-
-# Standalone application install script for VDI environment - (C)2021 Jonathan Pitre & Owen Reynolds, inspired by xenappblog.com
+# Standalone application install script for VDI environment - (C)2022 Jonathan Pitre, inspired by xenappblog.com
 
 #Requires -Version 5.1
 #Requires -RunAsAdministrator
 
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
 $ProgressPreference = "SilentlyContinue"
 $ErrorActionPreference = "SilentlyContinue"
+# Set the script execution policy for this process
+Try { Set-ExecutionPolicy -ExecutionPolicy 'ByPass' -Scope 'Process' -Force } Catch {}
 $env:SEE_MASK_NOZONECHECKS = 1
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
 $Modules = @("PSADT") # Modules list
 
 Function Get-ScriptDirectory
 {
-	Remove-Variable appScriptDirectory
-	Try
-	{
-		If ($psEditor) { Split-Path $psEditor.GetEditorContext().CurrentFile.Path } # Visual Studio Code Host
-		ElseIf ($psISE) { Split-Path $psISE.CurrentFile.FullPath } # Windows PowerShell ISE Host
-		ElseIf ($PSScriptRoot) { $PSScriptRoot } # Windows PowerShell 3.0-5.1
-		Else
-		{
-			Write-Host -Object "Cannot resolve script file's path" -ForegroundColor Red
-			Exit 1
-		}
-	}
-	Catch
-	{
-		Write-Host -Object "Caught Exception: $($Error[0].Exception.Message)" -ForegroundColor Red
-		Exit 2
-	}
+    Remove-Variable appScriptDirectory
+    Try
+    {
+        If ($psEditor) { Split-Path $psEditor.GetEditorContext().CurrentFile.Path } # Visual Studio Code Host
+        ElseIf ($psISE) { Split-Path $psISE.CurrentFile.FullPath } # Windows PowerShell ISE Host
+        ElseIf ($PSScriptRoot) { $PSScriptRoot } # Windows PowerShell 3.0-5.1
+        Else
+        {
+            Write-Host -Object "Cannot resolve script file's path" -ForegroundColor Red
+            Exit 1
+        }
+    }
+    Catch
+    {
+        Write-Host -Object "Caught Exception: $($Error[0].Exception.Message)" -ForegroundColor Red
+        Exit 2
+    }
 }
 
 Function Initialize-Module
 {
-	[CmdletBinding()]
-	Param
-	(
-		[Parameter(Mandatory = $true)]
-		[string]$Module
-	)
-	Write-Host -Object "Importing $Module module..." -ForegroundColor Green
+    [CmdletBinding()]
+    Param
+    (
+        [Parameter(Mandatory = $true)]
+        [string]$Module
+    )
+    Write-Host -Object "Importing $Module module..." -ForegroundColor Green
 
-	# If module is imported say that and do nothing
-	If (Get-Module | Where-Object { $_.Name -eq $Module })
-	{
-		Write-Host -Object "Module $Module is already imported." -ForegroundColor Green
-	}
-	Else
-	{
-		# If module is not imported, but available on disk then import
-		If (Get-Module -ListAvailable | Where-Object { $_.Name -eq $Module })
-		{
-			$InstalledModuleVersion = (Get-InstalledModule -Name $Module).Version
-			$ModuleVersion = (Find-Module -Name $Module).Version
-			$ModulePath = (Get-InstalledModule -Name $Module).InstalledLocation
-			$ModulePath = (Get-Item -Path $ModulePath).Parent.FullName
-			If ([version]$ModuleVersion -gt [version]$InstalledModuleVersion)
-			{
-				Update-Module -Name $Module -Force
-				Remove-Item -Path $ModulePath\$InstalledModuleVersion -Force -Recurse
-				Write-Host -Object "Module $Module was updated." -ForegroundColor Green
-			}
-			Import-Module -Name $Module -Force -Global -DisableNameChecking
-			Write-Host -Object "Module $Module was imported." -ForegroundColor Green
-		}
-		Else
-		{
-			# Install Nuget
-			If (-not(Get-PackageProvider -ListAvailable -Name NuGet))
-			{
-				Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-				Write-Host -Object "Package provider NuGet was installed." -ForegroundColor Green
-			}
+    # If module is imported say that and do nothing
+    If (Get-Module | Where-Object { $_.Name -eq $Module })
+    {
+        Write-Host -Object "Module $Module is already imported." -ForegroundColor Green
+    }
+    Else
+    {
+        # If module is not imported, but available on disk then import
+        If (Get-Module -ListAvailable | Where-Object { $_.Name -eq $Module })
+        {
+            $InstalledModuleVersion = (Get-InstalledModule -Name $Module).Version
+            $ModuleVersion = (Find-Module -Name $Module).Version
+            $ModulePath = (Get-InstalledModule -Name $Module).InstalledLocation
+            $ModulePath = (Get-Item -Path $ModulePath).Parent.FullName
+            If ([version]$ModuleVersion -gt [version]$InstalledModuleVersion)
+            {
+                Update-Module -Name $Module -Force
+                Remove-Item -Path $ModulePath\$InstalledModuleVersion -Force -Recurse
+                Write-Host -Object "Module $Module was updated." -ForegroundColor Green
+            }
+            Import-Module -Name $Module -Force -Global -DisableNameChecking
+            Write-Host -Object "Module $Module was imported." -ForegroundColor Green
+        }
+        Else
+        {
+            # Install Nuget
+            If (-not(Get-PackageProvider -ListAvailable -Name NuGet))
+            {
+                Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+                Write-Host -Object "Package provider NuGet was installed." -ForegroundColor Green
+            }
 
-			# Add the Powershell Gallery as trusted repository
-			If ((Get-PSRepository -Name "PSGallery").InstallationPolicy -eq "Untrusted")
-			{
-				Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
-				Write-Host -Object "PowerShell Gallery is now a trusted repository." -ForegroundColor Green
-			}
+            # Add the Powershell Gallery as trusted repository
+            If ((Get-PSRepository -Name "PSGallery").InstallationPolicy -eq "Untrusted")
+            {
+                Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+                Write-Host -Object "PowerShell Gallery is now a trusted repository." -ForegroundColor Green
+            }
 
-			# Update PowerShellGet
-			$InstalledPSGetVersion = (Get-PackageProvider -Name PowerShellGet).Version
-			$PSGetVersion = [version](Find-PackageProvider -Name PowerShellGet).Version
-			If ($PSGetVersion -gt $InstalledPSGetVersion)
-			{
-				Install-PackageProvider -Name PowerShellGet -Force
-				Write-Host -Object "PowerShellGet Gallery was updated." -ForegroundColor Green
-			}
+            # Update PowerShellGet
+            $InstalledPSGetVersion = (Get-PackageProvider -Name PowerShellGet).Version
+            $PSGetVersion = [version](Find-PackageProvider -Name PowerShellGet).Version
+            If ($PSGetVersion -gt $InstalledPSGetVersion)
+            {
+                Install-PackageProvider -Name PowerShellGet -Force
+                Write-Host -Object "PowerShellGet Gallery was updated." -ForegroundColor Green
+            }
 
-			# If module is not imported, not available on disk, but is in online gallery then install and import
-			If (Find-Module -Name $Module | Where-Object { $_.Name -eq $Module })
-			{
-				# Install and import module
-				Install-Module -Name $Module -AllowClobber -Force -Scope AllUsers
-				Import-Module -Name $Module -Force -Global -DisableNameChecking
-				Write-Host -Object "Module $Module was installed and imported." -ForegroundColor Green
-			}
-			Else
-			{
-				# If the module is not imported, not available and not in the online gallery then abort
-				Write-Host -Object "Module $Module was not imported, not available and not in an online gallery, exiting." -ForegroundColor Red
-				EXIT 1
-			}
-		}
-	}
+            # If module is not imported, not available on disk, but is in online gallery then install and import
+            If (Find-Module -Name $Module | Where-Object { $_.Name -eq $Module })
+            {
+                # Install and import module
+                Install-Module -Name $Module -AllowClobber -Force -Scope AllUsers
+                Import-Module -Name $Module -Force -Global -DisableNameChecking
+                Write-Host -Object "Module $Module was installed and imported." -ForegroundColor Green
+            }
+            Else
+            {
+                # If the module is not imported, not available and not in the online gallery then abort
+                Write-Host -Object "Module $Module was not imported, not available and not in an online gallery, exiting." -ForegroundColor Red
+                EXIT 1
+            }
+        }
+    }
 }
 
 # Get the current script directory
@@ -116,7 +117,7 @@ $appScriptDirectory = Get-ScriptDirectory
 # Install and import modules list
 Foreach ($Module in $Modules)
 {
-	Initialize-Module -Module $Module
+    Initialize-Module -Module $Module
 }
 
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
@@ -138,7 +139,7 @@ Set-Location -Path $appScriptDirectory
 Write-Log -Message "Saving a Default User registry hive copy..." -Severity 1 -LogType CMTrace -WriteHost $True
 If (-Not(Test-Path -Path "$envSystemDrive\Users\Default\NTUSER.DAT.bak"))
 {
-	Copy-File -Path "$envSystemDrive\Users\Default\NTUSER.DAT" -Destination "$appScriptDirectory\NTUSER.DAT.BAK"
+    Copy-File -Path "$envSystemDrive\Users\Default\NTUSER.DAT" -Destination "$appScriptDirectory\NTUSER.DAT.BAK"
 }
 
 # Load the Default User registry hive
@@ -222,10 +223,10 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iFir
 #Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sShortTime" -Type String -Value "HH:mm"
 
 # Set Sounds scheme to none
-$RegKeys = Get-ChildItem -Path "HKLM:\DefaultUser\AppEvents\Schemes\Apps\.Default" -Recurse | Select-Object -ExpandProperty Name | ForEach-Object { $_ -replace "HKEY_LOCAL_MACHINE" , 'HKLM:' }
-ForEach ($Items in $RegKeys)
+$regKeys = Get-ChildItem -Path "HKLM:\DefaultUser\AppEvents\Schemes\Apps\.Default" -Recurse | Select-Object -ExpandProperty Name | ForEach-Object { $_ -replace "HKEY_LOCAL_MACHINE" , 'HKLM:' }
+ForEach ($regItems in $regKeys)
 {
-	Set-RegistryKey -Key $Items -Name "(Default)" -Value ""
+    Set-RegistryKey -Key $regItems -Name "(Default)" -Value ""
 }
 
 # Disable sound beep
@@ -240,16 +241,16 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersio
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "EnableAutoTray" -Type DWord -Value "0"
 
 # Disable the label "Shortcut To" on shortcuts - https://www.howtogeek.com/howto/windows-vista/remove-shortcut-text-from-new-shortcuts-in-vista
-$ValueHex = "00,00,00,00"
-$ValueHexified = $ValueHex.Split(",") | ForEach-Object { "0x$_" }
-$ValueBinary = ([byte[]]$ValueHexified)
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "link" -Type Binary -Value $ValueBinary
+$regValueHex = "00,00,00,00"
+$regValueHexified = $regValueHex.Split(",") | ForEach-Object { "0x$_" }
+$regValueBinary = ([byte[]]$regValueHexified)
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "link" -Type Binary -Value $regValueBinary
 
 # https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-vdi-recommendations-2004
-$ValueHex = "24,00,00,00,3C,28,00,00,00,00,00,00,00,00,00,00"
-$ValueHexified = $ValueHex.Split(",") | ForEach-Object { "0x$_" }
-$ValueBinary = ([byte[]]$ValueHexified)
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "ShellState" -Type Binary -Value $ValueBinary
+$regValueHex = "24,00,00,00,3C,28,00,00,00,00,00,00,00,00,00,00"
+$regValueHexified = $regValueHex.Split(",") | ForEach-Object { "0x$_" }
+$regValueBinary = ([byte[]]$regValueHexified)
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "ShellState" -Type Binary -Value $regValueBinary
 
 # Enable Thumbnail Previews
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "DisableThumbnails"
@@ -390,11 +391,12 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "Interactiv
 # Change Windows Visual Effects - https://virtualfeller.com/2015/11/19/windows-10-optimization-part-4-user-interface
 # https://superuser.com/questions/839993/find-registry-key-for-windows-8-per-application-input-method-setting
 # https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-vdi-recommendations-2004
-$ValueHex = "90,32,07,80,10,00,00,00"
+# https://www.deploymentresearch.com/fixing-borderless-windows-in-windows-server-2019-and-windows-server-2022
+$regValueHex = "90,32,07,80,10,00,00,00"
 # old recommendation 90,24,03,80,10,00,00,00
-$ValueHexified = $ValueHex.Split(",") | ForEach-Object { "0x$_" }
-$ValueBinary = ([byte[]]$ValueHexified)
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "UserPreferencesMask" -Type Binary -Value $ValueBinary
+$regValueHexified = $regValueHex.Split(",") | ForEach-Object { "0x$_" }
+$regValueBinary = ([byte[]]$regValueHexified)
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "UserPreferencesMask" -Type Binary -Value $regValueBinary
 
 # Specifies how much time elapses between each blink of the selection cursor
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "CursorBlinkRate" -Type String -Value "-1"
@@ -496,13 +498,13 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Fi
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Microsoft.SkyDrive.Desktop" -Name "Enabled" -Type DWord -Value "0"
 
 # Get Micrososoft OneDrive setups run keys
-$OneDriveSetup = Get-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Value "OneDriveSetup"
-$OneDrive = Get-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Value "OneDrive"
+$regOneDriveSetup = Get-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Value "OneDriveSetup"
+$regOneDrive = Get-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Value "OneDrive"
 
 # Remove Microsoft OneDrive setups from running on new user profile
 # https://byteben.com/bb/installing-the-onedrive-sync-client-in-per-machine-mode-during-your-task-sequence-for-a-lightening-fast-first-logon-experience
-If ($OneDriveSetup) { Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Name "OneDriveSetup" }
-If ($OneDrive) { Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Name "OneDrive" }
+If ($regOneDriveSetup) { Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Name "OneDriveSetup" }
+If ($regOneDrive) { Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Name "OneDrive" }
 
 # Enable Storage Sense - https://james-rankin.com/all-posts/quickpost-setting-storage-sense-cloud-content-dehydration-on-server-2019
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" -Name "01" -Type DWord -Value "1"
@@ -521,23 +523,23 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\Pro
 # Download required Microsoft Teams config file
 If (-Not(Test-Path -Path $appScriptDirectory\$appTeamsConfig))
 {
-	Write-Log -Message "Downloading Microsoft Teams config file..." -Severity 1 -LogType CMTrace -WriteHost $True
-	Invoke-WebRequest -UseBasicParsing -Uri $appTeamsConfigURL -OutFile $appScriptDirectory\$appTeamsConfig
+    Write-Log -Message "Downloading Microsoft Teams config file..." -Severity 1 -LogType CMTrace -WriteHost $True
+    Invoke-WebRequest -UseBasicParsing -Uri $appTeamsConfigURL -OutFile $appScriptDirectory\$appTeamsConfig
 }
 Else
 {
-	Write-Log -Message "File(s) already exists, download was skipped." -Severity 1 -LogType CMTrace -WriteHost $True
+    Write-Log -Message "File(s) already exists, download was skipped." -Severity 1 -LogType CMTrace -WriteHost $True
 }
 
 # Copy Microsoft Teams config file to the default profile
 If (-Not(Test-Path -Path "$envSystemDrive\Users\Default\AppData\Roaming\Microsoft\Teams\$appTeamsConfig"))
 {
-	Copy-File -Path "$appScriptDirectory\$appTeamsConfig" -Destination "$envSystemDrive\Users\Default\AppData\Roaming\Microsoft\Teams"
-	Write-Log -Message "$appVendor $appName settings were configured for the Default User profile." -Severity 1 -LogType CMTrace -WriteHost $True
+    Copy-File -Path "$appScriptDirectory\$appTeamsConfig" -Destination "$envSystemDrive\Users\Default\AppData\Roaming\Microsoft\Teams"
+    Write-Log -Message "$appVendor $appName settings were configured for the Default User profile." -Severity 1 -LogType CMTrace -WriteHost $True
 }
 Else
 {
-	Write-Log -Message "Default profile is already configured for Microsoft Teams." -Severity 1 -LogType CMTrace -WriteHost $True
+    Write-Log -Message "Default profile is already configured for Microsoft Teams." -Severity 1 -LogType CMTrace -WriteHost $True
 }
 
 # To validate (from the comments section)
@@ -550,20 +552,25 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\Outlook\AddIns
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\Outlook\AddIns\TeamsAddin.FastConnect" -Name "FriendlyName" -Type String -Value "Microsoft Teams Meeting Add-in for Microsoft Office"
 
 # Add login script on new user creation
-$RunOnceKey = "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\RunOnce"
-If (-not(Test-Path $RunOnceKey))
+$regRunOnceKey = "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\RunOnce"
+If (-not(Test-Path $regRunOnceKey))
 {
-	Set-RegistryKey -Key $RunOnceKey
+    Set-RegistryKey -Key $regRunOnceKey
 }
-Set-RegistryKey -Key $RunOnceKey -Name "NewUser" -Type String -Value "C:\Windows\System32\WindowsPowerShell\v1.0\Powershell.exe -Ex ByPass -File $NewUserScript"
+Set-RegistryKey -Key $regRunOnceKey -Name "NewUser" -Type String -Value "C:\Windows\System32\WindowsPowerShell\v1.0\Powershell.exe -Ex ByPass -File $NewUserScript"
 
 If (Test-Path -Path $envProgramFiles\Autodesk)
 {
-	# Prevent Autodesk desktop analitycs -  https://forums.autodesk.com/t5/installation-licensing/preventing-the-desktop-analytics-popup-on-first-start/td-p/5311565
-	Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Autodesk\MC3" -Name "ADAOptIn" -Type DWord -Value "0"
-	Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Autodesk\MC3" -Name "ADARePrompted" -Type DWord -Value "1"
-	Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Autodesk\MC3" -Name "OverridedByHKLM" -Type DWord -Value "0"
+    # Prevent Autodesk desktop analitycs -  https://forums.autodesk.com/t5/installation-licensing/preventing-the-desktop-analytics-popup-on-first-start/td-p/5311565
+    Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Autodesk\MC3" -Name "ADAOptIn" -Type DWord -Value "0"
+    Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Autodesk\MC3" -Name "ADARePrompted" -Type DWord -Value "1"
+    Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Autodesk\MC3" -Name "OverridedByHKLM" -Type DWord -Value "0"
 }
+
+# Cleanup (to prevent access denied issue unloading the registry hive)
+Get-Variable reg* | Remove-Variable
+[GC]::Collect()
+Start-Sleep -Seconds 5
 
 # Unload the Default User registry hive
 Execute-Process -Path "$envWinDir\System32\reg.exe" -Parameters "UNLOAD HKLM\DefaultUser" -WindowStyle Hidden
@@ -576,8 +583,7 @@ Remove-Folder -Path "$envSystemDrive\Users\Default\AppData\Local\Microsoft\Windo
 Remove-Folder -Path "$envSystemDrive\Users\Default\AppData\Local\Microsoft\Windows\INetCookies"
 Remove-Folder -Path "$envSystemDrive\Users\Default\AppData\Local\Microsoft\Windows\WebCache"
 
-
-# Cleaup temp files
+# Cleanup temp files
 Remove-Item -Path "$envSystemDrive\Users\Default\*.LOG1" -Force
 Remove-Item -Path "$envSystemDrive\Users\Default\*.LOG2" -Force
 Remove-Item -Path "$envSystemDrive\Users\Default\*.blf" -Force
