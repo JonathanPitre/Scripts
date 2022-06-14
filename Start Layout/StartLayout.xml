@@ -16,10 +16,10 @@
           <start:DesktopApplicationTile Size="2x2" Column="0" Row="8" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Accessories\Quick Assist.lnk" />
           <start:DesktopApplicationTile Size="2x2" Column="0" Row="4" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Excel.lnk" />
           <start:DesktopApplicationTile Size="2x2" Column="0" Row="2" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Teams.lnk" />
-          <start:DesktopApplicationTile Size="2x2" Column="4" Row="6" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\ProjectLibre.lnk" />
+          <start:DesktopApplicationTile Size="2x2" Column="4" Row="6" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\ShareX.lnk" />
           <start:DesktopApplicationTile Size="2x2" Column="2" Row="2" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook.lnk" />
           <start:DesktopApplicationTile Size="2x2" Column="2" Row="4" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\PowerPoint.lnk" />
-          <start:DesktopApplicationTile Size="1x1" Column="5" Row="10" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Sign out.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="5" Row="10" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Sign Out.lnk" />
         </start:Group>
       </defaultlayout:StartLayout>
     </StartLayoutCollection>
