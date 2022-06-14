@@ -152,6 +152,9 @@
   <Association Identifier="msteams" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
   <Association Identifier="mswindowsmusic" ProgId="AppXtggqqtcfspt6ks3fjzyfppwc05yxwtwy" ApplicationName="Windows Media Player" ApplyOnUpgrade="true" />
   <Association Identifier="mswindowsvideo" ProgId="AppX6w6n4f8xch1s3vzwf3af6bfe88qhxbza" ApplicationName="Windows Media Player" ApplyOnUpgrade="true" />
-  <Association Identifier="read" ProgId="AppXe862j7twqs4aww05211jaakwxyfjx4da" NewBrowserProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" ApplyOnUpgrade="true" />
+  <Association Identifier="SIP" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="SIPS" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="read" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier="tel" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="WEBCAL" ProgId="Outlook.URL.webcal.15" ApplicationName="Outlook" />
 </DefaultAssociations>
