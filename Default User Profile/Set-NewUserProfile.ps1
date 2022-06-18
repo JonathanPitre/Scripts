@@ -84,7 +84,7 @@ Else
     }
 }
 
-<# Microsoft ADD Broker plugin shouuld be fixed before launching OneDrive
+<# Microsoft ADD Broker plugin should be fixed before launching OneDrive
 If (Get-Process | Where-Object name -eq OneDrive)
 {
     Write-Verbose -Message 'OneDrive is already running. Process will be killed.'
