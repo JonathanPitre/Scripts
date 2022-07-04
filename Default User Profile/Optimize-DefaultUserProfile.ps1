@@ -127,7 +127,7 @@ Foreach ($Module in $Modules)
 $appProcesses = @("regedit", "reg")
 $appTeamsConfigURL = "https://raw.githubusercontent.com/JonathanPitre/Apps/master/Microsoft/Teams/desktop-config.json"
 $appTeamsConfig = Split-Path -Path $appTeamsConfigURL -Leaf
-$NewUserScript = "\\$envMachineADDomain\NETLOGON\Citrix\NewUserProfile\Set-NewUserProfile.ps1" # Modify according to your environment
+$NewUserScript = "\\$envMachineADDomain\NETLOGON\VDI\NewUserProfile\Set-NewUserProfile.ps1" # Modify according to your environment
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
