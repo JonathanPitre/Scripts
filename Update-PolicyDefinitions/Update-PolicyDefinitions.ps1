@@ -41,17 +41,17 @@ Function Initialize-Module
         [Parameter(Mandatory = $true)]
         [string]$Module
     )
-    Write-Host -Object  "Importing $Module module..." -ForegroundColor Green
+    Write-Host -Object "Importing $Module module..." -ForegroundColor Green
 
     # If module is imported say that and do nothing
-    If (Get-Module | Where-Object {$_.Name -eq $Module})
+    If (Get-Module | Where-Object { $_.Name -eq $Module })
     {
-        Write-Host -Object  "Module $Module is already imported." -ForegroundColor Green
+        Write-Host -Object "Module $Module is already imported." -ForegroundColor Green
     }
     Else
     {
         # If module is not imported, but available on disk then import
-        If (Get-Module -ListAvailable | Where-Object {$_.Name -eq $Module})
+        If (Get-Module -ListAvailable | Where-Object { $_.Name -eq $Module })
         {
             $InstalledModuleVersion = (Get-InstalledModule -Name $Module).Version
             $ModuleVersion = (Find-Module -Name $Module).Version
@@ -92,7 +92,7 @@ Function Initialize-Module
             }
 
             # If module is not imported, not available on disk, but is in online gallery then install and import
-            If (Find-Module -Name $Module | Where-Object {$_.Name -eq $Module})
+            If (Find-Module -Name $Module | Where-Object { $_.Name -eq $Module })
             {
                 # Install and import module
                 Install-Module -Name $Module -AllowClobber -Force -Scope AllUsers
@@ -119,6 +119,28 @@ Foreach ($Module in $Modules)
 }
 
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
+
+Function Get-EvergreenAdmxVersion
+{
+    <#
+    .SYNOPSIS
+    Returns latest Version
+    #>
+
+    try
+    {
+        $GitHubRepo = "msfreaks/EvergreenAdmx"
+        $Releases = "https://api.github.com/repos/$GitHubRepo/releases"
+        Write-Verbose -Message "Determining latest EvergreenAdmx version..." -Verbose
+        $Version = (Invoke-WebRequest -Uri $Releases -UseBasicParsing | ConvertFrom-Json)[0].tag_name
+        return $Version
+        }
+    catch
+    {
+        Throw $_
+    }
+}
+
 Function Get-CitrixVDAServer
 {
     <#
@@ -150,35 +172,89 @@ Function Get-CitrixVDAServer
     }
 }
 
-Function Get-ZoomADMX
-{
-    <#
+# Fix for EvergreenAdmx 2206.1, replace both Citrix Workspace App functions manually in file C:\Program Files\WindowsPowerShell\Scripts\EvergreenAdmx.ps1
+function Get-CitrixWorkspaceAppAdmxOnline {
+<#
     .SYNOPSIS
-    Returns latest Version and Uri for Zoom ADMX files
-    #>
+    Returns latest Version and Uri for Citrix Workspace App ADMX files
+#>
 
-    try
-    {
-        $DownloadURL = "https://support.zoom.us/hc/en-us/articles/360039100051-Mass-deploying-with-Group-Policy-Objects"
-        # Grab content
-        $DownloadText = (Invoke-WebRequest -Uri $DownloadURL -DisableKeepAlive -UseBasicParsing).Links
-        # Find ADMX download
-        $URL = (($DownloadText| Where-Object {$_.href -like "*msi-templates*.zip"})[-1]).href
-        # Grab version
-        $Version = ($URL.Split("/")[-1] | Select-String -Pattern "(\d+(\.\d+){1,4})" -AllMatches | ForEach-Object { $_.Matches } | ForEach-Object { $_.Value }).ToString()
-
-        # Return evergreen object
-        if ($Version -and $URL)
-        {
-            [PSCustomObject]@{
-                Version = $Version
-                URI     = $URL
-            }
-        }
+    try {
+        $ProgressPreference = 'SilentlyContinue'
+        $url = "https://www.citrix.com/downloads/workspace-app/windows/workspace-app-for-windows-latest.html"
+        # grab content
+        $web = (Invoke-WebRequest -UseDefaultCredentials -Uri $url -UseBasicParsing -DisableKeepAlive -ErrorAction Ignore).RawContent
+        # find line with ADMX download
+        $str = ($web -split "`r`n" | Select-String -Pattern "_ADMX_")[0].ToString().Trim()
+        # extract url from ADMX download string
+        $URI = "https:$(((Select-String '(\/\/)([^\s,]+)(?=")' -Input $str).Matches.Value))"
+        # grab version
+        $VersionRegEx = "Version\: ((?:\d+\.)+(?:\d+)) \((.+)\)"
+        $Version = ($web | Select-String -Pattern $VersionRegEx).Matches.Groups[1].Value
+        $ShortVersion = ($web| Select-String -Pattern $VersionRegEx).Matches.Groups[2].Value
+        # return evergreen object
+        # return evergreen object
+        return @{ Version = $Version; URI = $URI }
     }
-    catch
-    {
+    catch {
         Throw $_
+    }
+}
+
+function Get-CitrixWorkspaceAppAdmx {
+<#
+    .SYNOPSIS
+    Process Citrix Workspace App Admx files
+
+    .PARAMETER Version
+    Current Version present
+
+    .PARAMETER PolicyStore
+    Destination for the Admx files
+#>
+
+    param(
+        [string]$Version,
+        [string]$PolicyStore = $null,
+        [string[]]$Languages = $null
+    )
+
+    $evergreen = Get-CitrixWorkspaceAppAdmxOnline
+    $productname = "Citrix Workspace App"
+    $productfolder = ""; if ($UseProductFolders) { $productfolder = "\$($productname)" }
+
+    # see if this is a newer version
+    if (-not $Version -or [version]$evergreen.Version -gt [version]$Version) {
+        Write-Verbose "Found new version $($evergreen.Version) for '$($productname)'"
+
+        # download and process
+        $outfile = "$($WorkingDirectory)\downloads\$($evergreen.URI.Split("?")[0].Split("/")[-1])"
+        try {
+            # download
+            $ProgressPreference = 'SilentlyContinue'
+            Write-Verbose "Downloading '$($evergreen.URI)' to '$($outfile)'"
+            Invoke-WebRequest -UseDefaultCredentials -Uri $evergreen.URI -UseBasicParsing -OutFile $outfile
+
+            # extract
+            Write-Verbose "Extracting '$($outfile)' to '$($env:TEMP)\citrixworkspaceapp'"
+            Expand-Archive -Path $outfile -DestinationPath "$($env:TEMP)\citrixworkspaceapp" -Force
+
+            # copy
+            $sourceadmx = "$($env:TEMP)\citrixworkspaceapp\$($evergreen.URI.Split("/")[-2].Split("?")[0].SubString(0,$evergreen.URI.Split("/")[-2].Split("?")[0].IndexOf(".")))"
+            $targetadmx = "$($WorkingDirectory)\admx$($productfolder)"
+            Copy-Admx -SourceFolder $sourceadmx -TargetFolder $targetadmx -PolicyStore $PolicyStore -ProductName $productname -Languages $Languages
+
+            # cleanup
+            Remove-Item -Path "$($env:TEMP)\citrixworkspaceapp" -Recurse -Force
+
+            return $evergreen
+        }
+        catch {
+            Throw $_
+        }
+    } else {
+        # version already processed
+        return $null
     }
 }
 
@@ -189,15 +265,15 @@ $Windows10Version = "21H2"
 $Languages = @("en-US", "fr-FR")
 $PolicyStore = "\\$envMachineADDomain\SYSVOL\$envMachineADDomain\Policies\PolicyDefinitions"
 $IncludeProducts = @("Windows 10", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe AcrobatReader DC", "BIS-F", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox")
-$WorkingDirectory = "C:\Install\EvergreenADMX"
+$WorkingDirectory = "C:\Scripts\EvergreenADMX"
 $CustomPolicyStore = "$WorkingDirectory\custom"
-$CitrixADMXVersion = (Get-CitrixVDAServer).Version
-$CitrixADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
+$CitrixADMXVersion = "2206"
+$CitrixADMXUrl = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
 $CitrixADMX = Split-Path -Path $CitrixADMXUrl -Leaf
 #$ZoomADMXVersion = (Get-ZoomADMX).Version
-$ZoomADMXVersion = "5.10.0"
+$ZoomADMXVersion = "5.11.0"
 #$ZoomADMXUrl = (Get-ZoomADMX).URI
-$ZoomADMXUrl = "https://github.com/JonathanPitre/Scripts/raw/master/Update-PolicyDefinitions/Zoom_$($ZoomADMXVersion).zip"
+$ZoomADMXUrl = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Update-PolicyDefinitions/Zoom_$($ZoomADMXVersion).zip"
 $ZoomADMX = Split-Path -Path $ZoomADMXUrl -Leaf
 [boolean]$IsAppInstalled = [boolean](Get-InstalledApplication -Name "Microsoft OneDrive")
 $appUninstallString = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).Split("/")[0]
@@ -206,17 +282,32 @@ $appUninstallParameters = "/uninstall /allusers"
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
 # Install EvergreenAdmx script - https://github.com/msfreaks/EvergreenAdmx
-Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
+$EvergreenAdmxVersion = Get-EvergreenAdmxVersion
+$ScriptInfo = Get-InstalledScript | Where-Object { $_.Name -eq "EvergreenADMX" }
+[boolean]$isScriptInstalled = [boolean]$ScriptInfo
+If ($isScriptInstalled)
+{
+    $ScriptVersion = ($ScriptInfo).Version
+        If ([version]$EvergreenAdmxVersion -eq [version]2206.1)
+    {
+        # This version is buggy, Citrix Workspace App policdy definitions wont download properly!
+        Write-Log -Message "This version is buggy, Citrix Workspace App policy definitions files wont download properly!" -Severity 1 -LogType CMTrace -WriteHost $True
+    }
+    If ([version]$EvergreenAdmxVersion -eq [version]$ScriptVersion)
+    {
+        Write-Log -Message "EvergreenAdmx script is already installed!" -Severity 1 -LogType CMTrace -WriteHost $True
+
+    }
+    Else
+    {
+        Write-Log -Message "Installing EvergreenAdmx script..." -Severity 1 -LogType CMTrace -WriteHost $True
+        Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
+    }
+}
+
 New-Folder -Path $WorkingDirectory
 New-Folder -Path $CustomPolicyStore
 Set-Location -Path $WorkingDirectory
-
-# Uninstall Microsoft OneDrive if already installed
-If ($IsAppInstalled)
-{
-    Write-Log -Message "Uninstalling Microsoft OneDrive..." -Severity 1 -LogType CMTrace -WriteHost $True
-    Execute-Process -Path $appUninstallString -Parameters $appUninstallParameters
-}
 
 # Clean older files
 If (Test-Path -Path "$WorkingDirectory\*")
@@ -225,40 +316,43 @@ If (Test-Path -Path "$WorkingDirectory\*")
     Remove-File -Path "$WorkingDirectory\*" -Recurse -ContinueOnError $True
 }
 
-# Download custom ADMX files
-Write-Log -Message "Downloading custom ADMX files..." -Severity 1 -LogType CMTrace -WriteHost $True
+# Download custom policy definitions files
+Write-Log -Message "Downloading custom Policy Definitions files..." -Severity 1 -LogType CMTrace -WriteHost $True
 Invoke-WebRequest -UseBasicParsing -Uri $CitrixADMXUrl -OutFile $CitrixADMX
 Invoke-WebRequest -UseBasicParsing -Uri $ZoomADMXUrl -OutFile $ZoomADMX
 
-# Extract custom ADMX files
-Write-Log -Message "Extracting custom ADMX files..." -Severity 1 -LogType CMTrace -WriteHost $True
+# Extract custom policy definitions files
+Write-Log -Message "Extracting custom Policy Definitions files..." -Severity 1 -LogType CMTrace -WriteHost $True
 Expand-Archive -Path $CitrixADMX -DestinationPath $CustomPolicyStore
 Expand-Archive -Path $ZoomADMX -DestinationPath $CustomPolicyStore
 
 # Cleanup
 Remove-File -Path $WorkingDirectory\*.zip -ContinueOnError $True
 
-Write-Log -Message "Copying custom ADMX files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
-Copy-Item -Path $CustomPolicyStore\* -Destination $PolicyStore -Recurse
+# Remove older  Citrix Profile Management policy definitions files
+Remove-Item -Path $PolicyStore -Include ctxprofile*.admx, ctxprofile*.adml -Recurse -Force
+
+Write-Log -Message "Copying custom Policy Definitions files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+Copy-Item -Path $CustomPolicyStore\* -Destination $PolicyStore -Recurse -Force
 
 Set-Location -Path "$envProgramFiles\WindowsPowerShell\Scripts"
-Write-Log -Message "Downloading and copying ADMX files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+
+Write-Log -Message "Downloading and copying Policy Definitions files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
 .\EvergreenAdmx.ps1 -Windows10Version $Windows10Version -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
 Start-Sleep -Seconds 20
 
-# Uninstall Microsoft OneDrive
-Get-Process -Name "OneDrive" | Stop-Process -Force
-Write-Log -Message "Uninstalling Microsoft OneDrive..." -Severity 1 -LogType CMTrace -WriteHost $True
-$appUninstallString = ((Get-InstalledApplication -Name "Microsoft OneDrive").UninstallString).Split("/")[0]
-Execute-Process -Path $appUninstallString -Parameters $appUninstallParameters
-
 Write-Log -Message "Cleaning Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+
 # Fix for WinStoreUI.admx error https://docs.microsoft.com/en-us/troubleshoot/windows-server/group-policy/winstoreui-conflict-with-windows-10-1151-admx-file
 Remove-File -Path $PolicyStore WinStoreUI.adm* -Recurse -ContinueOnError $True
-# Remove non admx files
+
+# Remove non policy definitions files
 Remove-Item -Path $PolicyStore -Exclude *.admx, *.adml, $Languages[0], $Languages[1] -Recurse -Force
 
-# Remove older Office admx files
-Remove-Item -Path $PolicyStore -Include *14*.admx, *14*.adml, *15*.admx, *15*.adml -Recurse -Force
+# Remove older Office policy definitions files
+Remove-Item -Path $PolicyStore -Include *12*.admx, *12*.adml, *13*.admx, *13*.adml, *14*.admx, *14*.adml, *15*.admx, *15*.adml -Recurse -Force
 
-Write-Log -Message "ADMX files were installed successfully!" -Severity 1 -LogType CMTrace -WriteHost $True
+# Remove older Adobe policy definitions files
+Remove-Item -Path $PolicyStore -Include Acrobat2017.admx, Acrobat2017.adml, AcrobatReader2017.admx, AcrobatReader2017.adml, Acrobat2020.admx, Acrobat2020.adml, AcrobatReader2020.admx, AcrobatReader2020.adml -Recurse -Force
+
+Write-Log -Message "Policy Definitions files were updated successfully!" -Severity 1 -LogType CMTrace -WriteHost $True
