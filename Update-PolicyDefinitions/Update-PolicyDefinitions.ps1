@@ -1,16 +1,18 @@
-# Standalone application install script for VDI environment - (C)2021 Jonathan Pitre & Owen Reynolds, inspired by xenappblog.com
+# Standalone application install script for VDI environment - (C)2022 Jonathan Pitre, inspired by xenappblog.com
 
 #Requires -Version 5.1
 #Requires -RunAsAdministrator
 
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
 $ProgressPreference = "SilentlyContinue"
 $ErrorActionPreference = "SilentlyContinue"
+# Set the script execution policy for this process
+Try { Set-ExecutionPolicy -ExecutionPolicy 'ByPass' -Scope 'Process' -Force } Catch {}
 $env:SEE_MASK_NOZONECHECKS = 1
-$Modules = @("PSADT") # Modules list
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+[System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
+$Modules = @("PSADT", "VcRedist") # Modules list
 
 Function Get-ScriptDirectory
 {
@@ -41,17 +43,17 @@ Function Initialize-Module
         [Parameter(Mandatory = $true)]
         [string]$Module
     )
-    Write-Host -Object "Importing $Module module..." -ForegroundColor Green
+    Write-Host -Object  "Importing $Module module..." -ForegroundColor Green
 
     # If module is imported say that and do nothing
-    If (Get-Module | Where-Object { $_.Name -eq $Module })
+    If (Get-Module | Where-Object {$_.Name -eq $Module})
     {
-        Write-Host -Object "Module $Module is already imported." -ForegroundColor Green
+        Write-Host -Object  "Module $Module is already imported." -ForegroundColor Green
     }
     Else
     {
         # If module is not imported, but available on disk then import
-        If (Get-Module -ListAvailable | Where-Object { $_.Name -eq $Module })
+        If (Get-Module -ListAvailable | Where-Object {$_.Name -eq $Module})
         {
             $InstalledModuleVersion = (Get-InstalledModule -Name $Module).Version
             $ModuleVersion = (Find-Module -Name $Module).Version
@@ -92,7 +94,7 @@ Function Initialize-Module
             }
 
             # If module is not imported, not available on disk, but is in online gallery then install and import
-            If (Find-Module -Name $Module | Where-Object { $_.Name -eq $Module })
+            If (Find-Module -Name $Module | Where-Object {$_.Name -eq $Module})
             {
                 # Install and import module
                 Install-Module -Name $Module -AllowClobber -Force -Scope AllUsers
@@ -283,26 +285,27 @@ $appUninstallParameters = "/uninstall /allusers"
 
 # Install EvergreenAdmx script - https://github.com/msfreaks/EvergreenAdmx
 $EvergreenAdmxVersion = Get-EvergreenAdmxVersion
+
 $ScriptInfo = Get-InstalledScript | Where-Object { $_.Name -eq "EvergreenADMX" }
 [boolean]$isScriptInstalled = [boolean]$ScriptInfo
 If ($isScriptInstalled)
 {
     $ScriptVersion = ($ScriptInfo).Version
-        If ([version]$EvergreenAdmxVersion -eq [version]2206.1)
+    If ([version]$EvergreenAdmxVersion -eq [version]2206.1)
     {
         # This version is buggy, Citrix Workspace App policdy definitions wont download properly!
         Write-Log -Message "This version is buggy, Citrix Workspace App policy definitions files wont download properly!" -Severity 1 -LogType CMTrace -WriteHost $True
     }
-    If ([version]$EvergreenAdmxVersion -eq [version]$ScriptVersion)
+    ElseIf ([version]$EvergreenAdmxVersion -eq [version]$ScriptVersion)
     {
         Write-Log -Message "EvergreenAdmx script is already installed!" -Severity 1 -LogType CMTrace -WriteHost $True
 
     }
-    Else
-    {
-        Write-Log -Message "Installing EvergreenAdmx script..." -Severity 1 -LogType CMTrace -WriteHost $True
-        Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
-    }
+}
+Else
+{
+    Write-Log -Message "Installing EvergreenAdmx script..." -Severity 1 -LogType CMTrace -WriteHost $True
+    Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
 }
 
 New-Folder -Path $WorkingDirectory
