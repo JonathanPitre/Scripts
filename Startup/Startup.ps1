@@ -6,7 +6,8 @@ $ErrorActionPreference = "SilentlyContinue"
 
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
 
-function Optimize-ScheduledTasks() {
+function Optimize-ScheduledTasks()
+{
 
     Write-Title -Text "Scheduled Tasks tweaks"
     Write-Section -Text "Disabling Scheduled Tasks"
@@ -23,14 +24,17 @@ function Optimize-ScheduledTasks() {
         #"\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance"
     )
 
-    ForEach ($ScheduledTask in $DisableScheduledTasks) {
-        If (Get-ScheduledTaskInfo -TaskName $ScheduledTask) {
+    ForEach ($ScheduledTask in $DisableScheduledTasks)
+    {
+        If (Get-ScheduledTaskInfo -TaskName $ScheduledTask)
+        {
 
             Write-Host "$($EnableStatus[0]) the $ScheduledTask Task..."
             Invoke-Expression "$($Commands[0])"
 
         }
-        Else {
+        Else
+        {
 
             Write-Warning "[?][TaskScheduler] $ScheduledTask was not found."
 
@@ -43,14 +47,17 @@ function Optimize-ScheduledTasks() {
         #"\Microsoft\Windows\Windows Error Reporting\QueueReporting"     # Windows Error Reporting event, needed to improve compatibility with your hardware
     )
 
-    ForEach ($ScheduledTask in $EnableScheduledTasks) {
-        If (Get-ScheduledTaskInfo -TaskName $ScheduledTask) {
+    ForEach ($ScheduledTask in $EnableScheduledTasks)
+    {
+        If (Get-ScheduledTaskInfo -TaskName $ScheduledTask)
+        {
 
             Write-Host "[+][TaskScheduler] Enabling the $ScheduledTask Task..."
             Get-ScheduledTask -TaskName "$ScheduledTask".Split("\")[-1] | Where-Object State -Like "Disabled" | Enable-ScheduledTask
 
         }
-        Else {
+        Else
+        {
 
             Write-Warning "[?][TaskScheduler] $ScheduledTask was not found."
 
@@ -58,24 +65,32 @@ function Optimize-ScheduledTasks() {
     }
 }
 
-function Detect-CitrixDiskMode () {
+function Detect-CitrixDiskMode ()
+{
     Write-Host "Detect the Citrix Disk Mode 'Shared' or 'Private'"
-    If ( Test-Path -Path $Personality ) {
-        If ( Select-String -Path $Personality -Pattern "$DiskMode=Shared") {
-            $DiskMode="ReadOnly"
+    If ( Test-Path -Path $Personality )
+    {
+        If ( Select-String -Path $Personality -Pattern "$DiskMode=Shared")
+        {
+            $DiskMode = "ReadOnly"
             Write-Host "The current Disk Mode is SHARED (Read-Only)"
 
-        } ElseIf ( Select-String -Path $Personality -Pattern "$DiskMode=Private") {
-            $DiskMode="ReadWrite"
+        }
+        ElseIf ( Select-String -Path $Personality -Pattern "$DiskMode=Private")
+        {
+            $DiskMode = "ReadWrite"
             Write-Host "The current Disk Mode is Private (Read/Write)"
         }
-    } Else {
+    }
+    Else
+    {
         Write-Host "The current machine is not a Citrix PVS nor MCS device."
     }
     Return $DiskMode
 }
 
-function Optimize-WindowsDefenderATPForNonPersistentMachines () {
+function Optimize-WindowsDefenderATPForNonPersistentMachines ()
+{
     # Some organizations, use non-persistent virtual machines for their users
     # A non-persistent machine is created from a master image
     # Every new machine instance has a different name and these machines are available via pool
@@ -83,34 +98,34 @@ function Optimize-WindowsDefenderATPForNonPersistentMachines () {
     # This script provides a solution for onboarding such machines
     # We would like to have sense unique id per machine name in organization
     # For that purpose, senseGuid is set prior to onboarding
-    # The guid is created deterministically based on combination of orgId and machine name 
+    # The guid is created deterministically based on combination of orgId and machine name
     # This script is intended to be integrated in golden image startup
-    Param (	
-	    [string]
-	    [ValidateNotNullOrEmpty()]
-        [ValidateScript({Test-Path $_ -PathType ëContainerí})]
-	    $onboardingPackageLocation = [System.IO.Path]::GetDirectoryName($MyInvocation.MyCommand.Path)
+    Param (
+        [string]
+        [ValidateNotNullOrEmpty()]
+        [ValidateScript({ Test-Path $_ -PathType ùContainerù })]
+        $onboardingPackageLocation = [System.IO.Path]::GetDirectoryName($MyInvocation.MyCommand.Path)
     )
 
-Add-Type @'
-using System; 
-using System.Diagnostics; 
-using System.Diagnostics.Tracing; 
-namespace Sense 
-{ 
+    Add-Type @'
+using System;
+using System.Diagnostics;
+using System.Diagnostics.Tracing;
+namespace Sense
+{
 	[EventData(Name = "Onboard")]
 	public struct Onboard
 	{
 		public string Message { get; set; }
-	} 
-	public class Trace 
+	}
+	public class Trace
 	{
-		public static EventSourceOptions TelemetryCriticalOption = new EventSourceOptions(){Level = EventLevel.Informational, Keywords = (EventKeywords)0x0000800000000000, Tags = (EventTags)0x0200000}; 
+		public static EventSourceOptions TelemetryCriticalOption = new EventSourceOptions(){Level = EventLevel.Informational, Keywords = (EventKeywords)0x0000800000000000, Tags = (EventTags)0x0200000};
 		public void WriteMessage(string message)
 		{
 			es.Write("OnboardNonPersistentMachine", TelemetryCriticalOption, new Onboard {Message = message});
-		} 
-		private static readonly string[] telemetryTraits = { "ETW_GROUP", "{5ECB0BAC-B930-47F5-A8A4-E8253529EDB7}" }; 
+		}
+		private static readonly string[] telemetryTraits = { "ETW_GROUP", "{5ECB0BAC-B930-47F5-A8A4-E8253529EDB7}" };
 		private EventSource es = new EventSource("Microsoft.Windows.Sense.Client.VDI",EventSourceSettings.EtwSelfDescribingEventFormat,telemetryTraits);
 	}
 }
@@ -129,23 +144,23 @@ namespace Sense
         $sha1CryptoServiceProvider = New-Object System.Security.Cryptography.SHA1CryptoServiceProvider
         $hashedBytes = $sha1CryptoServiceProvider.ComputeHash($bytes)
         [System.Array]::Resize([ref]$hashedBytes, 16);
-        return New-Object System.Guid -ArgumentList @(,$hashedBytes)
+        return New-Object System.Guid -ArgumentList @(, $hashedBytes)
     }
 
-    function Get-ComputerName 
+    function Get-ComputerName
     {
         return [system.environment]::MachineName
     }
 
     function Get-OrgIdFromOnboardingScript($onboardingScript)
     {
-        return select-string -path $onboardingScript -pattern "orgId\\\\\\`":\\\\\\`"([^\\]+)" | %{ $_.Matches[0].Groups[1].Value }
+        return Select-String -Path $onboardingScript -Pattern "orgId\\\\\\`":\\\\\\`"([^\\]+)" | ForEach-Object { $_.Matches[0].Groups[1].Value }
     }
 
-    function Test-Administrator  
-    {  
+    function Test-Administrator
+    {
         $user = [Security.Principal.WindowsIdentity]::GetCurrent();
-        return (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
+        return (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
     }
 
     if ((Test-Administrator) -eq $false)
@@ -158,7 +173,7 @@ namespace Sense
     Write-Host "Locating onboarding script under:" $onboardingPackageLocation
 
     $onboardingScript = [System.IO.Path]::Combine($onboardingPackageLocation, "WindowsDefenderATPOnboardingScript.cmd");
-    if(![System.IO.File]::Exists($onboardingScript))
+    if (![System.IO.File]::Exists($onboardingScript))
     {
         Write-Host -ForegroundColor Red "Onboarding script not found:" $onboardingScript
         Trace("Onboarding script not found")
@@ -213,10 +228,11 @@ namespace Sense
     Trace("SUCCESS")
 }
 
-function Main() {
+function Main()
+{
 
     $EnableStatus = @(
-        "[-][TaskScheduler] Disabling", 
+        "[-][TaskScheduler] Disabling",
         "[+][TaskScheduler] Enabling"
     )
     $Commands = @(
@@ -224,18 +240,19 @@ function Main() {
         { Get-ScheduledTask -TaskName "$ScheduledTask".Split("\")[-1] | Where-Object State -Like "Disabled" | Enable-ScheduledTask }
     )
 
-    if (($Revert)) {
+    if (($Revert))
+    {
         Write-Warning "[<][TaskScheduler] Reverting: $Revert."
 
         $EnableStatus = @(
-            "[<][TaskScheduler] Re-Enabling", 
+            "[<][TaskScheduler] Re-Enabling",
             "[<][TaskScheduler] Re-Disabling"
         )
         $Commands = @(
-            { Get-ScheduledTask -TaskName "$ScheduledTask".Split("\")[-1] | Where-Object State -Like "Disabled" | Enable-ScheduledTask }, 
+            { Get-ScheduledTask -TaskName "$ScheduledTask".Split("\")[-1] | Where-Object State -Like "Disabled" | Enable-ScheduledTask },
             { Get-ScheduledTask -TaskName "$ScheduledTask".Split("\")[-1] | Where-Object State -Like "R*" | Disable-ScheduledTask } # R* = Ready/Running Tasks
         )
-  
+
     }
 
     Optimize-ScheduledTasks # Disable Scheduled Tasks that causes slowdowns
@@ -245,7 +262,7 @@ function Main() {
 
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 
-$HypervisorManufacturer = (Get-WmiObject ñquery ëselect * from Win32_ComputerSystemí).Manufacturer
+$HypervisorManufacturer = (Get-WmiObject -Query 'select * from Win32_ComputerSystem').Manufacturer
 $SendBufferSize = (Get-NetAdapterAdvancedProperty -DisplayName "Send Buffer Size").DisplayValue
 $Personality = "$env:SystemDrive\Personality.ini"
 $DiskMode = Detect-CitrixDiskMode
@@ -254,7 +271,7 @@ $DiskMode = Detect-CitrixDiskMode
 
 If (($HypervisorManufacturer -like "Microsoft Corporation") -and ($SendBufferSize -ne "4MB"))
 {
-   # https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/main/Windows_VDOT.ps1
+    # https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/blob/main/Windows_VDOT.ps1
     Write-Host "Configuring Network Adapter Buffer Size" -ForegroundColor Cyan
     Set-NetAdapterAdvancedProperty -DisplayName "Send Buffer Size" -DisplayValue 4MB -NoRestart
 }
@@ -272,5 +289,3 @@ Main
 # Launch process if image is in read-only mode
 # See https://github.com/JamesKindon/Citrix/blob/master/PreFetchStartApps.ps1
 # and https://github.com/kaspersmjohansen/AutoLogon-Script/blob/main/Set-AutoLogon.ps1
-
-
