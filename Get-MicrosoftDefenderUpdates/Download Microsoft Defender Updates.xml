@@ -64,7 +64,7 @@
 	<Actions Context="Author">
 		<Exec>
 			<Command>powershell.exe</Command>
-			<Arguments>-Ex ByPass -File C:\Scripts\Download-MicrosoftDefenderUpdates.ps1</Arguments>
+			<Arguments>-Ex ByPass -File C:\Scripts\Get-MicrosoftDefenderUpdates\Get-MicrosoftDefenderUpdates.ps1</Arguments>
 		</Exec>
 	</Actions>
 </Task>
