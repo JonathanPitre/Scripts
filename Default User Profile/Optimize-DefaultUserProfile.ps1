@@ -151,9 +151,9 @@ Execute-Process -Path "$envWinDir\System32\reg.exe" -Parameters "LOAD HKLM\Defau
 # Set display language
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "PreferredUILanguages" -Type MultiString -Value "fr-CA"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "PreviousPreferredUILanguages" -Type MultiString -Value "en-US"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop\MuiCached" -Name "MachinePreferredUILanguages" -Type MultiString -Value "en-US"
-Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Recurse -ContinueOnError $True
-Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile System Backup" -Recurse -ContinueOnError $True
+#Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop\MuiCached" -Name "MachinePreferredUILanguages" -Type MultiString -Value "en-US"
+#Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Recurse -ContinueOnError $True
+#Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile System Backup" -Recurse -ContinueOnError $True
 
 # Set display locale
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "Locale" -Type String -Value "00000C0C"
@@ -166,13 +166,13 @@ Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "s
 #Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sCountry" -Type String -Value "Canada"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sLanguage" -Type String -Value "FRC"
 
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "InputMethodOverride" -Type String -Value "0C0C:00001009"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "Languages" -Type MultiString -Value "fr-CA"
+Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "InputMethodOverride"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "Languages" -Type MultiString -Value "fr-CA en-US"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowAutoCorrection" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowTextPrediction" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowCasing" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowShiftLock" -Type DWord -Value "1"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowTextPrediction" -Type DWord -Value "1"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "0C0C:00001009" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "0C0C:00000C0C" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "CachedLanguageName" -Type String -Value "@Winlangdb.dll,-1160"
 
 # Adds an extra language when set to another country then US
