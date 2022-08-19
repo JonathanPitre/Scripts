@@ -444,12 +444,17 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\
 
 # Limit Office 365 telemetry - https://www.ghacks.net/2020/11/15/limit-office-365-telemetry-with-this-undocumented-setting
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\Common\ClientTelemetry" -Name "DisableTelemetry" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\Common\ClientTelemetry" -Name "SendTelemetry" -Type DWord -Value "0"
 
 # Disable "Your Privacy Option" message - http://www.edugeek.net/forums/office-software/218099-office-2019-your-privacy-option-popup.html
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common" -Name "PrivacyNoticeShown" -Type DWord -Value "2"
 
 # Disable "Your Privacy Matters" message - https://www.reddit.com/r/sysadmin/comments/q6sesu/office_2021_your_privacy_matters_disable_via_gpo
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Privacy\SettingsStore\Anonymous" -Name "OptionalConnectedExperiencesNoticeVersion" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Privacy\SettingsStore\Anonymous" -Name "FRESettingsMigrated" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Privacy\SettingsStore\Anonymous" -Name "RequiredDiagnosticDataNoticeVersion" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Privacy\SettingsStore\Anonymous" -Name "OptionalDiagnosticDataConsentVersion" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Privacy\SettingsStore\Anonymous" -Name "ConnectedExperiencesNoticeVersion" -Type DWord -Value "1"
 
 # Disable "Show the option for Office Insider" - https://docs.microsoft.com/en-us/azure/virtual-desktop/install-office-on-wvd-master-image
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common" -Name "InsiderSlabBehavior" -Type DWord -Value "2"
