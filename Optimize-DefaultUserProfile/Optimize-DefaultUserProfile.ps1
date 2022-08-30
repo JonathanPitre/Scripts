@@ -167,12 +167,14 @@ Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "s
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sLanguage" -Type String -Value "FRC"
 
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "InputMethodOverride"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "Languages" -Type MultiString -Value "fr-CA en-US"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "HttpAcceptLanguageOptOut" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "Languages" -Type MultiString -Value "fr-CA"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowAutoCorrection" -Type DWord -Value "1"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowTextPrediction" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowCasing" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowShiftLock" -Type DWord -Value "1"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "0C0C:00000C0C" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowTextPrediction" -Type DWord -Value "1"
+Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\en-US"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "0C0C:00001009" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "CachedLanguageName" -Type String -Value "@Winlangdb.dll,-1160"
 
 # Adds an extra language when set to another country then US
@@ -181,20 +183,13 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\Geo" -Name "Name" -Type String -Value "US"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\Geo" -Name "Nation" -Type String -Value "244"
 
-# Set Internet Explorer language
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\International" -Name "AcceptLanguage" -Value "fr-CA,en;q=0.5" -Type String
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\International" -Name "AcceptLanguage" -Type String -Value "fr-CA,en-CA;q=0.5"
-
-# Sets primary editing language to fr-CA - https://docs.microsoft.com/en-us/deployoffice/office2016/customize-language-setup-and-settings-for-office-2016
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\languageresources" -Name "preferrededitinglanguage" -Type String -Value "fr-CA"
-
 # Set Keyboards
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Keyboard Layout\Preload" -Recurse
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Keyboard Layout\Substitutes" -Recurse
 
 # Set French (Canada) - Canadian French keyboard layout
 Set-RegistryKey -Key "HKLM:\DefaultUser\Keyboard Layout\Preload" -Name "1" -Type String -Value "00000c0c"
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Keyboard Layout\Substitutes" -Name "00000c0c" -Type String -Value "00001009"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Keyboard Layout\Substitutes" -Name "00000c0c" -Type String -Value "00001009"
 
 # Set English (Canada) - US keyboard layout
 #Set-RegistryKey -Key "HKLM:\DefaultUser\Keyboard Layout\Preload" -Name "2" -Type String -Value "00001009"
@@ -207,6 +202,13 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Keyboard Layout\Toggle" -Name "Layout Ho
 
 # Hide the language bar
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\CTF\LangBar" -Name "ShowStatus" -Type DWord -Value "3"
+
+# Set Internet Explorer language
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\International" -Name "AcceptLanguage" -Value "fr-CA,en;q=0.5" -Type String
+#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\International" -Name "AcceptLanguage" -Type String -Value "fr-CA,en-CA;q=0.5"
+
+# Sets primary editing language to fr-CA - https://docs.microsoft.com/en-us/deployoffice/office2016/customize-language-setup-and-settings-for-office-2016
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\languageresources" -Name "preferrededitinglanguage" -Type String -Value "fr-CA"
 
 
 ## Date and Time
