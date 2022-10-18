@@ -166,6 +166,28 @@ Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "s
 #Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sCountry" -Type String -Value "Canada"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sLanguage" -Type String -Value "FRC"
 
+# Set French (Canada) regional settings, remove if you need English (US) instead
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "s1159" -Type String -Value "" #AM
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "s2359" -Type String -Value ""  #PM
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sDate" -Type String -Value "-" #/
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sList" -Type String -Value ";" #.
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sLongDate" -Type String -Value "d MMMM yyyy"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sMonDecimalSep" -Type String -Value ","
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sMonThousandSep" -Type String -Value ""
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sShortDate" -Type String -Value "yyyy-MM-dd"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sThousand" -Type String -Value " "
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sTimeFormat" -Type String -Value "HH:mm:ss"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sShortTime" -Type String -Value "HH:mm"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sYearMonth" -Type String -Value "MMMM, yyyy"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iCurrency" -Type String -Value "3"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iDate" -Type String -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iFirstDayOfWeek" -Type String -Value "6"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iMeasure" -Type String -Value "0"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iNegCurr" -Type String -Value "15"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iTime" -Type String -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iTLZero" -Type String -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\🌎🌏🌍" -Name "Calendar" -Type String -Value "Gregorian"
+
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "InputMethodOverride"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "HttpAcceptLanguageOptOut" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "Languages" -Type MultiString -Value "fr-CA"
@@ -173,9 +195,12 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowCasing" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowShiftLock" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "ShowTextPrediction" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "UserLocaleFromLanguageProfileOptOut" -Type DWord -Value "1"
+
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\en-US"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "0C0C:00001009" -Type DWord -Value "1"
+
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "CachedLanguageName" -Type String -Value "@Winlangdb.dll,-1160"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile\fr-CA" -Name "0C0C:00001009" -Type DWord -Value "1"
 
 # Adds an extra language when set to another country then US
 #Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\Geo" -Name "Name" -Type String -Value "CA"
@@ -204,8 +229,8 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Keyboard Layout\Toggle" -Name "Layout Ho
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\CTF\LangBar" -Name "ShowStatus" -Type DWord -Value "3"
 
 # Set Internet Explorer language
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\International" -Name "AcceptLanguage" -Value "fr-CA,en;q=0.5" -Type String
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\International" -Name "AcceptLanguage" -Type String -Value "fr-CA,en-CA;q=0.5"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\International" -Name "AcceptLanguage" -Value "fr-CA, en; q=0.5" -Type String
+#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\International" -Name "AcceptLanguage" -Type String -Value "fr-CA, en-CA; q=0.5"
 
 # Sets primary editing language to fr-CA - https://docs.microsoft.com/en-us/deployoffice/office2016/customize-language-setup-and-settings-for-office-2016
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\languageresources" -Name "preferrededitinglanguage" -Type String -Value "fr-CA"
@@ -235,24 +260,30 @@ ForEach ($regItems in $regKeys)
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Sound" -Name "Beep" -Type String -Value "no"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Sound" -Name "ExtendedSounds" -Type String -Value "no"
 
-# Force asynchronous processing of user GPOs at first logon - https://james-rankin.com/articles/make-citrix-logons-use-asynchronous-user-group-policy-processing-mode
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Group Policy\State" -Name "NextRefreshReason" -Type DWord -Value "0"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Group Policy\State" -Name "NextRefreshMode" -Type DWord -Value "2"
+# Force asynchronous processing of user GPOs at first logon - No longuer works as of 03/03/2022
+#https://james-rankin.com/articles/make-citrix-logons-use-asynchronous-user-group-policy-processing-mode
+#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Group Policy\State" -Name "NextRefreshReason" -Type DWord -Value "0"
+#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Group Policy\State" -Name "NextRefreshMode" -Type DWord -Value "2"
 
 # Always show alll icons and notifications on the taskbar -   https://winaero.com/blog/always-show-tray-icons-windows-10
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "EnableAutoTray" -Type DWord -Value "0"
 
 # Disable the label "Shortcut To" on shortcuts - https://www.howtogeek.com/howto/windows-vista/remove-shortcut-text-from-new-shortcuts-in-vista
-$regValueHex = "00,00,00,00"
-$regValueHexified = $regValueHex.Split(",") | ForEach-Object { "0x$_" }
+$regValueHex = "00, 00, 00, 00"
+$regValueHexified = $regValueHex.Split(", ") | ForEach-Object { "0x$_" }
 $regValueBinary = ([byte[]]$regValueHexified)
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "link" -Type Binary -Value $regValueBinary
 
 # https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-vdi-recommendations-2004
-$regValueHex = "24,00,00,00,3C,28,00,00,00,00,00,00,00,00,00,00"
-$regValueHexified = $regValueHex.Split(",") | ForEach-Object { "0x$_" }
+$regValueHex = "24, 00, 00, 00, 3C, 28, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00"
+$regValueHexified = $regValueHex.Split(", ") | ForEach-Object { "0x$_" }
 $regValueBinary = ([byte[]]$regValueHexified)
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "ShellState" -Type Binary -Value $regValueBinary
+
+# Fix an issue with FSLogix "SHSetKnownFolderPath failed with access denied"
+# https://stefanos.cloud/blog/kb/how-to-resolve-the-fslogix-inetcache-access-denied-issue
+# https://citrixadvice.blogspot.com/2021/09/fslogix-default-exclusions-explanation.html
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "DisablePersonalDirChange" -Type DWord -Value "0"
 
 # Enable Thumbnail Previews
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "DisableThumbnails"
@@ -394,9 +425,9 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "Interactiv
 # https://superuser.com/questions/839993/find-registry-key-for-windows-8-per-application-input-method-setting
 # https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-vdi-recommendations-2004
 # https://www.deploymentresearch.com/fixing-borderless-windows-in-windows-server-2019-and-windows-server-2022
-$regValueHex = "90,32,07,80,10,00,00,00"
+$regValueHex = "90, 32, 07, 80, 10, 00, 00, 00"
 # old recommendation 90,24,03,80,10,00,00,00
-$regValueHexified = $regValueHex.Split(",") | ForEach-Object { "0x$_" }
+$regValueHexified = $regValueHex.Split(", ") | ForEach-Object { "0x$_" }
 $regValueBinary = ([byte[]]$regValueHexified)
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "UserPreferencesMask" -Type Binary -Value $regValueBinary
 
@@ -416,7 +447,10 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "DragFullWi
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "FontSmoothing" -Type String -Value "2"
 
 # Disable smooth scrolling
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "SmoothScroll" -Type DWord-Value "0"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "SmoothScroll" -Type DWord -Value "0"
+
+# Disable password protect the screen saver - https://support.citrix.com/article/CTX207524
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaverIsSecure" -Type DWord -Value "0"
 
 # Visual effects - Disable "Animate windows when minimizing and maximizing" - https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-vdi-recommendations-2004
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop\WindowMetrics" -Name "MinAnimate" -Type String -Value "0"
@@ -462,10 +496,23 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Pr
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common" -Name "InsiderSlabBehavior" -Type DWord -Value "2"
 # Set Outlook's Cached Exchange Mode behavior - https://docs.microsoft.com/en-us/azure/virtual-desktop/install-office-on-wvd-master-image
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "Enable" -Type DWord -Value "1"
-# 1 month sync
+
+# Disable download of shared non-mail folders
+# https://support.microsoft.com/en-us/topic/performance-and-synchronization-problems-when-you-work-with-folders-in-a-secondary-mailbox-in-outlook-d45e5881-3d32-ca00-6338-5962cfc41ea8
+# https://james-rankin.com/articles/quickpost-adding-shared-mailboxes-in-online-non-cached-mode
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "DownloadSharedFolders" -Type DWord -Value "0"
+# Disable shared mail folder caching
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CacheOthersMail" -Type DWord -Value "0"
+
+# Set Cached Exchange Mode sync setting for profiles to 1 month
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "SyncWindowSetting" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CalendarSyncWindowSetting" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CalendarSyncWindowSettingMonths" -Type DWord -Value "1"
+
+# Hide Update Notifications - https://docs.microsoft.com/en-us/azure/virtual-desktop/install-office-on-wvd-master-image
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common\OfficUupdate" -Name "HideUpdateNotifications" -Type DWord -Value "1"
+# Hide option to enable or disable updates - https://docs.microsoft.com/en-us/azure/virtual-desktop/install-office-on-wvd-master-image
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common\OfficUupdate" -Name "HideEnableDisableupdates" -Type DWord -Value "1"
 
 # Disable teaching callouts - https://docs.microsoft.com/en-us/answers/questions/186354/outlook-remove-blue-tip-boxes.html
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "AutocreateTeachingCallout_MoreLocations" -Type DWord -Value "2"
@@ -500,7 +547,7 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Visio\App
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\FileIO" -Name "DisableNotificationIcon" -Type String -Value "1"
 
 # Disable Micrososoft Office hardware graphics acceleration - http://shawnbass.com/psa-software-gpu-can-reduce-your-virtual-desktop-scalability
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Graphics" -Name "DisableHardwareAcceleration" -Type String -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Graphics" -Name "DisableHardwareAcceleration" -Type String -Value "1"
 
 # Disable Micrososoft OneDrive Notifications - https://docs.microsoft.com/en-us/archive/blogs/platforms_lync_cloud/disabling-windows-10-action-center-notifications
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Microsoft.SkyDrive.Desktop" -Name "Enabled" -Type DWord -Value "0"
@@ -512,7 +559,12 @@ $regOneDrive = Get-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Window
 # Remove Microsoft OneDrive setups from running on new user profile
 # https://byteben.com/bb/installing-the-onedrive-sync-client-in-per-machine-mode-during-your-task-sequence-for-a-lightening-fast-first-logon-experience
 If ($regOneDriveSetup) { Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Name "OneDriveSetup" }
-If ($regOneDrive) { Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Name "OneDrive" }
+
+# Prevent automatic launch of OneDrive on Windows Server since the ADD Plugin must be repaired first for the OneDrive SSO to work
+If (($envOSName -like "*Windows Server") -and ($regOneDrive -eq $True))
+{
+    Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Name "OneDrive"
+}
 
 # Enable Storage Sense - https://james-rankin.com/all-posts/quickpost-setting-storage-sense-cloud-content-dehydration-on-server-2019
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" -Name "01" -Type DWord -Value "1"
