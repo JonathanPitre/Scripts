@@ -181,6 +181,7 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sSho
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sYearMonth" -Type String -Value "MMMM, yyyy"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iCurrency" -Type String -Value "3"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iDate" -Type String -Value "2"
+# Set first day of week
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iFirstDayOfWeek" -Type String -Value "6"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iMeasure" -Type String -Value "0"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iNegCurr" -Type String -Value "15"
@@ -234,20 +235,6 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\Int
 
 # Sets primary editing language to fr-CA - https://docs.microsoft.com/en-us/deployoffice/office2016/customize-language-setup-and-settings-for-office-2016
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\languageresources" -Name "preferrededitinglanguage" -Type String -Value "fr-CA"
-
-
-## Date and Time
-# Set date format
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sLongDate" -Type String -Value "dddd dd MMMM yyyy"
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sShortDate" -Type String -Value "dd-MM-yyyy"
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sYearMonth" -Type String -Value "MMMM, yyyy"
-
-# Set first day of week
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iFirstDayOfWeek" -Type String -Value "0"
-
-# Set time format
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sTimeFormat" -Type String -Value "HH:mm:ss"
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sShortTime" -Type String -Value "HH:mm"
 
 # Set Sounds scheme to none
 $regKeys = Get-ChildItem -Path "HKLM:\DefaultUser\AppEvents\Schemes\Apps\.Default" -Recurse | Select-Object -ExpandProperty Name | ForEach-Object { $_ -replace "HKEY_LOCAL_MACHINE" , 'HKLM:' }
