@@ -170,10 +170,11 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sLan
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "s1159" -Type String -Value "" #AM
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "s2359" -Type String -Value ""  #PM
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sDate" -Type String -Value "-" #/
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sDecimal" -Type String -Value ","
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sList" -Type String -Value ";" #.
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sLongDate" -Type String -Value "d MMMM yyyy"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sMonDecimalSep" -Type String -Value ","
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sMonThousandSep" -Type String -Value ""
+Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sMonThousandSep" -Type String -Value " "
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sShortDate" -Type String -Value "yyyy-MM-dd"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sThousand" -Type String -Value " "
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "sTimeFormat" -Type String -Value "HH:mm:ss"
@@ -187,7 +188,7 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iMea
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iNegCurr" -Type String -Value "15"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iTime" -Type String -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International" -Name "iTLZero" -Type String -Value "1"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\🌎🌏🌍" -Name "Calendar" -Type String -Value "Gregorian"
+#Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\🌎🌏🌍" -Name "Calendar" -Type String -Value "Gregorian"
 
 Remove-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "InputMethodOverride"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\International\User Profile" -Name "HttpAcceptLanguageOptOut" -Type DWord -Value "1"
