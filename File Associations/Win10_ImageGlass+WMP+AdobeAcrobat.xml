@@ -4,15 +4,11 @@
   <Association Identifier=".3gp" ProgId="WMP11.AssocFile.3GP" ApplicationName="Windows Media Player" />
   <Association Identifier=".3gp2" ProgId="WMP11.AssocFile.3G2" ApplicationName="Windows Media Player" />
   <Association Identifier=".3gpp" ProgId="WMP11.AssocFile.3GP" ApplicationName="Windows Media Player" />
-  <Association Identifier=".MP2" ProgId="WMP11.AssocFile.MP3" ApplicationName="Windows Media Player" />
-  <Association Identifier=".MPE" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
-  <Association Identifier=".TS" ProgId="WMP11.AssocFile.TTS" ApplicationName="Windows Media Player" />
-  <Association Identifier=".TTS" ProgId="WMP11.AssocFile.TTS" ApplicationName="Windows Media Player" />
-  <Association Identifier=".WPL" ProgId="WMP11.AssocFile.WPL" ApplicationName="Windows Media Player" />
   <Association Identifier=".aac" ProgId="WMP11.AssocFile.ADTS" ApplicationName="Windows Media Player" />
-  <Association Identifier=".acrobatsecuritysettings" ProgId="AcroExch.acrobatsecuritysettings" ApplicationName="Adobe Acrobat Reader DC" />
+  <Association Identifier=".acrobatsecuritysettings" ProgId="Acrobat.acrobatsecuritysettings" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".adt" ProgId="WMP11.AssocFile.ADTS" ApplicationName="Windows Media Player" />
   <Association Identifier=".adts" ProgId="WMP11.AssocFile.ADTS" ApplicationName="Windows Media Player" />
+  <Association Identifier=".api" ProgId="Acrobat.Plugin" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".ari" ProgId="ImageGlass.AssocFile.ARI" ApplicationName="ImageGlass" />
   <Association Identifier=".arw" ProgId="ImageGlass.AssocFile.ARW" ApplicationName="ImageGlass" />
   <Association Identifier=".avi" ProgId="WMP11.AssocFile.AVI" ApplicationName="Windows Media Player" />
@@ -67,11 +63,12 @@
   <Association Identifier=".mod" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
   <Association Identifier=".mos" ProgId="ImageGlass.AssocFile.MOS" ApplicationName="ImageGlass" />
   <Association Identifier=".mov" ProgId="WMP11.AssocFile.MOV" ApplicationName="Windows Media Player" />
+  <Association Identifier=".mp2" ProgId="WMP11.AssocFile.MP3" ApplicationName="Windows Media Player" />
   <Association Identifier=".mp3" ProgId="WMP11.AssocFile.MP3" ApplicationName="Windows Media Player" />
-  <Association Identifier=".mp4" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
   <Association Identifier=".mp4" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
   <Association Identifier=".mp4v" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
   <Association Identifier=".mpa" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
+  <Association Identifier=".mpe" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
   <Association Identifier=".mpeg" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
   <Association Identifier=".mpg" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
   <Association Identifier=".mpv2" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
@@ -79,18 +76,16 @@
   <Association Identifier=".mts" ProgId="WMP11.AssocFile.M2TS" ApplicationName="Windows Media Player" />
   <Association Identifier=".nef" ProgId="ImageGlass.AssocFile.NEF" ApplicationName="ImageGlass" />
   <Association Identifier=".nrw" ProgId="ImageGlass.AssocFile.NRW" ApplicationName="ImageGlass" />
-  <Association Identifier=".obj" ProgId="AppXmgw6pxxs62rbgfp9petmdyb4fx7rnd4k" ApplicationName="Mixed Reality Viewer" />
   <Association Identifier=".obm" ProgId="ImageGlass.AssocFile.OBM" />
   <Association Identifier=".orf" ProgId="ImageGlass.AssocFile.ORF" ApplicationName="ImageGlass" />
   <Association Identifier=".oxps" ProgId="Windows.XPSReachViewer" ApplicationName="XPS Viewer" />
   <Association Identifier=".pbm" ProgId="ImageGlass.AssocFile.PBM" ApplicationName="ImageGlass" />
   <Association Identifier=".pcx" ProgId="ImageGlass.AssocFile.PCX" ApplicationName="ImageGlass" />
-  <Association Identifier=".pdf" ProgId="AcroExch.Document.DC" ApplicationName="Adobe Acrobat Reader DC" />
-  <Association Identifier=".pdfxml" ProgId="AcroExch.pdfxml" ApplicationName="Adobe Acrobat Reader DC" />
-  <Association Identifier=".pdx" ProgId="PDXFileType" ApplicationName="Adobe Acrobat Reader DC" />
+  <Association Identifier=".pdf" ProgId="Acrobat.Document.DC" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".pdfxml" ProgId="Acrobat.pdfxml" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".pdx" ProgId="PDXFileType" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".pef" ProgId="ImageGlass.AssocFile.PEF" ApplicationName="ImageGlass" />
   <Association Identifier=".pgm" ProgId="ImageGlass.AssocFile.PGM" ApplicationName="ImageGlass" />
-  <Association Identifier=".ply" ProgId="AppXmgw6pxxs62rbgfp9petmdyb4fx7rnd4k" ApplicationName="Mixed Reality Viewer" />
   <Association Identifier=".png" ProgId="ImageGlass.AssocFile.PNG" ApplicationName="ImageGlass" />
   <Association Identifier=".ppm" ProgId="ImageGlass.AssocFile.PPM" ApplicationName="ImageGlass" />
   <Association Identifier=".ps1" ProgId="Microsoft.PowerShellScript.1" ApplicationName="Notepad" />
@@ -107,14 +102,17 @@
   <Association Identifier=".rwl" ProgId="ImageGlass.AssocFile.RWL" ApplicationName="ImageGlass" />
   <Association Identifier=".rwz" ProgId="ImageGlass.AssocFile.RWZ" ApplicationName="ImageGlass" />
   <Association Identifier=".scp" ProgId="txtfile" ApplicationName="Notepad" />
+  <Association Identifier=".secstore" ProgId="Acrobat.SecStore" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".sequ" ProgId="Acrobat.Sequence" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".sr2" ProgId="ImageGlass.AssocFile.SR2" ApplicationName="ImageGlass" />
   <Association Identifier=".srf" ProgId="ImageGlass.AssocFile.SRF" ApplicationName="ImageGlass" />
   <Association Identifier=".srw" ProgId="ImageGlass.AssocFile.SRW" ApplicationName="ImageGlass" />
-  <Association Identifier=".stl" ProgId="AppXvhc4p7vz4b485xfp46hhk3fq3grkdgjg" ApplicationName="3D Builder" />
   <Association Identifier=".svg" ProgId="ImageGlass.AssocFile.SVG" ApplicationName="ImageGlass" />
   <Association Identifier=".tga" ProgId="ImageGlass.AssocFile.TGA" ApplicationName="ImageGlass"/>
   <Association Identifier=".tif" ProgId="ImageGlass.AssocFile.TIF" ApplicationName="ImageGlass" />
   <Association Identifier=".tiff" ProgId="ImageGlass.AssocFile.TIFF" ApplicationName="ImageGlass" />
+  <Association Identifier=".ts" ProgId="WMP11.AssocFile.TTS" ApplicationName="Windows Media Player" />
+  <Association Identifier=".tts" ProgId="WMP11.AssocFile.TTS" ApplicationName="Windows Media Player" />
   <Association Identifier=".txt" ProgId="txtfile" ApplicationName="Notepad" />
   <Association Identifier=".url" ProgId="IE.AssocFile.URL" ApplicationName="Internet Browser" />
   <Association Identifier=".wav" ProgId="WMP11.AssocFile.WAV" ApplicationName="Windows Media Player" />
@@ -125,36 +123,32 @@
   <Association Identifier=".wma" ProgId="WMP11.AssocFile.WMA" ApplicationName="Windows Media Player" />
   <Association Identifier=".wmf" ProgId="ImageGlass.AssocFile.WMF" ApplicationName="ImageGlass"/>
   <Association Identifier=".wmv" ProgId="WMP11.AssocFile.WMV" ApplicationName="Windows Media Player" />
-  <Association Identifier=".wmv" ProgId="WMP11.AssocFile.WMV" ApplicationName="Windows Media Player" />
   <Association Identifier=".wpg" ProgId="ImageGlass.AssocFile.WPG" ApplicationName="ImageGlass" />
+  <Association Identifier=".wpl" ProgId="WMP11.AssocFile.WPL" ApplicationName="Windows Media Player" />
   <Association Identifier=".wsb" ProgId="Windows.Sandbox" ApplicationName="Windows Sandbox" />
   <Association Identifier=".wtx" ProgId="txtfile" ApplicationName="Notepad" />
   <Association Identifier=".x3f" ProgId="ImageGlass.AssocFile.X3F" ApplicationName="ImageGlass" />
   <Association Identifier=".xbm" ProgId="ImageGlass.AssocFile.XBM" ApplicationName="ImageGlass" />
-  <Association Identifier=".xdp" ProgId="AcroExch.XDPDoc" ApplicationName="Adobe Acrobat Reader DC" />
-  <Association Identifier=".xfdf" ProgId="AcroExch.XFDFDoc" ApplicationName="Adobe Acrobat Reader DC" />
+  <Association Identifier=".xdp" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".xfdf" ProgId="Acrobat.XFDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".xml" ProgId="Applications\Notepad.exe" ApplicationName="Notepad" />
   <Association Identifier=".xpm" ProgId="ImageGlass.AssocFile.XPM" ApplicationName="ImageGlass" />
   <Association Identifier=".xps" ProgId="Windows.XPSReachViewer" ApplicationName="XPS Viewer" />
+  <Association Identifier="ACROBAT" ProgId="acrobat" ApplicationName="Adobe Acrobat" />
   <Association Identifier="CALLTO" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
-  <Association Identifier="IM" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
-  <Association Identifier="MMS" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
-  <Association Identifier="SIP" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
-  <Association Identifier="SIPS" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
-  <Association Identifier="acrobat" ProgId="acrobat" ApplicationName="Adobe Acrobat Reader DC" />
-  <Association Identifier="bingmaps" ProgId="AppXp9gkwccvk6fa6yyfq3tmsk8ws2nprk1p" ApplicationName="Maps" />
+  <Association Identifier="FTP" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier="http" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier="https" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="IM" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
   <Association Identifier="mailto" ProgId="Outlook.URL.mailto.15" ApplicationName="Outlook" />
-  <Association Identifier="microsoft-edge" ProgId="AppX7rm9drdg8sk7vqndwj3sdjw11x96jc0y" NewBrowserProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" ApplyOnUpgrade="true" />
-  <Association Identifier="microsoft-edge-holographic" ProgId="AppX3xxs313wwkfjhythsb8q46xdsq8d2cvv" NewBrowserProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" ApplyOnUpgrade="true" />
-  <Association Identifier="ms-xbl-3d8b930f" ProgId="AppXdn5b0j699ka5fqvrr3pgjad0evqarm6d" NewBrowserProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" ApplyOnUpgrade="true" />
+  <Association Identifier="microsoft-edge-holographic" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="microsoft-edge" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="MMS" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="ms-xbl-3d8b930f" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier="msteams" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
-  <Association Identifier="mswindowsmusic" ProgId="AppXtggqqtcfspt6ks3fjzyfppwc05yxwtwy" ApplicationName="Windows Media Player" ApplyOnUpgrade="true" />
-  <Association Identifier="mswindowsvideo" ProgId="AppX6w6n4f8xch1s3vzwf3af6bfe88qhxbza" ApplicationName="Windows Media Player" ApplyOnUpgrade="true" />
+  <Association Identifier="read" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier="SIP" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
   <Association Identifier="SIPS" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
-  <Association Identifier="read" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier="tel" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
   <Association Identifier="WEBCAL" ProgId="Outlook.URL.webcal.15" ApplicationName="Outlook" />
 </DefaultAssociations>
