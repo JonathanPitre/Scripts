@@ -35,6 +35,7 @@
   <Association Identifier=".exr" ProgId="ImageGlass.AssocFile.EXR" ApplicationName="ImageGlass" />
   <Association Identifier=".fdf" ProgId="AcroExch.FDFDoc" ApplicationName="Adobe Acrobat Reader DC" />
   <Association Identifier=".fff" ProgId="ImageGlass.AssocFile.FFF" ApplicationName="ImageGlass" />
+  <Association Identifier=".fits" ProgId="ImageGlass.AssocFile.FITS" ApplicationName="ImageGlass" />
   <Association Identifier=".flac" ProgId="WMP11.AssocFile.FLAC" ApplicationName="Windows Media Player" />
   <Association Identifier=".gif" ProgId="ImageGlass.AssocFile.GIF" ApplicationName="ImageGlass" />
   <Association Identifier=".gpr" ProgId="ImageGlass.AssocFile.GPR" ApplicationName="ImageGlass" />
@@ -63,6 +64,7 @@
   <Association Identifier=".m4v" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
   <Association Identifier=".mdc" ProgId="ImageGlass.AssocFile.MDC" ApplicationName="ImageGlass" />
   <Association Identifier=".mef" ProgId="ImageGlass.AssocFile.MEF" ApplicationName="ImageGlass" />
+  <Association Identifier=".mjpeg" ProgId="ImageGlass.AssocFile.MJPEG" ApplicationName="ImageGlass" />
   <Association Identifier=".mkv" ProgId="WMP11.AssocFile.MKV" ApplicationName="Windows Media Player" />
   <Association Identifier=".mod" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
   <Association Identifier=".mos" ProgId="ImageGlass.AssocFile.MOS" ApplicationName="ImageGlass" />
@@ -118,6 +120,7 @@
   <Association Identifier=".TTS" ProgId="WMP11.AssocFile.TTS" ApplicationName="Windows Media Player" />
   <Association Identifier=".txt" ProgId="txtfile" ApplicationName="Notepad" />
   <Association Identifier=".url" ProgId="IE.AssocFile.URL" ApplicationName="Internet Browser" />
+  <Association Identifier=".viff" ProgId="ImageGlass.AssocFile.VIFF" ApplicationName="ImageGlass" />
   <Association Identifier=".wav" ProgId="WMP11.AssocFile.WAV" ApplicationName="Windows Media Player" />
   <Association Identifier=".wdp" ProgId="ImageGlass.AssocFile.WDP" ApplicationName="ImageGlass" />
   <Association Identifier=".webp" ProgId="ImageGlass.AssocFile.WEBP" ApplicationName="ImageGlass" />
@@ -137,6 +140,7 @@
   <Association Identifier=".xml" ProgId="Applications\Notepad.exe" ApplicationName="Notepad" />
   <Association Identifier=".xpm" ProgId="ImageGlass.AssocFile.XPM" ApplicationName="ImageGlass" />
   <Association Identifier=".xps" ProgId="Windows.XPSReachViewer" ApplicationName="XPS Viewer" />
+  <Association Identifier=".xv" ProgId="ImageGlass.AssocFile.XV" ApplicationName="ImageGlass" />
   <Association Identifier="acrobat" ProgId="acrobat" ApplicationName="Adobe Acrobat Reader DC" />
   <Association Identifier="CALLTO" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
   <Association Identifier="http" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
