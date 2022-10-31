@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DefaultAssociations>
+  <Association Identifier=".3fr" ProgId="ImageGlass.AssocFile.3FR" ApplicationName="ImageGlass" />
   <Association Identifier=".3g2" ProgId="WMP11.AssocFile.3G2" ApplicationName="Windows Media Player" />
   <Association Identifier=".3gp" ProgId="WMP11.AssocFile.3GP" ApplicationName="Windows Media Player" />
   <Association Identifier=".3gp2" ProgId="WMP11.AssocFile.3G2" ApplicationName="Windows Media Player" />
@@ -11,11 +12,13 @@
   <Association Identifier=".ari" ProgId="ImageGlass.AssocFile.ARI" ApplicationName="ImageGlass" />
   <Association Identifier=".arw" ProgId="ImageGlass.AssocFile.ARW" ApplicationName="ImageGlass" />
   <Association Identifier=".avi" ProgId="WMP11.AssocFile.AVI" ApplicationName="Windows Media Player" />
+  <Association Identifier=".avif" ProgId="ImageGlass.AssocFile.AVIF" ApplicationName="ImageGlass" />
   <Association Identifier=".b64" ProgId="ImageGlass.AssocFile.B64" ApplicationName="ImageGlass" />
   <Association Identifier=".bay" ProgId="ImageGlass.AssocFile.BAY" ApplicationName="ImageGlass" />
   <Association Identifier=".bmp" ProgId="ImageGlass.AssocFile.BMP" ApplicationName="ImageGlass" />
   <Association Identifier=".cap" ProgId="ImageGlass.AssocFile.CAP" ApplicationName="ImageGlass" />
   <Association Identifier=".cr2" ProgId="ImageGlass.AssocFile.CR2" ApplicationName="ImageGlass" />
+  <Association Identifier=".cr3" ProgId="ImageGlass.AssocFile.CR3" ApplicationName="ImageGlass" />
   <Association Identifier=".crw" ProgId="ImageGlass.AssocFile.CRW" ApplicationName="ImageGlass" />
   <Association Identifier=".cur" ProgId="ImageGlass.AssocFile.CUR" ApplicationName="ImageGlass" />
   <Association Identifier=".cut" ProgId="ImageGlass.AssocFile.CUT" ApplicationName="ImageGlass" />
@@ -37,6 +40,7 @@
   <Association Identifier=".gpr" ProgId="ImageGlass.AssocFile.GPR" ApplicationName="ImageGlass" />
   <Association Identifier=".hdr" ProgId="ImageGlass.AssocFile.HDR" ApplicationName="ImageGlass" />
   <Association Identifier=".heic" ProgId="ImageGlass.AssocFile.HEIC" ApplicationName="ImageGlass" />
+  <Association Identifier=".heic" ProgId="ImageGlass.AssocFile.HEIF" ApplicationName="ImageGlass" />
   <Association Identifier=".htm" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier=".html" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier=".ico" ProgId="ImageGlass.AssocFile.ICO" ApplicationName="ImageGlass" />
@@ -44,10 +48,11 @@
   <Association Identifier=".inf" ProgId="inffile" ApplicationName="Notepad" />
   <Association Identifier=".ini" ProgId="inifile" ApplicationName="Notepad" />
   <Association Identifier=".jfif" ProgId="ImageGlass.AssocFile.JFIF" ApplicationName="ImageGlass" />
+  <Association Identifier=".jp2" ProgId="ImageGlass.AssocFile.JP2" ApplicationName="ImageGlass" />
   <Association Identifier=".jpe" ProgId="ImageGlass.AssocFile.JPE" ApplicationName="ImageGlass" />
   <Association Identifier=".jpeg" ProgId="ImageGlass.AssocFile.JPEG" ApplicationName="ImageGlass" />
   <Association Identifier=".jpg" ProgId="ImageGlass.AssocFile.JPG" ApplicationName="ImageGlass" />
-  <Association Identifier=".jxr" ProgId="ImageGlass.AssocFile.JXR" ApplicationName="ImageGlass" />
+  <Association Identifier=".jxl" ProgId="ImageGlass.AssocFile.JXL" ApplicationName="ImageGlass" />
   <Association Identifier=".k25" ProgId="ImageGlass.AssocFile.K25" ApplicationName="ImageGlass" />
   <Association Identifier=".kdc" ProgId="ImageGlass.AssocFile.KDC" ApplicationName="ImageGlass" />
   <Association Identifier=".log" ProgId="txtfile" ApplicationName="Notepad" />
@@ -64,7 +69,6 @@
   <Association Identifier=".mov" ProgId="WMP11.AssocFile.MOV" ApplicationName="Windows Media Player" />
   <Association Identifier=".MP2" ProgId="WMP11.AssocFile.MP3" ApplicationName="Windows Media Player" />
   <Association Identifier=".mp3" ProgId="WMP11.AssocFile.MP3" ApplicationName="Windows Media Player" />
-  <Association Identifier=".mp4" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
   <Association Identifier=".mp4" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
   <Association Identifier=".mp4v" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
   <Association Identifier=".mpa" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
@@ -95,6 +99,7 @@
   <Association Identifier=".psm1" ProgId="Microsoft.PowerShellModule.1" ApplicationName="Notepad" />
   <Association Identifier=".ptx" ProgId="ImageGlass.AssocFile.PTX" ApplicationName="ImageGlass" />
   <Association Identifier=".pxn" ProgId="ImageGlass.AssocFile.PXN" ApplicationName="ImageGlass" />
+  <Association Identifier=".qoi" ProgId="ImageGlass.AssocFile.QOI" ApplicationName="ImageGlass" />
   <Association Identifier=".r3d" ProgId="ImageGlass.AssocFile.R3D" ApplicationName="ImageGlass" />
   <Association Identifier=".raf" ProgId="ImageGlass.AssocFile.RAF" ApplicationName="ImageGlass" />
   <Association Identifier=".raw" ProgId="ImageGlass.AssocFile.RAW" ApplicationName="ImageGlass" />
@@ -121,9 +126,8 @@
   <Association Identifier=".wma" ProgId="WMP11.AssocFile.WMA" ApplicationName="Windows Media Player" />
   <Association Identifier=".wmf" ProgId="ImageGlass.AssocFile.WMF" ApplicationName="ImageGlass"/>
   <Association Identifier=".wmv" ProgId="WMP11.AssocFile.WMV" ApplicationName="Windows Media Player" />
-  <Association Identifier=".wmv" ProgId="WMP11.AssocFile.WMV" ApplicationName="Windows Media Player" />
   <Association Identifier=".wpg" ProgId="ImageGlass.AssocFile.WPG" ApplicationName="ImageGlass" />
-  <Association Identifier=".WPL" ProgId="WMP11.AssocFile.WPL" ApplicationName="Windows Media Player" />
+  <Association Identifier=".wpl" ProgId="WMP11.AssocFile.WPL" ApplicationName="Windows Media Player" />
   <Association Identifier=".wsb" ProgId="Windows.Sandbox" ApplicationName="Windows Sandbox" />
   <Association Identifier=".wtx" ProgId="txtfile" ApplicationName="Notepad" />
   <Association Identifier=".x3f" ProgId="ImageGlass.AssocFile.X3F" ApplicationName="ImageGlass" />
