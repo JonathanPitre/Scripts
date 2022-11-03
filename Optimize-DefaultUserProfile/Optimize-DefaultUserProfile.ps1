@@ -127,7 +127,7 @@ Foreach ($Module in $Modules)
 $appProcesses = @("regedit", "reg")
 $appTeamsConfigURL = "https://raw.githubusercontent.com/JonathanPitre/Apps/master/Microsoft/Teams/desktop-config.json"
 $appTeamsConfig = Split-Path -Path $appTeamsConfigURL -Leaf
-$NewUserScript = "\\$envMachineADDomain\NETLOGON\VDI\NewUserProfile\Set-NewUserProfile.ps1" # Modify according to your environment
+$NewUserScript = "\\$envMachineADDomain\NETLOGON\Citrix\NewUserProfile\Set-NewUserProfile.ps1" # Modify according to your environment
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
@@ -497,10 +497,14 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CalendarSyncWindowSetting" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CalendarSyncWindowSettingMonths" -Type DWord -Value "1"
 
+# Turn off Coming Soon - https://support.microsoft.com/en-us/topic/turn-off-coming-soon-for-your-organization-0ac68b98-47e8-4756-a0d7-ebc7aa37018e
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Outlook\Options\General" -Name "DisablePreviewPlace" -Type DWord -Value "1"
+
 # Hide Update Notifications - https://docs.microsoft.com/en-us/azure/virtual-desktop/install-office-on-wvd-master-image
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common\OfficUupdate" -Name "HideUpdateNotifications" -Type DWord -Value "1"
+Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common\OfficUupdate" -Recurse
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common\OfficeUpdate" -Name "HideUpdateNotifications" -Type DWord -Value "1"
 # Hide option to enable or disable updates - https://docs.microsoft.com/en-us/azure/virtual-desktop/install-office-on-wvd-master-image
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common\OfficUupdate" -Name "HideEnableDisableupdates" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common\OfficeUpdate" -Name "HideEnableDisableupdates" -Type DWord -Value "1"
 
 # Disable teaching callouts - https://docs.microsoft.com/en-us/answers/questions/186354/outlook-remove-blue-tip-boxes.html
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "AutocreateTeachingCallout_MoreLocations" -Type DWord -Value "2"
