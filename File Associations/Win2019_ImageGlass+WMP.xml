@@ -6,7 +6,7 @@
   <Association Identifier=".3gp2" ProgId="WMP11.AssocFile.3G2" ApplicationName="Windows Media Player" />
   <Association Identifier=".3gpp" ProgId="WMP11.AssocFile.3GP" ApplicationName="Windows Media Player" />
   <Association Identifier=".aac" ProgId="WMP11.AssocFile.ADTS" ApplicationName="Windows Media Player" />
-  <Association Identifier=".acrobatsecuritysettings" ProgId="AcroExch.acrobatsecuritysettings" ApplicationName="Adobe Acrobat Reader DC" />
+  <Association Identifier=".acrobatsecuritysettings" ProgId="Acrobat.acrobatsecuritysettings" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".adt" ProgId="WMP11.AssocFile.ADTS" ApplicationName="Windows Media Player" />
   <Association Identifier=".adts" ProgId="WMP11.AssocFile.ADTS" ApplicationName="Windows Media Player" />
   <Association Identifier=".ari" ProgId="ImageGlass.AssocFile.ARI" ApplicationName="ImageGlass" />
@@ -33,7 +33,7 @@
   <Association Identifier=".erf" ProgId="ImageGlass.AssocFile.ERF" ApplicationName="ImageGlass" />
   <Association Identifier=".exif" ProgId="ImageGlass.AssocFile.EXIF" ApplicationName="ImageGlass" />
   <Association Identifier=".exr" ProgId="ImageGlass.AssocFile.EXR" ApplicationName="ImageGlass" />
-  <Association Identifier=".fdf" ProgId="AcroExch.FDFDoc" ApplicationName="Adobe Acrobat Reader DC" />
+  <Association Identifier=".fdf" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".fff" ProgId="ImageGlass.AssocFile.FFF" ApplicationName="ImageGlass" />
   <Association Identifier=".fits" ProgId="ImageGlass.AssocFile.FITS" ApplicationName="ImageGlass" />
   <Association Identifier=".flac" ProgId="WMP11.AssocFile.FLAC" ApplicationName="Windows Media Player" />
@@ -87,9 +87,9 @@
   <Association Identifier=".oxps" ProgId="Windows.XPSReachViewer" ApplicationName="XPS Viewer" />
   <Association Identifier=".pbm" ProgId="ImageGlass.AssocFile.PBM" ApplicationName="ImageGlass" />
   <Association Identifier=".pcx" ProgId="ImageGlass.AssocFile.PCX" ApplicationName="ImageGlass" />
-  <Association Identifier=".pdf" ProgId="AcroExch.Document.DC" ApplicationName="Adobe Acrobat Reader DC" />
-  <Association Identifier=".pdfxml" ProgId="AcroExch.pdfxml" ApplicationName="Adobe Acrobat Reader DC" />
-  <Association Identifier=".pdx" ProgId="PDXFileType" ApplicationName="Adobe Acrobat Reader DC" />
+  <Association Identifier=".pdf" ProgId="Acrobat.Document.DC" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".pdfxml" ProgId="Acrobat.pdfxml" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".pdx" ProgId="PDXFileType" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".pef" ProgId="ImageGlass.AssocFile.PEF" ApplicationName="ImageGlass" />
   <Association Identifier=".pgm" ProgId="ImageGlass.AssocFile.PGM" ApplicationName="ImageGlass" />
   <Association Identifier=".png" ProgId="ImageGlass.AssocFile.PNG" ApplicationName="ImageGlass" />
@@ -109,6 +109,8 @@
   <Association Identifier=".rwl" ProgId="ImageGlass.AssocFile.RWL" ApplicationName="ImageGlass" />
   <Association Identifier=".rwz" ProgId="ImageGlass.AssocFile.RWZ" ApplicationName="ImageGlass" />
   <Association Identifier=".scp" ProgId="txtfile" ApplicationName="Notepad" />
+  <Association Identifier=".secstore" ProgId="Acrobat.SecStore" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".sequ" ProgId="Acrobat.Sequence" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".sr2" ProgId="ImageGlass.AssocFile.SR2" ApplicationName="ImageGlass" />
   <Association Identifier=".srf" ProgId="ImageGlass.AssocFile.SRF" ApplicationName="ImageGlass" />
   <Association Identifier=".srw" ProgId="ImageGlass.AssocFile.SRW" ApplicationName="ImageGlass" />
@@ -135,13 +137,13 @@
   <Association Identifier=".wtx" ProgId="txtfile" ApplicationName="Notepad" />
   <Association Identifier=".x3f" ProgId="ImageGlass.AssocFile.X3F" ApplicationName="ImageGlass" />
   <Association Identifier=".xbm" ProgId="ImageGlass.AssocFile.XBM" ApplicationName="ImageGlass" />
-  <Association Identifier=".xdp" ProgId="AcroExch.XDPDoc" ApplicationName="Adobe Acrobat Reader DC" />
-  <Association Identifier=".xfdf" ProgId="AcroExch.XFDFDoc" ApplicationName="Adobe Acrobat Reader DC" />
+  <Association Identifier=".xdp" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".xfdf" ProgId="Acrobat.XFDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".xml" ProgId="Applications\Notepad.exe" ApplicationName="Notepad" />
   <Association Identifier=".xpm" ProgId="ImageGlass.AssocFile.XPM" ApplicationName="ImageGlass" />
   <Association Identifier=".xps" ProgId="Windows.XPSReachViewer" ApplicationName="XPS Viewer" />
   <Association Identifier=".xv" ProgId="ImageGlass.AssocFile.XV" ApplicationName="ImageGlass" />
-  <Association Identifier="acrobat" ProgId="acrobat" ApplicationName="Adobe Acrobat Reader DC" />
+  <Association Identifier="ACROBAT" ProgId="acrobat" ApplicationName="Adobe Acrobat" />
   <Association Identifier="CALLTO" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
   <Association Identifier="http" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier="https" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />

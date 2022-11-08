@@ -34,7 +34,7 @@
   <Association Identifier=".erf" ProgId="ImageGlass.AssocFile.ERF" ApplicationName="ImageGlass" />
   <Association Identifier=".exif" ProgId="ImageGlass.AssocFile.EXIF" ApplicationName="ImageGlass" />
   <Association Identifier=".exr" ProgId="ImageGlass.AssocFile.EXR" ApplicationName="ImageGlass" />
-  <Association Identifier=".fdf" ProgId="AcroExch.FDFDoc" ApplicationName="Adobe Acrobat Reader DC" />
+  <Association Identifier=".fdf" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".fff" ProgId="ImageGlass.AssocFile.FFF" ApplicationName="ImageGlass" />
   <Association Identifier=".fits" ProgId="ImageGlass.AssocFile.FITS" ApplicationName="ImageGlass" />
   <Association Identifier=".flac" ProgId="WMP11.AssocFile.FLAC" ApplicationName="Windows Media Player" />

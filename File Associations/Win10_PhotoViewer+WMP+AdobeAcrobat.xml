@@ -17,7 +17,7 @@
   <Association Identifier=".crw" ProgId="AppX43hnxtbyyps62jhe9sqpdzxn1790zetc" ApplicationName="Photos" />
   <Association Identifier=".dib" ProgId="PhotoViewer.FileAssoc.Bitmap" ApplicationName="PhotoViewer" />
   <Association Identifier=".erf" ProgId="AppX43hnxtbyyps62jhe9sqpdzxn1790zetc" ApplicationName="Photos" />
-  <Association Identifier=".fdf" ProgId="AcroExch.FDFDoc" ApplicationName="Adobe Reader" />
+  <Association Identifier=".fdf" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".flac" ProgId="WMP11.AssocFile.FLAC" ApplicationName="Windows Media Player" />
   <Association Identifier=".gif" ProgId="PhotoViewer.FileAssoc.Tiff" ApplicationName="PhotoViewer" />
   <Association Identifier=".htm" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
