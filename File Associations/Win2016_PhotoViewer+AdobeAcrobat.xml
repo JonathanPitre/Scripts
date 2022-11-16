@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DefaultAssociations>
+    <Association Identifier=".3g2" ProgId="WMP11.AssocFile.3G2" ApplicationName="Windows Media Player" />
+    <Association Identifier=".3gp" ProgId="WMP11.AssocFile.3GP" ApplicationName="Windows Media Player" />
+    <Association Identifier=".3gp2" ProgId="WMP11.AssocFile.3G2" ApplicationName="Windows Media Player" />
+    <Association Identifier=".3gpp" ProgId="WMP11.AssocFile.3GP" ApplicationName="Windows Media Player" />
+    <Association Identifier=".aac" ProgId="WMP11.AssocFile.ADTS" ApplicationName="Windows Media Player" />
+    <Association Identifier=".acrobatsecuritysettings" ProgId="Acrobat.acrobatsecuritysettings" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".adt" ProgId="WMP11.AssocFile.ADTS" ApplicationName="Windows Media Player" />
+    <Association Identifier=".adts" ProgId="WMP11.AssocFile.ADTS" ApplicationName="Windows Media Player" />
+    <Association Identifier=".api" ProgId="Acrobat.Plugin" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".avi" ProgId="WMP11.AssocFile.AVI" ApplicationName="Windows Media Player" />
+    <Association Identifier=".bmp" ProgId="PhotoViewer.FileAssoc.Bitmap" ApplicationName="PhotoViewer" />
+    <Association Identifier=".bpdx" ProgId="AcrobatBPDXFileType" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".cr2" ProgId="PhotoViewer.FileAssoc.Tiff" ApplicationName="PhotoViewer" />
+    <Association Identifier=".dib" ProgId="PhotoViewer.FileAssoc.Bitmap" ApplicationName="PhotoViewer" />
+    <Association Identifier=".fdf" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".flac" ProgId="WMP11.AssocFile.FLAC" ApplicationName="Windows Media Player" />
+    <Association Identifier=".gif" ProgId="PhotoViewer.FileAssoc.Tiff" ApplicationName="PhotoViewer" />
+    <Association Identifier=".htm" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier=".html" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier=".ico" ProgId="PhotoViewer.FileAssoc.Tiff" ApplicationName="PhotoViewer" />
+    <Association Identifier=".inf" ProgId="inffile" ApplicationName="Notepad" />
+    <Association Identifier=".ini" ProgId="inifile" ApplicationName="Notepad" />
+    <Association Identifier=".jfif" ProgId="PhotoViewer.FileAssoc.JFIF" ApplicationName="PhotoViewer" />
+    <Association Identifier=".jpe" ProgId="PhotoViewer.FileAssoc.Jpeg" ApplicationName="PhotoViewer" />
+    <Association Identifier=".jpeg" ProgId="PhotoViewer.FileAssoc.Jpeg" ApplicationName="PhotoViewer" />
+    <Association Identifier=".jpg" ProgId="PhotoViewer.FileAssoc.Jpeg" ApplicationName="PhotoViewer" />
+    <Association Identifier=".jxr" ProgId="PhotoViewer.FileAssoc.Jpeg" ApplicationName="PhotoViewer" />
+    <Association Identifier=".log" ProgId="txtfile" ApplicationName="Notepad" />
+    <Association Identifier=".m2t" ProgId="WMP11.AssocFile.M2TS" ApplicationName="Windows Media Player" />
+    <Association Identifier=".m2ts" ProgId="WMP11.AssocFile.M2TS" ApplicationName="Windows Media Player" />
+    <Association Identifier=".m3u" ProgId="WMP11.AssocFile.m3u" ApplicationName="Windows Media Player" />
+    <Association Identifier=".m4a" ProgId="WMP11.AssocFile.M4A" ApplicationName="Windows Media Player" />
+    <Association Identifier=".m4v" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mht" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier=".mhtml" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier=".mkv" ProgId="WMP11.AssocFile.MKV" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mod" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mov" ProgId="WMP11.AssocFile.MOV" ApplicationName="Windows Media Player" />
+    <Association Identifier=".MP2" ProgId="WMP11.AssocFile.MP3" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mp3" ProgId="WMP11.AssocFile.MP3" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mp4" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mp4v" ProgId="WMP11.AssocFile.MP4" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mpa" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
+    <Association Identifier=".MPE" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mpeg" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mpg" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mpv2" ProgId="WMP11.AssocFile.MPEG" ApplicationName="Windows Media Player" />
+    <Association Identifier=".mts" ProgId="WMP11.AssocFile.M2TS" ApplicationName="Windows Media Player" />
+    <Association Identifier=".pdf" ProgId="Acrobat.Document.DC" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".pdfxml" ProgId="Acrobat.pdfxml" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".pdx" ProgId="PDXFileType" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".png" ProgId="PhotoViewer.FileAssoc.Png" ApplicationName="PhotoViewer" />
+    <Association Identifier=".ps1" ProgId="Microsoft.PowerShellScript.1" ApplicationName="Notepad" />
+    <Association Identifier=".psd1" ProgId="Microsoft.PowerShellData.1" ApplicationName="Notepad" />
+    <Association Identifier=".psm1" ProgId="Microsoft.PowerShellModule.1" ApplicationName="Notepad" />
+    <Association Identifier=".rmf" ProgId="Acrobat.RMFFile" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".scp" ProgId="txtfile" ApplicationName="Notepad" />
+    <Association Identifier=".secstore" ProgId="Acrobat.SecStore" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".sequ" ProgId="Acrobat.Sequence" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".svg" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier=".tif" ProgId="PhotoViewer.FileAssoc.Tiff" ApplicationName="PhotoViewer" />
+    <Association Identifier=".tiff" ProgId="PhotoViewer.FileAssoc.Tiff" ApplicationName="PhotoViewer" />
+    <Association Identifier=".ts" ProgId="WMP11.AssocFile.TTS" ApplicationName="Windows Media Player" />
+    <Association Identifier=".tts" ProgId="WMP11.AssocFile.TTS" ApplicationName="Windows Media Player" />
+    <Association Identifier=".txt" ProgId="txtfile" ApplicationName="Notepad" />
+    <Association Identifier=".url" ProgId="IE.AssocFile.URL" ApplicationName="Internet Browser" />
+    <Association Identifier=".wav" ProgId="WMP11.AssocFile.WAV" ApplicationName="Windows Media Player" />
+    <Association Identifier=".wdp" ProgId="PhotoViewer.FileAssoc.Wdp" ApplicationName="PhotoViewer" />
+    <Association Identifier=".webp" ProgId="PhotoViewer.FileAssoc.Jpeg" ApplicationName="PhotoViewer" />
+    <Association Identifier=".website" ProgId="IE.AssocFile.WEBSITE" ApplicationName="Microsoft Edge" />
+    <Association Identifier=".wm" ProgId="WMP11.AssocFile.ASF" ApplicationName="Windows Media Player" />
+    <Association Identifier=".wma" ProgId="WMP11.AssocFile.WMA" ApplicationName="Windows Media Player" />
+    <Association Identifier=".wmv" ProgId="WMP11.AssocFile.WMV" ApplicationName="Windows Media Player" />
+    <Association Identifier=".wpl" ProgId="WMP11.AssocFile.WPL" ApplicationName="Windows Media Player" />
+    <Association Identifier=".wtx" ProgId="txtfile" ApplicationName="Notepad" />
+    <Association Identifier=".xdp" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".xfdf" ProgId="Acrobat.XFDFDoc" ApplicationName="Adobe Acrobat" />
+    <Association Identifier=".xht" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier=".xhtml" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier=".xml" ProgId="Applications\Notepad.exe" ApplicationName="Notepad" />
+    <Association Identifier=".xps" ProgId="Windows.XPSReachViewer" ApplicationName="XPS Viewer" />
+    <Association Identifier="ACROBAT" ProgId="acrobat" ApplicationName="Adobe Acrobat" />
+    <Association Identifier="CALLTO" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+    <Association Identifier="FTP" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier="http" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier="https" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier="IM" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+    <Association Identifier="mailto" ProgId="Outlook.URL.mailto.15" ApplicationName="Outlook" />
+    <Association Identifier="microsoft-edge-holographic" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier="microsoft-edge" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier="MMS" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier="ms-xbl-3d8b930f" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier="msteams" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+    <Association Identifier="read" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+    <Association Identifier="SIP" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+    <Association Identifier="SIPS" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+    <Association Identifier="tel" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+    <Association Identifier="WEBCAL" ProgId="Outlook.URL.webcal.15" ApplicationName="Outlook" />
+</DefaultAssociations>
