@@ -317,6 +317,12 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersio
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MMTaskbarEnabled" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MMTaskbarMode" -Type DWord -Value "2"
 
+If ($envOSName -like "*Windows Server 2016")
+{
+    # Show Windows Powershell on WinX menu instead of Command Prompt - https://blogs.msmvps.com/russel/2016/11/18/defaulting-to-powershell-instead-of-cmd/
+    Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "DontUsePowerShellOnWinX" -Type DWord -Value "0"
+}
+
 # Display Full Path in Title Bar
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState" -Name "FullPath" -Type DWord -Value "1"
 
@@ -345,16 +351,16 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersio
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\TooltipAnimation" -Name "DefaultApplied" -Type DWord -Value "0"
 
 # Show ribbon in File Explorer
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Explorer" -Name "ExplorerRibbonStartsMinimized" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\Explorer" -Name "ExplorerRibbonStartsMinimized" -Type DWord -Value "2"
 
 # Disable action center
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type DWord -Value "0"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type DWord -Value "0"
 
 # Remove "Recently added" list from Start Menu
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Explorer" -Name "HideRecentlyAddedApps" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\Explorer" -Name "HideRecentlyAddedApps" -Type DWord -Value "1"
 
 # Do not show the 'new application installed' notification
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Explorer" -Name "NoNewAppAlert" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\Explorer" -Name "NoNewAppAlert" -Type DWord -Value "1"
 
 # https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-vdi-recommendations-2004
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338393Enabled" -Type DWord -Value "0"
@@ -540,6 +546,9 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Fi
 
 # Disable Micrososoft Office hardware graphics acceleration - http://shawnbass.com/psa-software-gpu-can-reduce-your-virtual-desktop-scalability
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Graphics" -Name "DisableHardwareAcceleration" -Type String -Value "1"
+
+# Disable Microsoft Office animations
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Graphics" -Name "DisableAnimations" -Type String -Value "1"
 
 # Disable Micrososoft OneDrive Notifications - https://docs.microsoft.com/en-us/archive/blogs/platforms_lync_cloud/disabling-windows-10-action-center-notifications
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Microsoft.SkyDrive.Desktop" -Name "Enabled" -Type DWord -Value "0"
