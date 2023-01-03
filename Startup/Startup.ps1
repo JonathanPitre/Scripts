@@ -286,6 +286,13 @@ If (($HypervisorManufacturer -like "Microsoft Corporation") -and ($SendBufferSiz
 # Disable unnecessary Scheduled Taks
 Main
 
+# Force GPupdate, useful for shitty domain
+Invoke-GPUpdate -Force
+
+# Restart FSLogix Service
+Restart-Service frxsvc -Name -Force
+Restart-Service frxccds -Name -Force
+
 # Launch process if image is in read-only mode
 # See https://github.com/JamesKindon/Citrix/blob/master/PreFetchStartApps.ps1
 # and https://github.com/kaspersmjohansen/AutoLogon-Script/blob/main/Set-AutoLogon.ps1
