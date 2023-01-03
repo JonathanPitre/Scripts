@@ -402,15 +402,19 @@ If (-Not(Test-Path $PolicyStore)) { New-Folder -Path $PolicyStore }
 
 # Download custom Policy Definitions files
 Write-Log -Message "Downloading custom Policy Definitions files..." -Severity 1 -LogType CMTrace -WriteHost $True
+# Citrix
 Invoke-WebRequest -UseBasicParsing -Uri $CitrixADMXUrl -OutFile "$WorkingDirectory\downloads\$CitrixADMX"
-
+# Microsoft AVD
 Get-MicrosoftAVDAdmx
+# SChannel
 Get-SchannelAdmx
 
 # Extract custom Policy Definitions files
 Write-Log -Message "Extracting custom Policy Definitions files..." -Severity 1 -LogType CMTrace -WriteHost $True
-# Citrix
+
+# Extract Citrix Policy Definitions files
 Expand-Archive -Path "$DownloadsDirectory\$CitrixADMX" -DestinationPath $CustomPolicyStore -Force
+
 # Zoom Desktop Client
 if ($IncludeProducts -notcontains 'Zoom Desktop Client')
 {
@@ -423,8 +427,7 @@ else
     $admx = Get-ZoomDesktopClientAdmx -Version $admxversions.ZoomDesktopClient.Version -PolicyStore $PolicyStore -Languages $Languages
     if ($admx) { if ($admxversions.ZoomDesktopClient) { $admxversions.ZoomDesktopClient = $admx } else { $admxversions += @{ ZoomDesktopClient = @{ Version = $admx.Version; URI = $admx.URI } } } }
 }
-
-
+# Extract Zoom Desktop Client files
 Expand-Archive -Path "$DownloadsDirectory\$ZoomADMX" -DestinationPath "$DownloadsDirectory\Zoom Desktop Client" -Force
 Copy-File -Path "$DownloadsDirectory\Zoom Desktop Client\Zoom_$($ZoomADMXVersion)\*" -Destination $CustomPolicyStore -Recurse
 Remove-Item -Path $CustomPolicyStore -Include *.adm, *.reg, Zoom_$($ZoomADMXVersion) -Recurse -Force
@@ -440,6 +443,7 @@ Set-Location -Path "$envProgramFiles\WindowsPowerShell\Scripts"
 
 # Cleanup Central Policy Store
 Write-Log -Message "Cleaning Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+
 # Fix for WinStoreUI.admx error https://docs.microsoft.com/en-us/troubleshoot/windows-server/group-policy/winstoreui-conflict-with-windows-10-1151-admx-file
 Remove-File -Path $PolicyStore WinStoreUI.adm* -Recurse -ContinueOnError $True
 
