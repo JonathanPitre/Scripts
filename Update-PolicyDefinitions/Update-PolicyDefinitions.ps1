@@ -350,26 +350,25 @@ function Get-SchannelAdmx
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 
 # Must read - https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/windows-10-or-windows-11-gpo-admx-which-one-to-use-for-your/ba-p/3063322
-$WindowsVersion = "10" # or 11
-$WindowsBuild = "22H2" # or 22H2
+$WindowsBuild = "22H2"
 $Languages = @("en-US", "fr-FR")
 $PolicyStore = "\\$envMachineADDomain\SYSVOL\$envMachineADDomain\Policies\PolicyDefinitions"
-$IncludeProducts = @("Windows 10", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe AcrobatReader DC", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox", "Custom Policy Store")
+$IncludeProducts = @("Windows 10", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe Acrobat", "Adobe Reader", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox", "Zoom Desktop Client", "Custom Policy Store")
 $WorkingDirectory = "C:\Scripts\EvergreenADMX"
 $DownloadsDirectory = "$WorkingDirectory\downloads"
 $CustomPolicyStore = "$WorkingDirectory\custom admx"
 $CitrixADMXVersion = "2212"
 $CitrixADMXUrl = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
 $CitrixADMX = Split-Path -Path $CitrixADMXUrl -Leaf
-$ZoomADMXVersion = "5.13.0"
-$ZoomADMXUrl = "https://assets.zoom.us/docs/msi-templates/Zoom_$($ZoomADMXVersion).zip"
-$ZoomADMX = Split-Path -Path $ZoomADMXUrl -Leaf
+$latestEvergreenAdmxUrl = "https://raw.githubusercontent.com/msfreaks/EvergreenAdmx/5cc839cd89ff348ea979b30187ba56dfac423f74/EvergreenAdmx.ps1"
+$latestEvergreenAdmx = Split-Path -Path $latestEvergreenAdmxUrl -Leaf
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
 # Install EvergreenAdmx script - https://github.com/msfreaks/EvergreenAdmx
 $EvergreenAdmxVersion = Get-EvergreenAdmxVersion
 
+<#
 $ScriptInfo = Get-InstalledScript | Where-Object { $_.Name -eq "EvergreenADMX" }
 [boolean]$isScriptInstalled = [boolean]$ScriptInfo
 If ($isScriptInstalled)
@@ -382,9 +381,15 @@ If ($isScriptInstalled)
 }
 Else
 {
-    Write-Log -Message "Installing EvergreenAdmx script..." -Severity 1 -LogType CMTrace -WriteHost $True
+    Write-Log -Message "Installing latest EvergreenAdmx script..." -Severity 1 -LogType CMTrace -WriteHost $True
     Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
+    Invoke-WebRequest -Uri $latestEvergreenAdmxUrl -UseBasicParsing -OutFile "$envProgramFiles\WindowsPowerShell\Scripts\$latestEvergreenAdmx"
 }
+#>
+
+Write-Log -Message "Installing latest EvergreenAdmx script..." -Severity 1 -LogType CMTrace -WriteHost $True
+Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
+Invoke-WebRequest -Uri $latestEvergreenAdmxUrl -UseBasicParsing -OutFile "$envProgramFiles\WindowsPowerShell\Scripts\$latestEvergreenAdmx"
 
 # Clean older files
 If (Test-Path -Path "$WorkingDirectory\*")
@@ -415,31 +420,37 @@ Write-Log -Message "Extracting custom Policy Definitions files..." -Severity 1 -
 # Extract Citrix Policy Definitions files
 Expand-Archive -Path "$DownloadsDirectory\$CitrixADMX" -DestinationPath $CustomPolicyStore -Force
 
-# Zoom Desktop Client
-if ($IncludeProducts -notcontains 'Zoom Desktop Client')
-{
-    Write-Verbose "`nSkipping Zoom Desktop Client"
-}
-else
-{
-    Write-Verbose "`nProcessing Admx files for Zoom Desktop Client"
-    Invoke-WebRequest -UseBasicParsing -Uri $ZoomADMXUrl -OutFile "$WorkingDirectory\downloads\$ZoomADMX"
-    $admx = Get-ZoomDesktopClientAdmx -Version $admxversions.ZoomDesktopClient.Version -PolicyStore $PolicyStore -Languages $Languages
-    if ($admx) { if ($admxversions.ZoomDesktopClient) { $admxversions.ZoomDesktopClient = $admx } else { $admxversions += @{ ZoomDesktopClient = @{ Version = $admx.Version; URI = $admx.URI } } } }
-}
-# Extract Zoom Desktop Client files
-Expand-Archive -Path "$DownloadsDirectory\$ZoomADMX" -DestinationPath "$DownloadsDirectory\Zoom Desktop Client" -Force
-Copy-File -Path "$DownloadsDirectory\Zoom Desktop Client\Zoom_$($ZoomADMXVersion)\*" -Destination $CustomPolicyStore -Recurse
-Remove-Item -Path $CustomPolicyStore -Include *.adm, *.reg, Zoom_$($ZoomADMXVersion) -Recurse -Force
-Remove-Folder -Path "$DownloadsDirectory\Zoom Desktop Client"
-
 # Remove older Citrix Profile Management policy definitions files
 Remove-Item -Path $PolicyStore -Include ctxprofile*.admx, ctxprofile*.adml -Recurse -Force
 
 # Copy Policy Definitions files to Central Policy Store
-Write-Log -Message "Downloading and copying Policy Definitions files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
 Set-Location -Path "$envProgramFiles\WindowsPowerShell\Scripts"
-.\EvergreenAdmx.ps1 -Windows$($WindowsVersion)Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
+
+$Windows10 = New-Object System.Management.Automation.Host.ChoiceDescription '&Windows 10', 'Windows 10'
+$Windows11 = New-Object System.Management.Automation.Host.ChoiceDescription '&Windows 11', 'Windows 11'
+$options = [System.Management.Automation.Host.ChoiceDescription[]]($Windows10, $Windows11)
+$title = 'Operating System'
+$message = "Which Operating System are you using for most of your endpoints ?"
+$result = $host.ui.PromptForChoice($title, $message, $options, 0)
+if ($result -eq 0)
+{
+    $choice = "Windows 10"
+    Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+    .\EvergreenAdmx.ps1 -Windows10Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
+
+}
+elseif ($result -eq 1)
+{
+    $choice = "Windows 11'"
+    Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+    .\EvergreenAdmx.ps1 -Windows11Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
+
+}
+else
+{
+    $choice = "Try again"
+}
+"You have selected: {0}" -f $choice
 
 # Cleanup Central Policy Store
 Write-Log -Message "Cleaning Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
