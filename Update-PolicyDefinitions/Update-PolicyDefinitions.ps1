@@ -360,7 +360,7 @@ $CustomPolicyStore = "$WorkingDirectory\custom admx"
 $CitrixADMXVersion = "2212"
 $CitrixADMXUrl = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
 $CitrixADMX = Split-Path -Path $CitrixADMXUrl -Leaf
-$latestEvergreenAdmxUrl = "https://raw.githubusercontent.com/msfreaks/EvergreenAdmx/5cc839cd89ff348ea979b30187ba56dfac423f74/EvergreenAdmx.ps1"
+$latestEvergreenAdmxUrl = "https://raw.githubusercontent.com/msfreaks/EvergreenAdmx/main/EvergreenAdmx.ps1"
 $latestEvergreenAdmx = Split-Path -Path $latestEvergreenAdmxUrl -Leaf
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
