@@ -47,10 +47,11 @@ Remove-Item -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\PrinterPor
 
 
 # https://docs.microsoft.com/en-us/azure/active-directory/devices/howto-device-identity-virtual-desktop-infrastructure
-Remove-Item -Path "$env:LOCALAPPDATA\Packages\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy" -Recurse -Force
-Remove-Item -Path "$env:LOCALAPPDATA\Packages\Microsoft.Windows.CloudExperienceHost_cw5n1h2txyewy" -Recurse -Force
+#https://techcommunity.microsoft.com/t5/azure-virtual-desktop/announcing-fslogix-2210-public-preview-2-9-8308-44092/m-p/3645478
+#Remove-Item -Path "$env:LOCALAPPDATA\Packages\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy" -Recurse -Force
+#Remove-Item -Path "$env:LOCALAPPDATA\Packages\Microsoft.Windows.CloudExperienceHost_cw5n1h2txyewy" -Recurse -Force
 Remove-Item -Path "$env:LOCALAPPDATA\Packages\*\AC\TokenBroker" -Recurse -Force
-Remove-Item -Path "$env:LOCALAPPDATA\Microsoft\TokenBroker" -Recurse -Force
+#Remove-Item -Path "$env:LOCALAPPDATA\Microsoft\TokenBroker" -Recurse -Force
 Remove-Item -Path "HKCU:\Software\Microsoft\IdentityCRL" -Recurse -Force
 Remove-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AAD" -Recurse -Force
 Remove-Item -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\WorkplaceJoin" -Recurse -Force
