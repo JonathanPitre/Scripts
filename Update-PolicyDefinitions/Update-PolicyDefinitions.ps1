@@ -294,26 +294,33 @@ function Get-MicrosoftAVDAdmx
     <#
     .SYNOPSIS
     Download latest version of the Microsoft AVD Admx files
-#>
+    #>
 
-    $productname = "MicrosoftAVD"
+    $productName = "Microsoft AVD"
 
     try
     {
         $ProgressPreference = 'SilentlyContinue'
         $URI = Resolve-Uri -Uri "https://aka.ms/avdgpo" | Select-Object -ExpandProperty Uri
 
+        $outFile = "$($DownloadsDirectory)\AVDGPTemplate.cab"
+        $zipFile = "$($DownloadsDirectory)\AVDGPTemplate.zip"
+
         # download
-        Write-Verbose "Downloading '$($URI)' to '$($CustomPolicyStore)'"
+        Write-Verbose -Message "Downloading $productName Policy Definitions files to '$($CustomPolicyStore)...'" -Verbose
         Invoke-WebRequest -Uri $URI -UseBasicParsing -DisableKeepAlive -OutFile "$DownloadsDirectory\AVDGPTemplate.cab"
 
         # extract
-        Start-Process -FilePath "$env:windir\system32\cmd.exe" -ArgumentList "/c expand.exe -F:* $DownloadsDirectory\AVDGPTemplate.cab $DownloadsDirectory\$productname.zip" -NoNewWindow
-        Start-Sleep -Seconds 3
-        Expand-Archive -Path "$DownloadsDirectory\$($productname).zip" -DestinationPath $CustomPolicyStore
+        $null = (New-Item -Path "$($env:TEMP)\$productName" -ItemType Directory -Force)
+        $null = (expand "$($outFile)" -F:* "$($env:TEMP)\$productName" $zipFile)
+        Expand-Archive -Path $zipFile -DestinationPath "$($env:TEMP)\$productName" -Force
+
+        # copy
+        Copy-File -Path "$($env:TEMP)\$productName\*" -Destination $CustomPolicyStore -Recurse
 
         # cleanup
-        Remove-Item -Path "$DownloadsDirectory\AVDGPTemplate.cab" -Force
+        Remove-Item -Path $outFile -Force
+        Remove-Item -Path "$env:TEMP\$productName" -Recurse -Force
     }
     catch
     {
@@ -328,18 +335,22 @@ function Get-SchannelAdmx
     Download latest version of the Schannel Admx files
 #>
 
-    $productname = "Schannel"
+    $productName = "Schannel"
 
     try
     {
         $ProgressPreference = 'SilentlyContinue'
         $URIAdmx = "https://raw.githubusercontent.com/Crosse/SchannelGroupPolicy/master/template/schannel.admx"
         $URIAdml = "https://raw.githubusercontent.com/Crosse/SchannelGroupPolicy/master/template/en-US/schannel.adml"
+        $URIAdmlFR = "https://raw.githubusercontent.com/Crosse/SchannelGroupPolicy/master/template/fr-FR/schannel.adml"
+        $URIAdmlDE = "https://raw.githubusercontent.com/Crosse/SchannelGroupPolicy/master/template/de-DE/schannel.adml"
 
         # download
-        Write-Verbose "Downloading '$($URI)' to '$($CustomPolicyStore)'"
-        Invoke-WebRequest -Uri $URIAdmx -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\$($productname).admx"
-        Invoke-WebRequest -Uri $URIAdml -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\en-US\$($productname).adml"
+        Write-Verbose -Message "Downloading $productName Policy Definitions files to '$($CustomPolicyStore)...'" -Verbose
+        Invoke-WebRequest -Uri $URIAdmx -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\$productName.admx"
+        Invoke-WebRequest -Uri $URIAdml -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\en-US\$productName.adml"
+        Invoke-WebRequest -Uri $URIAdmlFR -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\fr-FR\$productName.adml"
+        Invoke-WebRequest -Uri $URIAdmlDE -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\de-DE\$productName.adml"
     }
     catch
     {
@@ -360,36 +371,32 @@ $CustomPolicyStore = "$WorkingDirectory\custom admx"
 $CitrixADMXVersion = "2212"
 $CitrixADMXUrl = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
 $CitrixADMX = Split-Path -Path $CitrixADMXUrl -Leaf
-$latestEvergreenAdmxUrl = "https://raw.githubusercontent.com/msfreaks/EvergreenAdmx/main/EvergreenAdmx.ps1"
-$latestEvergreenAdmx = Split-Path -Path $latestEvergreenAdmxUrl -Leaf
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
 # Install EvergreenAdmx script - https://github.com/msfreaks/EvergreenAdmx
 $EvergreenAdmxVersion = Get-EvergreenAdmxVersion
 
-<#
 $ScriptInfo = Get-InstalledScript | Where-Object { $_.Name -eq "EvergreenADMX" }
 [boolean]$isScriptInstalled = [boolean]$ScriptInfo
 If ($isScriptInstalled)
 {
     $ScriptVersion = ($ScriptInfo).Version
-    If ([version]$EvergreenAdmxVersion -eq [version]$ScriptVersion)
+    If ([version]$EvergreenAdmxVersion -gt [version]$ScriptVersion)
     {
-        Write-Log -Message "EvergreenAdmx script is already installed!" -Severity 1 -LogType CMTrace -WriteHost $True
+        Write-Log -Message "Installing latest EvergreenAdmx script..." -Severity 1 -LogType CMTrace -WriteHost $True
+        Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
+    }
+    Else
+    {
+        Write-Log -Message "Latest version of EvergreenAdmx script is already installed!" -Severity 1 -LogType CMTrace -WriteHost $True
     }
 }
 Else
 {
     Write-Log -Message "Installing latest EvergreenAdmx script..." -Severity 1 -LogType CMTrace -WriteHost $True
     Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
-    Invoke-WebRequest -Uri $latestEvergreenAdmxUrl -UseBasicParsing -OutFile "$envProgramFiles\WindowsPowerShell\Scripts\$latestEvergreenAdmx"
 }
-#>
-
-Write-Log -Message "Installing latest EvergreenAdmx script..." -Severity 1 -LogType CMTrace -WriteHost $True
-Install-Script -Name EvergreenAdmx -Force -Scope AllUsers
-Invoke-WebRequest -Uri $latestEvergreenAdmxUrl -UseBasicParsing -OutFile "$envProgramFiles\WindowsPowerShell\Scripts\$latestEvergreenAdmx"
 
 # Clean older files
 If (Test-Path -Path "$WorkingDirectory\*")
@@ -432,21 +439,21 @@ $options = [System.Management.Automation.Host.ChoiceDescription[]]($Windows10, $
 $title = 'Operating System'
 $message = "Which Operating System are you using for most of your endpoints ?"
 $result = $host.ui.PromptForChoice($title, $message, $options, 0)
-if ($result -eq 0)
+If ($result -eq 0)
 {
     $choice = "Windows 10"
     Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
     .\EvergreenAdmx.ps1 -Windows10Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
 
 }
-elseif ($result -eq 1)
+ElseIf ($result -eq 1)
 {
     $choice = "Windows 11'"
     Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
     .\EvergreenAdmx.ps1 -Windows11Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
 
 }
-else
+Else
 {
     $choice = "Try again"
 }
