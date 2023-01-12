@@ -448,8 +448,9 @@ If ($result -eq 0)
 }
 ElseIf ($result -eq 1)
 {
-    $choice = "Windows 11'"
+    $choice = "Windows 11"
     Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+    $IncludeProducts = ($IncludeProducts).Replace("Windows 10", "Windows 11")
     .\EvergreenAdmx.ps1 -Windows11Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
 
 }
