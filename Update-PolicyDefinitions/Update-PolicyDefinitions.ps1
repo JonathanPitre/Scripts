@@ -1,47 +1,98 @@
-# Standalone application install script for VDI environment - (C)2022 Jonathan Pitre, inspired by xenappblog.com
+# Standalone application install script for VDI environment - (C)2023 Jonathan Pitre
 
 #Requires -Version 5.1
 #Requires -RunAsAdministrator
 
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
 
+#region Initialisations
+
 $ProgressPreference = "SilentlyContinue"
 $ErrorActionPreference = "SilentlyContinue"
 # Set the script execution policy for this process
 Try { Set-ExecutionPolicy -ExecutionPolicy 'ByPass' -Scope 'Process' -Force } Catch {}
+# Unblock ps1 script
+Get-ChildItem -Recurse *.ps*1 | Unblock-File
 $env:SEE_MASK_NOZONECHECKS = 1
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
 $Modules = @("PSADT") # Modules list
 
-Function Get-ScriptDirectory
+Function Get-ScriptPath
 {
-    Remove-Variable appScriptDirectory
-    Try
+    <#
+    .SYNOPSIS
+        Get-ScriptPath returns the path of the current script.
+    .OUTPUTS
+        System.String
+    #>
+    [CmdletBinding()]
+    [OutputType([String])]
+    Param()
+
+    Begin
     {
-        If ($psEditor) { Split-Path $psEditor.GetEditorContext().CurrentFile.Path } # Visual Studio Code Host
-        ElseIf ($psISE) { Split-Path $psISE.CurrentFile.FullPath } # Windows PowerShell ISE Host
-        ElseIf ($PSScriptRoot) { $PSScriptRoot } # Windows PowerShell 3.0-5.1
+        Remove-Variable appScriptPath
+    }
+    Process
+    {
+        If ($psEditor) { Split-Path -Path $psEditor.GetEditorContext().CurrentFile.Path } # Visual Studio Code
+        ElseIf ($MyInvocation.MyCommand.CommandType -eq "ExternalScript") { Split-Path -Path $My$MyInvocation.MyCommand.Source } # PS1 converted to EXE
+        ElseIf ($null -ne $HostInvocation) { $HostInvocation.MyCommand.Path } # SAPIEN PowerShell Studio
+        ElseIf ($psISE) { Split-Path -Path $psISE.CurrentFile.FullPath } # Windows PowerShell ISE
+        ElseIf ($MyInvocation.PSScriptRoot) { $MyInvocation.PSScriptRoot } # Windows PowerShell 3.0+
+        ElseIf ($MyInvocation.MyCommand.Path) { Split-Path -Path $MyInvocation.MyCommand.Path -Parent } # Windows PowerShell
         Else
         {
-            Write-Host -Object "Cannot resolve script file's path" -ForegroundColor Red
+            Write-Host -Object "Unable to resolve script's file path!" -ForegroundColor Red
             Exit 1
         }
     }
-    Catch
+}
+
+Function Get-ScriptName
+{
+    <#
+    .SYNOPSIS
+        Get-ScriptName returns the name of the current script.
+    .OUTPUTS
+        System.String
+    #>
+    [CmdletBinding()]
+    [OutputType([String])]
+    Param()
+    Begin
     {
-        Write-Host -Object "Caught Exception: $($Error[0].Exception.Message)" -ForegroundColor Red
-        Exit 2
+        Remove-Variable appScriptName
+    }
+    Process
+    {
+        If ($psEditor) { Split-Path -Path $psEditor.GetEditorContext().CurrentFile.Path -Leaf } # Visual Studio Code Host
+        ElseIf ($psEXE) { [System.Diagnotics.Process]::GetCurrentProcess.Name } # PS1 converted to EXE
+        ElseIf ($null -ne $HostInvocation) { $HostInvocation.MyCommand.Name } # SAPIEN PowerShell Studio
+        ElseIf ($psISE) { $psISE.CurrentFile.DisplayName.Trim("*") } # Windows PowerShell ISE
+        ElseIf ($MyInvocation.MyCommand.Name) { $MyInvocation.MyCommand.Name } # Windows PowerShell
+        Else
+        {
+            Write-Host -Object "Uanble to resolve script's file name!" -ForegroundColor Red
+            Exit 1
+        }
     }
 }
 
 Function Initialize-Module
 {
+    <#
+    .SYNOPSIS
+        Initialize-Module install and import modules from PowerShell Galllery.
+    .OUTPUTS
+        System.String
+    #>
     [CmdletBinding()]
     Param
     (
         [Parameter(Mandatory = $true)]
-        [string]$Module
+        [String]$Module
     )
     Write-Host -Object "Importing $Module module..." -ForegroundColor Green
 
@@ -53,7 +104,8 @@ Function Initialize-Module
     Else
     {
         # If module is not imported, but available on disk then import
-        If (Get-Module -ListAvailable | Where-Object { $_.Name -eq $Module })
+        If ( [Boolean](Get-Module -ListAvailable | Where-Object { $_.Name -eq $Module }) )
+
         {
             $InstalledModuleVersion = (Get-InstalledModule -Name $Module).Version
             $ModuleVersion = (Find-Module -Name $Module).Version
@@ -111,8 +163,8 @@ Function Initialize-Module
     }
 }
 
-# Get the current script directory
-$appScriptDirectory = Get-ScriptDirectory
+[String]$appScriptPath = Get-ScriptPath # Get the current script path
+[String]$appScriptName = Get-ScriptName # Get the current script name
 
 # Install and import modules list
 Foreach ($Module in $Modules)
@@ -120,13 +172,17 @@ Foreach ($Module in $Modules)
     Initialize-Module -Module $Module
 }
 
+#endregion
+
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
+
+#region Functions
 
 Function Get-EvergreenAdmxVersion
 {
     <#
     .SYNOPSIS
-    Returns latest Version
+        Returns latest EvergreenAdmx version
     #>
 
     try
@@ -143,7 +199,7 @@ Function Get-EvergreenAdmxVersion
     }
 }
 
-function Resolve-Uri
+Function Resolve-Uri
 {
     <#
     .SYNOPSIS
@@ -193,7 +249,7 @@ function Resolve-Uri
 
     begin
     {
-        $ProgressPreference = 'SilentlyContinue'
+
     }
 
     process
@@ -289,38 +345,101 @@ function Resolve-Uri
 
 }
 
-function Get-MicrosoftAVDAdmx
+Function Download-GitHubRepository
+{
+    Param(
+        [Parameter(Mandatory = $True)]
+        [string] $Name,
+
+        [Parameter(Mandatory = $True)]
+        [string] $Author,
+
+        [Parameter(Mandatory = $False)]
+        [string] $Branch = "master",
+
+        [Parameter(Mandatory = $False)]
+        [string] $Location = "$DownloadsDirectory"
+    )
+
+    # Force to create a zip file
+    $ZipFile = "$location\$Name.zip"
+    $null = New-Item $ZipFile -ItemType File -Force
+
+    $RepositoryZipUrl = "https://api.github.com/repos/$Author/$Name/zipball/$Branch"
+
+    # Download
+    Invoke-RestMethod -Uri $RepositoryZipUrl -OutFile $ZipFile -UseBasicParsing
+
+    # Extract
+    Expand-Archive -Path $ZipFile -DestinationPath $location -Force
+
+    # Remove the zip file
+    #Remove-Item -Path $ZipFile -Force
+}
+
+Function Get-CitrixAdmx
 {
     <#
     .SYNOPSIS
-    Download latest version of the Microsoft AVD Admx files
+        Download latest version of the Citrix Admx files
+    #>
+    [CmdletBinding()]
+    Param (
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            ValueFromPipeline,
+            ValueFromPipelineByPropertyName)]
+        [ValidateLength(4, 4)]
+        [string]$Version = "2303"
+    )
+    $productName = "Citrix"
+
+    try
+    {
+        $url = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
+        $zip = Split-Path -Path $url -Leaf
+
+        # download
+        Write-Verbose -Message "Downloading $productName Policy Definitions files to '$($DownloadsDirectory)...'" -Verbose
+        Invoke-WebRequest -Uri $url -UseBasicParsing -DisableKeepAlive -OutFile "$($DownloadsDirectory)\$zip"
+
+        # extract
+        Write-Verbose -Message "Extracting $productName Policy Definitions files to '$($CustomPolicyStore)...'" -Verbose
+        Expand-Archive -Path "$($DownloadsDirectory)\$zip" -DestinationPath "$CustomPolicyStore" -Force
+    }
+    catch
+    {
+        Throw $_
+    }
+}
+
+Function Get-MicrosoftAVDAdmx
+{
+    <#
+    .SYNOPSIS
+        Download latest version of the Microsoft AVD Admx files
     #>
 
     $productName = "Microsoft AVD"
 
     try
     {
-        $ProgressPreference = 'SilentlyContinue'
-        $URI = Resolve-Uri -Uri "https://aka.ms/avdgpo" | Select-Object -ExpandProperty Uri
-
+        $url = Resolve-Uri -Uri "https://aka.ms/avdgpo" | Select-Object -ExpandProperty Uri
         $outFile = "$($DownloadsDirectory)\AVDGPTemplate.cab"
         $zipFile = "$($DownloadsDirectory)\AVDGPTemplate.zip"
 
         # download
-        Write-Verbose -Message "Downloading $productName Policy Definitions files to '$($CustomPolicyStore)...'" -Verbose
-        Invoke-WebRequest -Uri $URI -UseBasicParsing -DisableKeepAlive -OutFile "$DownloadsDirectory\AVDGPTemplate.cab"
+        Write-Verbose -Message "Downloading $productName Policy Definitions files to '$($DownloadsDirectory)...'" -Verbose
+        Invoke-WebRequest -Uri $url -UseBasicParsing -DisableKeepAlive -OutFile $outFile
 
         # extract
-        $null = (New-Item -Path "$($env:TEMP)\$productName" -ItemType Directory -Force)
-        $null = (expand "$($outFile)" -F:* "$($env:TEMP)\$productName" $zipFile)
-        Expand-Archive -Path $zipFile -DestinationPath "$($env:TEMP)\$productName" -Force
-
-        # copy
-        Copy-File -Path "$($env:TEMP)\$productName\*" -Destination $CustomPolicyStore -Recurse
+        Write-Verbose -Message "Extracting $productName Policy Definitions files to '$($CustomPolicyStore)...'" -Verbose
+        $null = (expand "$($outFile)" -F:* "$DownloadsDirectory" $zipFile)
+        Expand-Archive -Path $zipFile -DestinationPath "$CustomPolicyStore" -Force
 
         # cleanup
         Remove-Item -Path $outFile -Force
-        Remove-Item -Path "$env:TEMP\$productName" -Recurse -Force
     }
     catch
     {
@@ -328,29 +447,74 @@ function Get-MicrosoftAVDAdmx
     }
 }
 
-function Get-SchannelAdmx
+Function Get-MicrosoftDefenderATPAdmx
 {
     <#
     .SYNOPSIS
-    Download latest version of the Schannel Admx files
-#>
+        Download latest version of the Microsoft Defender ATP Admx files
+    #>
+
+    $productName = "Microsoft Defender ATP"
+
+    try
+    {
+        $url = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Update-PolicyDefinitions/MicrosoftDefenderATP.zip"
+        $zip = Split-Path -Path $url -Leaf
+
+        # download
+        Write-Verbose -Message "Downloading $productName Policy Definitions files to '$($DownloadsDirectory)...'" -Verbose
+        Invoke-WebRequest -Uri $url -UseBasicParsing -DisableKeepAlive -OutFile "$($DownloadsDirectory)\$zip"
+
+        # extract
+        Write-Verbose -Message "Extracting $productName Policy Definitions files to '$($CustomPolicyStore)...'" -Verbose
+        Expand-Archive -Path "$($DownloadsDirectory)\$zip" -DestinationPath "$CustomPolicyStore" -Force
+    }
+    catch
+    {
+        Throw $_
+    }
+}
+
+Function Get-SchannelAdmx
+{
+    <#
+    .SYNOPSIS
+        Download latest version of the Schannel Admx files
+
+    .PARAMETER Languages
+        Optionally provide an array of languages to process. Entries must be in 'xy-XY' format.
+        If omitted the script will process 'en-US'.
+    #>
+    [CmdletBinding()]
+    Param (
+        [Parameter(
+            Mandatory = $false,
+            Position = 0,
+            ValueFromPipeline,
+            ValueFromPipelineByPropertyName)]
+        [ValidateSet('en-US', 'fr-FR', 'de-DE', ignorecase = $False)]
+        [array]$Languages = @("en-US")
+    )
 
     $productName = "Schannel"
 
     try
     {
-        $ProgressPreference = 'SilentlyContinue'
-        $URIAdmx = "https://raw.githubusercontent.com/Crosse/SchannelGroupPolicy/master/template/schannel.admx"
-        $URIAdml = "https://raw.githubusercontent.com/Crosse/SchannelGroupPolicy/master/template/en-US/schannel.adml"
-        $URIAdmlFR = "https://raw.githubusercontent.com/Crosse/SchannelGroupPolicy/master/template/fr-FR/schannel.adml"
-        $URIAdmlDE = "https://raw.githubusercontent.com/Crosse/SchannelGroupPolicy/master/template/de-DE/schannel.adml"
+        $gitHubRepoAuthor = "Crosse"
+        $gitHubRepoName = "SchannelGroupPolicy"
+        $gitHubRepoBranch = "master"
 
         # download
-        Write-Verbose -Message "Downloading $productName Policy Definitions files to '$($CustomPolicyStore)...'" -Verbose
-        Invoke-WebRequest -Uri $URIAdmx -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\$productName.admx"
-        Invoke-WebRequest -Uri $URIAdml -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\en-US\$productName.adml"
-        Invoke-WebRequest -Uri $URIAdmlFR -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\fr-FR\$productName.adml"
-        Invoke-WebRequest -Uri $URIAdmlDE -UseBasicParsing -DisableKeepAlive -OutFile "$CustomPolicyStore\de-DE\$productName.adml"
+        Write-Verbose -Message "Downloading $productName Policy Definitions files to '$($DownloadsDirectory)...'" -Verbose
+        Download-GitHubRepository -Author $gitHubRepoAuthor -Name $gitHubRepoName -Branch $gitHubRepoBranch
+
+        # copy
+        Write-Verbose -Message "Copying $productName Policy Definitions files to '$($CustomPolicyStore)...'" -Verbose
+        $outFolder = Get-ChildItem -Path $DownloadsDirectory -Include "$gitHubRepoAuthor-$gitHubRepoName-*" -Recurse | Select-Object -ExpandProperty Name
+        Copy-Item -Path "$DownloadsDirectory\$outFolder\template\*" -Destination "$CustomPolicyStore" -Recurse -Force -Verbose
+
+        # cleanup
+        Remove-Item -Path "$($DownloadsDirectory)\$outFolder" -Recurse -Force
     }
     catch
     {
@@ -358,21 +522,28 @@ function Get-SchannelAdmx
     }
 }
 
+#endregion
+
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 
+#region Declarations
+
 # Must read - https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/windows-10-or-windows-11-gpo-admx-which-one-to-use-for-your/ba-p/3063322
-$WindowsBuild = "22H2"
-$Languages = @("en-US", "fr-FR")
-$PolicyStore = "\\$envMachineADDomain\SYSVOL\$envMachineADDomain\Policies\PolicyDefinitions"
-$IncludeProducts = @("Windows 10", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe Acrobat", "Adobe Reader", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox", "Zoom Desktop Client", "Custom Policy Store")
-$WorkingDirectory = "C:\Scripts\EvergreenADMX"
-$DownloadsDirectory = "$WorkingDirectory\downloads"
-$CustomPolicyStore = "$WorkingDirectory\custom admx"
-$CitrixADMXVersion = "2212"
-$CitrixADMXUrl = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Update-PolicyDefinitions/Citrix_$($CitrixADMXVersion).zip"
-$CitrixADMX = Split-Path -Path $CitrixADMXUrl -Leaf
+[string]$WindowsBuild = "22H2"
+[array]$Languages = @("en-US", "fr-FR")
+[string]$PolicyStore = "\\$envMachineADDomain\SYSVOL\$envMachineADDomain\Policies\PolicyDefinitions"
+[array]$IncludeProducts = @("Windows 10", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe Acrobat", "Adobe Reader", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox", "Zoom Desktop Client", "Custom Policy Store")
+[string]$WorkingDirectory = "C:\Scripts\EvergreenADMX"
+[string]$DownloadsDirectory = "$WorkingDirectory\downloads"
+[string]$CustomPolicyStore = "$WorkingDirectory\custom admx"
+[string]$CitrixADMXVersion = "2303"
+[boolean]$IsOneDriveInstalled = [boolean](Get-InstalledApplication -Name "Microsoft OneDrive")
+
+#endregion
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
+
+#region Execution
 
 # Install EvergreenAdmx script - https://github.com/msfreaks/EvergreenAdmx
 $EvergreenAdmxVersion = Get-EvergreenAdmxVersion
@@ -412,23 +583,19 @@ New-Folder -Path $CustomPolicyStore
 Set-Location -Path $WorkingDirectory
 If (-Not(Test-Path $PolicyStore)) { New-Folder -Path $PolicyStore }
 
+# Remove older Citrix Profile Management policy definitions files
+Remove-Item -Path $PolicyStore -Include ctxprofile*.admx, ctxprofile*.adml -Recurse -Force
+
 # Download custom Policy Definitions files
 Write-Log -Message "Downloading custom Policy Definitions files..." -Severity 1 -LogType CMTrace -WriteHost $True
 # Citrix
-Invoke-WebRequest -UseBasicParsing -Uri $CitrixADMXUrl -OutFile "$WorkingDirectory\downloads\$CitrixADMX"
+Get-CitrixAdmx -Version "2303"
 # Microsoft AVD
 Get-MicrosoftAVDAdmx
+# Microsoft Defender ATP
+Get-MicrosoftDefenderATPAdmx
 # SChannel
 Get-SchannelAdmx
-
-# Extract custom Policy Definitions files
-Write-Log -Message "Extracting custom Policy Definitions files..." -Severity 1 -LogType CMTrace -WriteHost $True
-
-# Extract Citrix Policy Definitions files
-Expand-Archive -Path "$DownloadsDirectory\$CitrixADMX" -DestinationPath $CustomPolicyStore -Force
-
-# Remove older Citrix Profile Management policy definitions files
-Remove-Item -Path $PolicyStore -Include ctxprofile*.admx, ctxprofile*.adml -Recurse -Force
 
 # Copy Policy Definitions files to Central Policy Store
 Set-Location -Path "$envProgramFiles\WindowsPowerShell\Scripts"
@@ -439,26 +606,35 @@ $options = [System.Management.Automation.Host.ChoiceDescription[]]($Windows10, $
 $title = 'Operating System'
 $message = "Which Operating System are you using for most of your endpoints ?"
 $result = $host.ui.PromptForChoice($title, $message, $options, 0)
-If ($result -eq 0)
+If (($result -eq 0) -and ($IsOneDriveInstalled))
 {
     $choice = "Windows 10"
     Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
-    .\EvergreenAdmx.ps1 -Windows10Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
-
+    .\EvergreenAdmx.ps1 -Windows10Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts -PreferLocalOneDrive
 }
-ElseIf ($result -eq 1)
+ElseIf (($result -eq 1) -and ($IsOneDriveInstalled))
 {
     $choice = "Windows 11"
     Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
     $IncludeProducts = ($IncludeProducts).Replace("Windows 10", "Windows 11")
-    .\EvergreenAdmx.ps1 -Windows11Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
-
+    .\EvergreenAdmx.ps1 -Windows11Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts -PreferLocalOneDrive
+}
+ElseIf (($result -eq 0) -and (-Not($IsOneDriveInstalled)))
+{
+    $choice = "Windows 10"
+    Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+    .\EvergreenAdmx.ps1 -Windows10Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
+}
+ElseIf (($result -eq 1) -and (-Not($IsOneDriveInstalled)))
+{
+    $choice = "Windows 11"
+    Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+    .\EvergreenAdmx.ps1 -Windows10Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
 }
 Else
 {
     $choice = "Try again"
 }
-"You have selected: {0}" -f $choice
 
 # Cleanup Central Policy Store
 Write-Log -Message "Cleaning Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
@@ -476,3 +652,5 @@ Remove-Item -Path $PolicyStore -Include *12*.admx, *12*.adml, *13*.admx, *13*.ad
 Remove-Item -Path $PolicyStore -Include Acrobat2017.admx, Acrobat2017.adml, AcrobatReader2017.admx, AcrobatReader2017.adml, Acrobat2020.admx, Acrobat2020.adml, AcrobatReader2020.admx, AcrobatReader2020.adml -Recurse -Force
 
 Write-Log -Message "Policy Definitions files were updated successfully!" -Severity 1 -LogType CMTrace -WriteHost $True
+
+#endregion
