@@ -1,4 +1,4 @@
-﻿# Standalone application install script for VDI environment - (C)2022 Jonathan Pitre
+﻿# Standalone application install script for VDI environment - (C)2023 Jonathan Pitre
 
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
 
