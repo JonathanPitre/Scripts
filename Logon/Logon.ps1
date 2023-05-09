@@ -166,7 +166,6 @@ If ($AADPluginState -ne "Ok")
     Add-AppxPackage -Register "$env:windir\SystemApps\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy\Appxmanifest.xml" -DisableDevelopmentMode -ForceApplicationShutdown
 }
 
-
 # Launch OneDrive only after Microsoft AAD Broker Plugin is repaired
 If ((Test-Path -Path "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe") -and ($null -eq (Get-Process -Name OneDrive | Get-Process -Name OneDrive -IncludeUserName | Where-Object { $_.UserName -eq "$env:COMPUTERNAME\$env:USERNAME" } )))
 {
@@ -177,7 +176,6 @@ Else
 {
     Write-Host -Object "Microsoft OneDrive is already started." -ForegroundColor Green
 }
-
 
 # Set User File Associations - https://kolbi.cz/blog/2017/10/25/setuserfta-userchoice-hash-defeated-set-file-type-associations-per-user
 If (Test-Path -Path "$appScriptDirectory\SetUserFTA\SetUserFTA.exe")
