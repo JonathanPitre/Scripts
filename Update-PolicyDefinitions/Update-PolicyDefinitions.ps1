@@ -475,6 +475,33 @@ Function Get-MicrosoftDefenderATPAdmx
     }
 }
 
+Function Get-MicrosoftLAPSAdmx
+{
+    <#
+    .SYNOPSIS
+        Download latest version of the Microsoft LAPS Admx files
+    #>
+
+    $productName = "Microsoft LAPS"
+
+    try
+    {
+        $url = "https://raw.githubusercontent.com/JonathanPitre/Scripts/master/Update-PolicyDefinitions/MicrosoftLAPS.zip"
+        $zip = Split-Path -Path $url -Leaf
+
+        # download
+        Write-Verbose -Message "Downloading $productName Policy Definitions files to '$($DownloadsDirectory)...'" -Verbose
+        Invoke-WebRequest -Uri $url -UseBasicParsing -DisableKeepAlive -OutFile "$($DownloadsDirectory)\$zip"
+
+        # extract
+        Write-Verbose -Message "Extracting $productName Policy Definitions files to '$($CustomPolicyStore)...'" -Verbose
+        Expand-Archive -Path "$($DownloadsDirectory)\$zip" -DestinationPath "$CustomPolicyStore" -Force
+    }
+    catch
+    {
+        Throw $_
+    }
+}
 Function Get-SchannelAdmx
 {
     <#
@@ -521,6 +548,13 @@ Function Get-SchannelAdmx
         Throw $_
     }
 }
+
+# To Add
+# VisualStudio admx
+# VSCode.admx
+# Devolutions.admx
+# PowerShellCoreExecutionPolicy.admx compare with native one
+# Edgechromium_blocker.admx - https://docs.microsoft.com/deployedge/microsoft-edge-blocker-toolkit
 
 #endregion
 
@@ -594,6 +628,8 @@ Get-CitrixAdmx -Version "2303"
 Get-MicrosoftAVDAdmx
 # Microsoft Defender ATP
 Get-MicrosoftDefenderATPAdmx
+# Microsoft LAPS
+Get-MicrosoftLAPSAdmx
 # SChannel
 Get-SchannelAdmx
 
