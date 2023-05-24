@@ -79,7 +79,15 @@ Function Get-ScriptName
         }
     }
 }
+
+Function Initialize-Module
 {
+    <#
+    .SYNOPSIS
+        Initialize-Module install and import modules from PowerShell Galllery.
+    .OUTPUTS
+        System.String
+    #>
     [CmdletBinding()]
     Param
     (
@@ -96,7 +104,8 @@ Function Get-ScriptName
     Else
     {
         # If module is not imported, but available on disk then import
-        If (Get-Module -ListAvailable | Where-Object { $_.Name -eq $Module })
+        If ( [boolean](Get-Module -ListAvailable | Where-Object { $_.Name -eq $Module }) )
+
         {
             $InstalledModuleVersion = (Get-InstalledModule -Name $Module).Version
             $ModuleVersion = (Find-Module -Name $Module).Version
@@ -169,15 +178,21 @@ Foreach ($Module in $Modules)
 
 #region Functions
 #endregion
+
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
+
+#region Declarations
 
 $appProcesses = @("regedit", "reg")
 $appTeamsConfigURL = "https://raw.githubusercontent.com/JonathanPitre/Apps/master/Microsoft/Teams/desktop-config.json"
 $appTeamsConfig = Split-Path -Path $appTeamsConfigURL -Leaf
 $NewUserScript = "\\$envMachineADDomain\NETLOGON\Citrix\NewUserProfile\Set-NewUserProfile.ps1" # Modify according to your environment
 
+#endregion
+
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
+#region Execution
 
 Get-Process -Name $appProcesses | Stop-Process -Force
 Set-Location -Path $appScriptPath
@@ -441,8 +456,8 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersio
 # Disable peer-to-peer caching but still allows Delivery Optimization to download content over HTTP from the download's original source - https://docs.microsoft.com/en-us/windows/deployment/update/waas-delivery-optimization-reference#download-mode
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization" -Name "SystemSettingsDownloadMode" -Type DWord -Value "3"
 
-# Show search box on the taskbar
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Type DWord -Value "2"
+# Show search icon on the taskbar - https://www.elevenforum.com/t/add-or-remove-search-button-on-taskbar-in-windows-11.1197
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Type DWord -Value "1"
 
 # Disable Security and Maintenance Notifications
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" -Name "Enabled" -Type DWord -Value "0"
@@ -459,7 +474,7 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "AutoEndTas
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "WaitToKillAppTimeout" -Type String -Value "2000"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "HungAppTimeout" -Type String -Value "1000"
 
-# Optimizes Explorer and Start Menu responses Times - https://docs.citrix.com/en-us/workspace-environment-management/current-release/reference/environmental-settings-registry-values.html
+# Optimizes Explorer and Start Menu responses times - https://docs.citrix.com/en-us/workspace-environment-management/current-release/reference/environmental-settings-registry-values.html
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "InteractiveDelay" -Type DWord -Value "40"
 
 # Change Windows Visual Effects - https://virtualfeller.com/2015/11/19/windows-10-optimization-part-4-user-interface
@@ -703,3 +718,5 @@ Remove-Item -Path "$envSystemDrive\Users\Default\*.blf" -Force
 Remove-Item -Path "$envSystemDrive\Users\Default\*.regtrans-ms" -Force
 
 Write-Log -Message "The default user profile was optimized!" -LogType 'CMTrace' -WriteHost $True
+
+#endregion
