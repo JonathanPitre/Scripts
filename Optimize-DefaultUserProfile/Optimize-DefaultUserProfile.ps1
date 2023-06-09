@@ -539,7 +539,7 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\Commo
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\Common\ClientTelemetry" -Name "SendTelemetry" -Type DWord -Value "0"
 
 # Disable "Your Privacy Option" message - http://www.edugeek.net/forums/office-software/218099-office-2019-your-privacy-option-popup.html
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common" -Name "PrivacyNoticeShown" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common" -Name "PrivacyNoticeShown" -Type DWord -Value "2"
 
 # Disable "Your Privacy Matters" message - https://www.reddit.com/r/sysadmin/comments/q6sesu/office_2021_your_privacy_matters_disable_via_gpo
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Privacy\SettingsStore\Anonymous" -Name "OptionalConnectedExperiencesNoticeVersion" -Type DWord -Value "2"
@@ -547,6 +547,9 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Pr
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Privacy\SettingsStore\Anonymous" -Name "RequiredDiagnosticDataNoticeVersion" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Privacy\SettingsStore\Anonymous" -Name "OptionalDiagnosticDataConsentVersion" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\common\Privacy\SettingsStore\Anonymous" -Name "ConnectedExperiencesNoticeVersion" -Type DWord -Value "1"
+
+# Automatically configure profile based on Active Directory Primary SMTP address (one-time only)
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\autodiscover" -Name "zeroconfigexchangeonce" -Type DWord -Value "1"
 
 # Disable "Show the option for Office Insider" - https://docs.microsoft.com/en-us/azure/virtual-desktop/install-office-on-wvd-master-image
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Common" -Name "InsiderSlabBehavior" -Type DWord -Value "2"
@@ -584,6 +587,7 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Te
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "DataVisualizerRibbonTeachingCallout" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "ExportToWordProcessTabTeachingCallout" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "FocusedInboxTeachingCallout_2" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "HubBarTeachingCallout" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "MeetingAllowForwardTeachingCallout" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "Olk_SearchBoxTitleBar_SLR_Sequence" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "PowerQueryAsDefaultGetDataTeachingCallout" -Type DWord -Value "2"
@@ -594,6 +598,7 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Te
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "Search.TopResults" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "SLRToggleReplaceTeachingCalloutID" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "ThreadedCommentsCallout" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "TryNewOutlookToggle" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "UseTighterSpacingTeachingCallout" -Type DWord -Value "2"
 
 # Hide "Try New Outlook" toggle option in Microsoft Outlook titlebar - https://www.askvg.com/tip-show-or-hide-try-new-outlook-toggle-option-in-microsoft-outlook-titlebar/
