@@ -568,6 +568,10 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CalendarSyncWindowSetting" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CalendarSyncWindowSettingMonths" -Type DWord -Value "1"
 
+# Fix Outlook freeze and slow start - https://www.bleepingcomputer.com/news/microsoft/microsoft-shares-workaround-for-outlook-freezes-slow-starts
+# https://support.microsoft.com/en-us/office/how-to-enable-and-disable-the-outlook-calendar-sharing-updates-c3aec5d3-55ce-4cea-84b0-80aab6d8dc26#:~:text=Enable%20using%20Group%20Policy
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Options\Calendar" -Name "RestUpdatesForCalendar" -Type DWord -Value "1"
+
 # Turn off Coming Soon - https://support.microsoft.com/en-us/topic/turn-off-coming-soon-for-your-organization-0ac68b98-47e8-4756-a0d7-ebc7aa37018e
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Outlook\Options\General" -Name "DisablePreviewPlace" -Type DWord -Value "1"
 
