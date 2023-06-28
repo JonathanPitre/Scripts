@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DefaultAssociations>
+  <Association Identifier=".001" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".3fr" ProgId="ImageGlass.AssocFile.3FR" ApplicationName="ImageGlass" />
+  <Association Identifier=".3g2" ProgId="VLC.3g2" ApplicationName="VLC media player" />
+  <Association Identifier=".3ga" ProgId="VLC.3ga" ApplicationName="VLC media player" />
+  <Association Identifier=".3gp" ProgId="VLC.3gp" ApplicationName="VLC media player" />
+  <Association Identifier=".3gp2" ProgId="VLC.3gp2" ApplicationName="VLC media player" />
+  <Association Identifier=".3gpp" ProgId="VLC.3gpp" ApplicationName="VLC media player" />
+  <Association Identifier=".3mf" ProgId="AppXvhc4p7vz4b485xfp46hhk3fq3grkdgjg" ApplicationName="3D Builder" OverwriteOnVersionMax="1" OverwriteIfProgIdIs="AppXr0rz9yckydawgnrx5df1t9s57ne60yhn;AppX4r6v2fg5b2qwg1jprp713smfp4wb02yp;AppXmgw6pxxs62rbgfp9petmdyb4fx7rnd4k" />
+  <Association Identifier=".669" ProgId="VLC.669" ApplicationName="VLC media player" />
+  <Association Identifier=".7z" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".a52" ProgId="VLC.a52" ApplicationName="VLC media player" />
+  <Association Identifier=".aac" ProgId="VLC.aac" ApplicationName="VLC media player" />
+  <Association Identifier=".ac3" ProgId="VLC.ac3" ApplicationName="VLC media player" />
+  <Association Identifier=".acrobatsecuritysettings" ProgId="Acrobat.acrobatsecuritysettings" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".adt" ProgId="VLC.adt" ApplicationName="VLC media player" />
+  <Association Identifier=".adts" ProgId="VLC.adts" ApplicationName="VLC media player" />
+  <Association Identifier=".aif" ProgId="VLC.aif" ApplicationName="VLC media player" />
+  <Association Identifier=".aifc" ProgId="VLC.aifc" ApplicationName="VLC media player" />
+  <Association Identifier=".aiff" ProgId="VLC.aiff" ApplicationName="VLC media player" />
+  <Association Identifier=".amr" ProgId="VLC.amr" ApplicationName="VLC media player" />
+  <Association Identifier=".amv" ProgId="VLC.amv" ApplicationName="VLC media player" />
+  <Association Identifier=".aob" ProgId="VLC.aob" ApplicationName="VLC media player" />
+  <Association Identifier=".ape" ProgId="VLC.ape" ApplicationName="VLC media player" />
+  <Association Identifier=".apfs" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".arg" ProgId="Applications\NOTEPAD.EXE" ApplicationName="Notepad" />
+  <Association Identifier=".ari" ProgId="ImageGlass.AssocFile.ARI" ApplicationName="ImageGlass" />
+  <Association Identifier=".arj" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".arw" ProgId="ImageGlass.AssocFile.ARW" ApplicationName="ImageGlass" />
+  <Association Identifier=".asf" ProgId="VLC.asf" ApplicationName="VLC media player" />
+  <Association Identifier=".asx" ProgId="VLC.asx" ApplicationName="VLC media player" />
+  <Association Identifier=".au" ProgId="VLC.au" ApplicationName="VLC media player" />
+  <Association Identifier=".avi" ProgId="VLC.avi" ApplicationName="VLC media player" />
+  <Association Identifier=".avif" ProgId="ImageGlass.AssocFile.AVIF" ApplicationName="ImageGlass" />
+  <Association Identifier=".b4s" ProgId="VLC.b4s" ApplicationName="VLC media player" />
+  <Association Identifier=".b64" ProgId="ImageGlass.AssocFile.B64" ApplicationName="ImageGlass" />
+  <Association Identifier=".bay" ProgId="ImageGlass.AssocFile.BAY" ApplicationName="ImageGlass" />
+  <Association Identifier=".bik" ProgId="VLC.bik" ApplicationName="VLC media player" />
+  <Association Identifier=".bin" ProgId="VLC.bin" ApplicationName="VLC media player" />
+  <Association Identifier=".bmp" ProgId="ImageGlass.AssocFile.BMP" ApplicationName="ImageGlass" />
+  <Association Identifier=".bz2" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".bzip2" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".cab" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".caf" ProgId="VLC.caf" ApplicationName="VLC media player" />
+  <Association Identifier=".cap" ProgId="ImageGlass.AssocFile.CAP" ApplicationName="ImageGlass" />
+  <Association Identifier=".config" ProgId="Applications\NOTEPAD.EXE" ApplicationName="Notepad" />
+  <Association Identifier=".cpio" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".cr2" ProgId="AppX43hnxtbyyps62jhe9sqpdzxn1790zetc" ApplicationName="Photos" OverwriteOnVersionMax="1" OverwriteIfProgIdIs="AppX9vdwcvrwnbettpahnt26jswq0n8hgyah;Paint.Paint;Microsoft.PhotoManager.imagetype" />
+  <Association Identifier=".cr2" ProgId="ImageGlass.AssocFile.CR2" ApplicationName="ImageGlass" />
+  <Association Identifier=".cr3" ProgId="ImageGlass.AssocFile.CR3" ApplicationName="ImageGlass" />
+  <Association Identifier=".crw" ProgId="AppX43hnxtbyyps62jhe9sqpdzxn1790zetc" ApplicationName="Photos" OverwriteOnVersionMax="1" OverwriteIfProgIdIs="AppX9vdwcvrwnbettpahnt26jswq0n8hgyah;Paint.Paint;Microsoft.PhotoManager.imagetype" />
+  <Association Identifier=".crw" ProgId="ImageGlass.AssocFile.CRW" ApplicationName="ImageGlass" />
+  <Association Identifier=".cue" ProgId="VLC.cue" ApplicationName="VLC media player" />
+  <Association Identifier=".cur" ProgId="ImageGlass.AssocFile.CUR" ApplicationName="ImageGlass" />
+  <Association Identifier=".cut" ProgId="ImageGlass.AssocFile.CUT" ApplicationName="ImageGlass" />
+  <Association Identifier=".dat" ProgId="Applications\NOTEPAD.EXE" ApplicationName="Notepad" />
+  <Association Identifier=".dcr" ProgId="ImageGlass.AssocFile.DCR" ApplicationName="ImageGlass" />
+  <Association Identifier=".dcs" ProgId="ImageGlass.AssocFile.DCS" ApplicationName="ImageGlass" />
+  <Association Identifier=".dds" ProgId="ImageGlass.AssocFile.DDS" ApplicationName="ImageGlass" />
+  <Association Identifier=".deb" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".dib" ProgId="AppX43hnxtbyyps62jhe9sqpdzxn1790zetc" ApplicationName="Photos" OverwriteOnVersionMax="1" OverwriteIfProgIdIs="AppX9vdwcvrwnbettpahnt26jswq0n8hgyah;Paint.Paint;Microsoft.PhotoManager.imagetype" />
+  <Association Identifier=".dib" ProgId="ImageGlass.AssocFile.DIB" ApplicationName="ImageGlass" />
+  <Association Identifier=".divx" ProgId="AppXqj98qxeaynz6dv4459ayz6bnqxbyaqcs" ApplicationName="Media Player" OverwriteOnVersionMax="44" OverwriteIfProgIdIs="AppX6eg8h5sxqq90pv53845wmnbewywdqq5h" />
+  <Association Identifier=".divx" ProgId="VLC.divx" ApplicationName="VLC media player" />
+  <Association Identifier=".dmg" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".dng" ProgId="ImageGlass.AssocFile.DNG" ApplicationName="ImageGlass" />
+  <Association Identifier=".drc" ProgId="VLC.drc" ApplicationName="VLC media player" />
+  <Association Identifier=".drf" ProgId="ImageGlass.AssocFile.DRF" ApplicationName="ImageGlass" />
+  <Association Identifier=".dts" ProgId="VLC.dts" ApplicationName="VLC media player" />
+  <Association Identifier=".dv" ProgId="VLC.dv" ApplicationName="VLC media player" />
+  <Association Identifier=".ec3" ProgId="AppXqj98qxeaynz6dv4459ayz6bnqxbyaqcs" ApplicationName="Music" />
+  <Association Identifier=".eip" ProgId="ImageGlass.AssocFile.EIP" ApplicationName="ImageGlass" />
+  <Association Identifier=".emf" ProgId="ImageGlass.AssocFile.EMF" ApplicationName="ImageGlass" />
+  <Association Identifier=".epub" ProgId="AppXvepbp3z66accmsd0x877zbbxjctkpr6t" ApplicationName="Microsoft Edge" />
+  <Association Identifier=".erf" ProgId="ImageGlass.AssocFile.ERF" ApplicationName="ImageGlass" />
+  <Association Identifier=".esd" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".exif" ProgId="ImageGlass.AssocFile.EXIF" ApplicationName="ImageGlass" />
+  <Association Identifier=".exr" ProgId="ImageGlass.AssocFile.EXR" ApplicationName="ImageGlass" />
+  <Association Identifier=".f4v" ProgId="VLC.f4v" ApplicationName="VLC media player" />
+  <Association Identifier=".fat" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".fbx" ProgId="AppXmgw6pxxs62rbgfp9petmdyb4fx7rnd4k" ApplicationName="Mixed Reality Viewer" />
+  <Association Identifier=".fdf" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".fff" ProgId="ImageGlass.AssocFile.FFF" ApplicationName="ImageGlass" />
+  <Association Identifier=".flac" ProgId="VLC.flac" ApplicationName="VLC media player" />
+  <Association Identifier=".flv" ProgId="VLC.flv" ApplicationName="VLC media player" />
+  <Association Identifier=".gif" ProgId="ImageGlass.AssocFile.GIF" ApplicationName="ImageGlass" />
+  <Association Identifier=".glb" ProgId="AppXmgw6pxxs62rbgfp9petmdyb4fx7rnd4k" ApplicationName="Mixed Reality Viewer" />
+  <Association Identifier=".gltf" ProgId="AppXmgw6pxxs62rbgfp9petmdyb4fx7rnd4k" ApplicationName="Mixed Reality Viewer" />
+  <Association Identifier=".gpr" ProgId="ImageGlass.AssocFile.GPR" ApplicationName="ImageGlass" />
+  <Association Identifier=".gvi" ProgId="VLC.gvi" ApplicationName="VLC media player" />
+  <Association Identifier=".gxf" ProgId="VLC.gxf" ApplicationName="VLC media player" />
+  <Association Identifier=".gz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".gzip" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".hdr" ProgId="ImageGlass.AssocFile.HDR" ApplicationName="ImageGlass" />
+  <Association Identifier=".heic" ProgId="ImageGlass.AssocFile.HEIC" ApplicationName="ImageGlass" />
+  <Association Identifier=".heif" ProgId="ImageGlass.AssocFile.HEIF" ApplicationName="ImageGlass" />
+  <Association Identifier=".hfs" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".hfsx" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".hlp" ProgId="Applications\winhlp32_legacy.exe" ApplicationName="Microsoft® Help"
+  <Association Identifier=".htm" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier=".html" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier=".icffav" ProgId="Applications\NOTEPAD.EXE" ApplicationName="Notepad" />
+  <Association Identifier=".ico" ProgId="ImageGlass.AssocFile.ICO" ApplicationName="ImageGlass" />
+  <Association Identifier=".ifo" ProgId="VLC.ifo" ApplicationName="VLC media player" />
+  <Association Identifier=".iiq" ProgId="ImageGlass.AssocFile.IIQ" ApplicationName="ImageGlass" />
+  <Association Identifier=".inf" ProgId="AppXzwr976v2e060wada4gabrk1x69h2dbwy" ApplicationName="Notepad" />
+  <Association Identifier=".ini" ProgId="AppXhk4des8gf2xat3wtyzc5q06ny78jhkqx" ApplicationName="Notepad" />
+  <Association Identifier=".iso" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".it" ProgId="VLC.it" ApplicationName="VLC media player" />
+  <Association Identifier=".jfif" ProgId="ImageGlass.AssocFile.JFIF" ApplicationName="ImageGlass" />
+  <Association Identifier=".jp2" ProgId="ImageGlass.AssocFile.JP2" ApplicationName="ImageGlass" />
+  <Association Identifier=".jpe" ProgId="ImageGlass.AssocFile.JPE" ApplicationName="ImageGlass" />
+  <Association Identifier=".jpeg" ProgId="ImageGlass.AssocFile.JPEG" ApplicationName="ImageGlass" />
+  <Association Identifier=".jpg" ProgId="ImageGlass.AssocFile.JPG" ApplicationName="ImageGlass" />
+  <Association Identifier=".json" ProgId="Applications\NOTEPAD.EXE" ApplicationName="Notepad" />
+  <Association Identifier=".jxl" ProgId="ImageGlass.AssocFile.JXL" ApplicationName="ImageGlass" />
+  <Association Identifier=".jxr" ProgId="AppX43hnxtbyyps62jhe9sqpdzxn1790zetc" ApplicationName="Photos" OverwriteOnVersionMax="1" OverwriteIfProgIdIs="AppX9vdwcvrwnbettpahnt26jswq0n8hgyah;Paint.Paint;Microsoft.PhotoManager.imagetype;wdpfile" />
+  <Association Identifier=".k25" ProgId="ImageGlass.AssocFile.K25" ApplicationName="ImageGlass" />
+  <Association Identifier=".kdc" ProgId="ImageGlass.AssocFile.KDC" ApplicationName="ImageGlass" />
+  <Association Identifier=".lha" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".liz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".log" ProgId="AppX4ztfk9wxr86nxmzzq47px0nh0e58b8fw" ApplicationName="Notepad" />
+  <Association Identifier=".log" ProgId="txtfile" ApplicationName="Notepad" />
+  <Association Identifier=".lz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".lz4" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".lz5" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".lzh" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".lzma" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".m1v" ProgId="VLC.m1v" ApplicationName="VLC media player" />
+  <Association Identifier=".m2t" ProgId="VLC.m2t" ApplicationName="VLC media player" />
+  <Association Identifier=".m2ts" ProgId="VLC.m2ts" ApplicationName="VLC media player" />
+  <Association Identifier=".m2v" ProgId="VLC.m2v" ApplicationName="VLC media player" />
+  <Association Identifier=".m3u" ProgId="VLC.m3u" ApplicationName="VLC media player" />
+  <Association Identifier=".m3u8" ProgId="VLC.m3u8" ApplicationName="VLC media player" />
+  <Association Identifier=".m4a" ProgId="VLC.m4a" ApplicationName="VLC media player" />
+  <Association Identifier=".m4p" ProgId="VLC.m4p" ApplicationName="VLC media player" />
+  <Association Identifier=".m4r" ProgId="AppXqj98qxeaynz6dv4459ayz6bnqxbyaqcs" ApplicationName="Music" />
+  <Association Identifier=".m4v" ProgId="VLC.m4v" ApplicationName="VLC media player" />
+  <Association Identifier=".mdc" ProgId="ImageGlass.AssocFile.MDC" ApplicationName="ImageGlass" />
+  <Association Identifier=".mef" ProgId="ImageGlass.AssocFile.MEF" ApplicationName="ImageGlass" />
+  <Association Identifier=".mht" ProgId="MSEdgeMHT" ApplicationName="Microsoft Edge" />
+  <Association Identifier=".mhtml" ProgId="MSEdgeMHT" ApplicationName="Microsoft Edge" />
+  <Association Identifier=".mid" ProgId="VLC.mid" ApplicationName="VLC media player" />
+  <Association Identifier=".mka" ProgId="VLC.mka" ApplicationName="VLC media player" />
+  <Association Identifier=".mkv" ProgId="VLC.mkv" ApplicationName="VLC media player" />
+  <Association Identifier=".mlp" ProgId="VLC.mlp" ApplicationName="VLC media player" />
+  <Association Identifier=".mod" ProgId="VLC.mod" ApplicationName="VLC media player" />
+  <Association Identifier=".mos" ProgId="ImageGlass.AssocFile.MOS" ApplicationName="ImageGlass" />
+  <Association Identifier=".mov" ProgId="VLC.mov" ApplicationName="VLC media player" />
+  <Association Identifier=".mp1" ProgId="VLC.mp1" ApplicationName="VLC media player" />
+  <Association Identifier=".mp2" ProgId="VLC.mp2" ApplicationName="VLC media player" />
+  <Association Identifier=".mp2v" ProgId="VLC.mp2v" ApplicationName="VLC media player" />
+  <Association Identifier=".mp3" ProgId="VLC.mp3" ApplicationName="VLC media player" />
+  <Association Identifier=".mp4" ProgId="VLC.mp4" ApplicationName="VLC media player" />
+  <Association Identifier=".mp4v" ProgId="VLC.mp4v" ApplicationName="VLC media player" />
+  <Association Identifier=".mpa" ProgId="VLC.mpa" ApplicationName="VLC media player" />
+  <Association Identifier=".mpc" ProgId="VLC.mpc" ApplicationName="VLC media player" />
+  <Association Identifier=".mpe" ProgId="VLC.mpe" ApplicationName="VLC media player" />
+  <Association Identifier=".mpeg" ProgId="VLC.mpeg" ApplicationName="VLC media player" />
+  <Association Identifier=".mpeg1" ProgId="VLC.mpeg1" ApplicationName="VLC media player" />
+  <Association Identifier=".mpeg2" ProgId="VLC.mpeg2" ApplicationName="VLC media player" />
+  <Association Identifier=".mpeg4" ProgId="VLC.mpeg4" ApplicationName="VLC media player" />
+  <Association Identifier=".mpg" ProgId="VLC.mpg" ApplicationName="VLC media player" />
+  <Association Identifier=".mpp" ProgId="ProjectLibreFile.1" ApplicationName="ProjectLibre.exe" />
+  <Association Identifier=".mpv2" ProgId="VLC.mpv2" ApplicationName="VLC media player" />
+  <Association Identifier=".mrw" ProgId="ImageGlass.AssocFile.MRW" ApplicationName="ImageGlass" />
+  <Association Identifier=".mts" ProgId="VLC.mts" ApplicationName="VLC media player" />
+  <Association Identifier=".mtv" ProgId="VLC.mtv" ApplicationName="VLC media player" />
+  <Association Identifier=".mxf" ProgId="VLC.mxf" ApplicationName="VLC media player" />
+  <Association Identifier=".nef" ProgId="ImageGlass.AssocFile.NEF" ApplicationName="ImageGlass" />
+  <Association Identifier=".nrw" ProgId="ImageGlass.AssocFile.NRW" ApplicationName="ImageGlass" />
+  <Association Identifier=".nsv" ProgId="VLC.nsv" ApplicationName="VLC media player" />
+  <Association Identifier=".ntfs" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".nuv" ProgId="VLC.nuv" ApplicationName="VLC media player" />
+  <Association Identifier=".obj" ProgId="AppXmgw6pxxs62rbgfp9petmdyb4fx7rnd4k" ApplicationName="Mixed Reality Viewer" />
+  <Association Identifier=".obm" ProgId="ImageGlass.AssocFile.OBM" ApplicationName="ImageGlass" />
+  <Association Identifier=".oga" ProgId="AppXqj98qxeaynz6dv4459ayz6bnqxbyaqcs" ApplicationName="Music" />
+  <Association Identifier=".ogg" ProgId="VLC.ogg" ApplicationName="VLC media player" />
+  <Association Identifier=".ogm" ProgId="VLC.ogm" ApplicationName="VLC media player" />
+  <Association Identifier=".ogv" ProgId="VLC.ogv" ApplicationName="VLC media player" />
+  <Association Identifier=".ogx" ProgId="VLC.ogx" ApplicationName="VLC media player" />
+  <Association Identifier=".oma" ProgId="VLC.oma" ApplicationName="VLC media player" />
+  <Association Identifier=".opus" ProgId="VLC.opus" ApplicationName="VLC media player" />
+  <Association Identifier=".orf" ProgId="ImageGlass.AssocFile.ORF" ApplicationName="ImageGlass" />
+  <Association Identifier=".oxps" ProgId="Windows.XPSReachViewer" ApplicationName="XPS Viewer" />
+  <Association Identifier=".pbm" ProgId="ImageGlass.AssocFile.PBM" ApplicationName="ImageGlass" />
+  <Association Identifier=".pcx" ProgId="ImageGlass.AssocFile.PCX" ApplicationName="ImageGlass" />
+  <Association Identifier=".pdf" ProgId="Acrobat.Document.DC" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".pdfxml" ProgId="Acrobat.pdfxml" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".pdx" ProgId="PDXFileType" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".pef" ProgId="ImageGlass.AssocFile.PEF" ApplicationName="ImageGlass" />
+  <Association Identifier=".pgm" ProgId="ImageGlass.AssocFile.PGM" ApplicationName="ImageGlass" />
+  <Association Identifier=".pls" ProgId="VLC.pls" ApplicationName="VLC media player" />
+  <Association Identifier=".ply" ProgId="AppXmgw6pxxs62rbgfp9petmdyb4fx7rnd4k" ApplicationName="Mixed Reality Viewer" />
+  <Association Identifier=".png" ProgId="ImageGlass.AssocFile.PNG" ApplicationName="ImageGlass" />
+  <Association Identifier=".ppm" ProgId="ImageGlass.AssocFile.PPM" ApplicationName="ImageGlass" />
+  <Association Identifier=".ps1" ProgId="AppXxf01pj590w7z9mxmyv3nx0a9ewj3e51g" ApplicationName="Notepad" />
+  <Association Identifier=".psb" ProgId="ImageGlass.AssocFile.PSB" ApplicationName="ImageGlass" />
+  <Association Identifier=".psd" ProgId="ImageGlass.AssocFile.PSD" ApplicationName="ImageGlass" />
+  <Association Identifier=".psd1" ProgId="AppXc9vj55m1n3559gcjff0scsqeket80zp7" ApplicationName="Notepad" />
+  <Association Identifier=".psm1" ProgId="AppX1b0e9ytcwx0wcmvkdey0h6af04t1ta3z" ApplicationName="Notepad" />
+  <Association Identifier=".ptx" ProgId="ImageGlass.AssocFile.PTX" ApplicationName="ImageGlass" />
+  <Association Identifier=".pxn" ProgId="ImageGlass.AssocFile.PXN" ApplicationName="ImageGlass" />
+  <Association Identifier=".qcp" ProgId="VLC.qcp" ApplicationName="VLC media player" />
+  <Association Identifier=".r3d" ProgId="ImageGlass.AssocFile.R3D" ApplicationName="ImageGlass" />
+  <Association Identifier=".ra" ProgId="VLC.ra" ApplicationName="VLC media player" />
+  <Association Identifier=".raf" ProgId="ImageGlass.AssocFile.RAF" ApplicationName="ImageGlass" />
+  <Association Identifier=".rar" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".raw" ProgId="ImageGlass.AssocFile.RAW" ApplicationName="ImageGlass" />
+  <Association Identifier=".rec" ProgId="VLC.rec" ApplicationName="VLC media player" />
+  <Association Identifier=".rle" ProgId="AppXcesbfs704v2mjbts9dkr42s9vmrhxbkj" ApplicationName="Paint" OverwriteOnVersionMax="35" OverwriteIfProgIdIs="rlefile" />
+  <Association Identifier=".rm" ProgId="VLC.rm" ApplicationName="VLC media player" />
+  <Association Identifier=".rmi" ProgId="VLC.rmi" ApplicationName="VLC media player" />
+  <Association Identifier=".rmvb" ProgId="VLC.rmvb" ApplicationName="VLC media player" />
+  <Association Identifier=".rpl" ProgId="VLC.rpl" ApplicationName="VLC media player" />
+  <Association Identifier=".rpm" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".rw2" ProgId="ImageGlass.AssocFile.RW2" ApplicationName="ImageGlass" />
+  <Association Identifier=".rwl" ProgId="ImageGlass.AssocFile.RWL" ApplicationName="ImageGlass" />
+  <Association Identifier=".rwz" ProgId="ImageGlass.AssocFile.RWZ" ApplicationName="ImageGlass" />
+  <Association Identifier=".s3m" ProgId="VLC.s3m" ApplicationName="VLC media player" />
+  <Association Identifier=".scp" ProgId="txtfile" ApplicationName="Notepad" />
+  <Association Identifier=".sdp" ProgId="VLC.sdp" ApplicationName="VLC media player" />
+  <Association Identifier=".secstore" ProgId="Acrobat.SecStore" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".sequ" ProgId="Acrobat.Sequence" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".snd" ProgId="VLC.snd" ApplicationName="VLC media player" />
+  <Association Identifier=".spx" ProgId="VLC.spx" ApplicationName="VLC media player" />
+  <Association Identifier=".squashfs" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".sr2" ProgId="ImageGlass.AssocFile.SR2" ApplicationName="ImageGlass" />
+  <Association Identifier=".srf" ProgId="ImageGlass.AssocFile.SRF" ApplicationName="ImageGlass" />
+  <Association Identifier=".srw" ProgId="ImageGlass.AssocFile.SRW" ApplicationName="ImageGlass" />
+  <Association Identifier=".stl" ProgId="AppXvhc4p7vz4b485xfp46hhk3fq3grkdgjg" ApplicationName="3D Builder" OverwriteOnVersionMax="1" OverwriteIfProgIdIs="AppXr0rz9yckydawgnrx5df1t9s57ne60yhn;AppX4r6v2fg5b2qwg1jprp713smfp4wb02yp;AppXmgw6pxxs62rbgfp9petmdyb4fx7rnd4k" />
+  <Association Identifier=".svg" ProgId="ImageGlass.AssocFile.SVG" ApplicationName="ImageGlass" />
+  <Association Identifier=".swm" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".tar" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".taz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".tbz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".tbz2" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".tga" ProgId="ImageGlass.AssocFile.TGA" ApplicationName="ImageGlass"/>
+  <Association Identifier=".tgz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".thp" ProgId="VLC.thp" ApplicationName="VLC media player" />
+  <Association Identifier=".tif" ProgId="ImageGlass.AssocFile.TIF" ApplicationName="ImageGlass" />
+  <Association Identifier=".tiff" ProgId="ImageGlass.AssocFile.TIFF" ApplicationName="ImageGlass" />
+  <Association Identifier=".tlz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".tod" ProgId="VLC.tod" ApplicationName="VLC media player" />
+  <Association Identifier=".tpz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".ts" ProgId="VLC.ts" ApplicationName="VLC media player" />
+  <Association Identifier=".tta" ProgId="VLC.tta" ApplicationName="VLC media player" />
+  <Association Identifier=".tts" ProgId="VLC.tts" ApplicationName="VLC media player" />
+  <Association Identifier=".txt" ProgId="AppX4ztfk9wxr86nxmzzq47px0nh0e58b8fw" ApplicationName="Notepad" />
+  <Association Identifier=".url" ProgId="InternetShortcut" ApplicationName="Internet Browser" />
+  <Association Identifier=".vhd" ProgId="Windows.VhdFile" ApplicationName="FSLogix Context Menu Handler" />
+  <Association Identifier=".vhdx" ProgId="Windows.VhdFile" ApplicationName="FSLogix Context Menu Handler" />
+  <Association Identifier=".vlc" ProgId="VLC.vlc" ApplicationName="VLC media player" />
+  <Association Identifier=".vlt" ProgId="VLC.vlt" ApplicationName="VLC media player" />
+  <Association Identifier=".vob" ProgId="VLC.vob" ApplicationName="VLC media player" />
+  <Association Identifier=".voc" ProgId="VLC.voc" ApplicationName="VLC media player" />
+  <Association Identifier=".vqf" ProgId="VLC.vqf" ApplicationName="VLC media player" />
+  <Association Identifier=".vro" ProgId="VLC.vro" ApplicationName="VLC media player" />
+  <Association Identifier=".w64" ProgId="VLC.w64" ApplicationName="VLC media player" />
+  <Association Identifier=".wav" ProgId="VLC.wav" ApplicationName="VLC media player" />  <Association Identifier=".wdp" ProgId="ImageGlass.AssocFile.WDP" ApplicationName="ImageGlass" />
+  <Association Identifier=".webm" ProgId="VLC.webm" ApplicationName="VLC media player" />
+  <Association Identifier=".webp" ProgId="ImageGlass.AssocFile.WEBP" ApplicationName="ImageGlass" />
+  <Association Identifier=".wim" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".wm" ProgId="AppXqj98qxeaynz6dv4459ayz6bnqxbyaqcs" ApplicationName="Media Player" OverwriteOnVersionMax="44" OverwriteIfProgIdIs="AppX6eg8h5sxqq90pv53845wmnbewywdqq5h;AppXhjhjmgrfm2d7rd026az898dy2p1pcsyt;WMP11.AssocFile.ASF" />  <Association Identifier=".website" ProgId="IE.AssocFile.WEBSITE" ApplicationName="Microsoft Edge" />
+  <Association Identifier=".wma" ProgId="VLC.wma" ApplicationName="VLC media player" />
+  <Association Identifier=".wmf" ProgId="ImageGlass.AssocFile.WMF" ApplicationName="ImageGlass"/>
+  <Association Identifier=".wmv" ProgId="VLC.wmv" ApplicationName="VLC media player" />
+  <Association Identifier=".wpg" ProgId="ImageGlass.AssocFile.WPG" ApplicationName="ImageGlass" />
+  <Association Identifier=".wsb" ProgId="Windows.Sandbox" ApplicationName="Windows Sandbox" />
+  <Association Identifier=".wsz" ProgId="VLC.wsz" ApplicationName="VLC media player" />
+  <Association Identifier=".wtx" ProgId="AppX4ztfk9wxr86nxmzzq47px0nh0e58b8fw" ApplicationName="Notepad" OverwriteOnVersionMax="34" OverwriteIfProgIdIs="txtfile" />
+  <Association Identifier=".wv" ProgId="VLC.wv" ApplicationName="VLC media player" />
+  <Association Identifier=".wvx" ProgId="VLC.wvx" ApplicationName="VLC media player" />
+  <Association Identifier=".x3f" ProgId="ImageGlass.AssocFile.X3F" ApplicationName="ImageGlass" />
+  <Association Identifier=".xa" ProgId="VLC.xa" ApplicationName="VLC media player" />
+  <Association Identifier=".xar" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".xbm" ProgId="ImageGlass.AssocFile.XBM" ApplicationName="ImageGlass" />
+  <Association Identifier=".xdp" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".xesc" ProgId="VLC.xesc" ApplicationName="VLC media player" />
+  <Association Identifier=".xfdf" ProgId="Acrobat.XFDFDoc" ApplicationName="Adobe Acrobat" />
+  <Association Identifier=".xht" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier=".xhtml" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier=".xm" ProgId="VLC.xm" ApplicationName="VLC media player" />
+  <Association Identifier=".xml" ProgId="Applications\NOTEPAD.EXE" ApplicationName="Notepad" />
+  <Association Identifier=".xpm" ProgId="ImageGlass.AssocFile.XPM" ApplicationName="ImageGlass" />
+  <Association Identifier=".xps" ProgId="Windows.XPSReachViewer" ApplicationName="XPS Viewer" />
+  <Association Identifier=".xvid" ProgId="AppXqj98qxeaynz6dv4459ayz6bnqxbyaqcs" ApplicationName="Media Player" OverwriteOnVersionMax="44" OverwriteIfProgIdIs="AppX6eg8h5sxqq90pv53845wmnbewywdqq5h" />
+  <Association Identifier=".xz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".z" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".zip" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".zpl" ProgId="AppXqj98qxeaynz6dv4459ayz6bnqxbyaqcs" ApplicationName="Music" />
+  <Association Identifier=".zst" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier="ACROBAT" ProgId="acrobat" ApplicationName="Adobe Acrobat" />
+  <Association Identifier="bingmaps" ProgId="AppXp9gkwccvk6fa6yyfq3tmsk8ws2nprk1p" ApplicationName="Maps" OverwriteOnVersionMax="1" OverwriteIfProgIdIs="AppXde453qzh223ys1wt2jpyxz3z4cn10ngt;AppXsmrmb683pb8qxt0pktr3q27hkbyjm8sb" />
+  <Association Identifier="CALLTO" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="ftp" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="http" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="https" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="IM" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="mailto" ProgId="Outlook.URL.mailto.15" ApplicationName="Outlook" />
+  <Association Identifier="microsoft-edge-holographic" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="microsoft-edge" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="MMS" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="ms-screenclip" ProgId="AppXbemgape21yns3k5pd4ah40jz06yq6xrk" ApplicationName="Screen Snipping" />
+  <Association Identifier="ms-xbl-3d8b930f" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="msteams" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="read" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
+  <Association Identifier="SIP" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="SIPS" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="tel" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
+  <Association Identifier="WEBCAL" ProgId="Outlook.URL.webcal.15" ApplicationName="Outlook" />
+</DefaultAssociations>
