@@ -26,7 +26,7 @@ If (Test-Path -Path "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe")
         Write-Host -Object "Microsoft OneDrive sync is completed." -ForegroundColor Green
 
         # Close OneDrive gracefully
-	    Start-Process -FilePath "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/shutdown" -WindowStyle Hidden
+        Start-Process -FilePath "$env:ProgramFiles\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/shutdown" -WindowStyle Hidden
         Exit
     }
     Else
@@ -55,6 +55,8 @@ Remove-Item -Path "$env:LOCALAPPDATA\Packages\*\AC\TokenBroker" -Recurse -Force
 Remove-Item -Path "HKCU:\Software\Microsoft\IdentityCRL" -Recurse -Force
 Remove-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AAD" -Recurse -Force
 Remove-Item -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\WorkplaceJoin" -Recurse -Force
+# https://learn.microsoft.com/en-us/sharepoint/sync-vdi-support
+Remove-Item -Path "HKCU:\Software\Microsoft\OneDrive" -Recurse -Force
 
 Remove-Item -Path "$env:TEMP\*\ODNative.dll" -Recurse -Force
 
