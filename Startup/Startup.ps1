@@ -1,10 +1,23 @@
+# Standalone application install script for VDI environment - (C)2023 Jonathan Pitre
+
 #Requires -Version 5.1
 
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
 
+#region Initialisations
+
 $ErrorActionPreference = "SilentlyContinue"
+# Set the script execution policy for this process
+Try { Set-ExecutionPolicy -ExecutionPolicy 'ByPass' -Scope 'Process' -Force } Catch {}
+# Unblock ps1 script
+Get-ChildItem -Recurse *.ps*1 | Unblock-File
+$env:SEE_MASK_NOZONECHECKS = 1
+
+#endregion
 
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
+
+#region Functions
 
 function Optimize-ScheduledTasks()
 {
@@ -89,145 +102,6 @@ function Detect-CitrixDiskMode ()
     Return $DiskMode
 }
 
-function Optimize-WindowsDefenderATPForNonPersistentMachines ()
-{
-    # Some organizations, use non-persistent virtual machines for their users
-    # A non-persistent machine is created from a master image
-    # Every new machine instance has a different name and these machines are available via pool
-    # Every user logon \ reboot returns machine to image state loosing all user data
-    # This script provides a solution for onboarding such machines
-    # We would like to have sense unique id per machine name in organization
-    # For that purpose, senseGuid is set prior to onboarding
-    # The guid is created deterministically based on combination of orgId and machine name
-    # This script is intended to be integrated in golden image startup
-    Param (
-        [string]
-        [ValidateNotNullOrEmpty()]
-        [ValidateScript({ Test-Path $_ -PathType ùContainerù })]
-        $onboardingPackageLocation = [System.IO.Path]::GetDirectoryName($MyInvocation.MyCommand.Path)
-    )
-
-    Add-Type @'
-using System;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-namespace Sense
-{
-	[EventData(Name = "Onboard")]
-	public struct Onboard
-	{
-		public string Message { get; set; }
-	}
-	public class Trace
-	{
-		public static EventSourceOptions TelemetryCriticalOption = new EventSourceOptions(){Level = EventLevel.Informational, Keywords = (EventKeywords)0x0000800000000000, Tags = (EventTags)0x0200000};
-		public void WriteMessage(string message)
-		{
-			es.Write("OnboardNonPersistentMachine", TelemetryCriticalOption, new Onboard {Message = message});
-		}
-		private static readonly string[] telemetryTraits = { "ETW_GROUP", "{5ECB0BAC-B930-47F5-A8A4-E8253529EDB7}" };
-		private EventSource es = new EventSource("Microsoft.Windows.Sense.Client.VDI",EventSourceSettings.EtwSelfDescribingEventFormat,telemetryTraits);
-	}
-}
-'@
-
-    $logger = New-Object -TypeName Sense.Trace;
-
-    function Trace([string] $message)
-    {
-        $logger.WriteMessage($message)
-    }
-
-    function CreateGuidFromString([string]$str)
-    {
-        $bytes = [System.Text.Encoding]::UTF8.GetBytes($str)
-        $sha1CryptoServiceProvider = New-Object System.Security.Cryptography.SHA1CryptoServiceProvider
-        $hashedBytes = $sha1CryptoServiceProvider.ComputeHash($bytes)
-        [System.Array]::Resize([ref]$hashedBytes, 16);
-        return New-Object System.Guid -ArgumentList @(, $hashedBytes)
-    }
-
-    function Get-ComputerName
-    {
-        return [system.environment]::MachineName
-    }
-
-    function Get-OrgIdFromOnboardingScript($onboardingScript)
-    {
-        return Select-String -Path $onboardingScript -Pattern "orgId\\\\\\`":\\\\\\`"([^\\]+)" | ForEach-Object { $_.Matches[0].Groups[1].Value }
-    }
-
-    function Test-Administrator
-    {
-        $user = [Security.Principal.WindowsIdentity]::GetCurrent();
-        return (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
-    }
-
-    if ((Test-Administrator) -eq $false)
-    {
-        Write-Host -ForegroundColor Red "The script should be executed with admin previliges"
-        Trace("Script wasn't executed as admin");
-        Exit 1;
-    }
-
-    Write-Host "Locating onboarding script under:" $onboardingPackageLocation
-
-    $onboardingScript = [System.IO.Path]::Combine($onboardingPackageLocation, "WindowsDefenderATPOnboardingScript.cmd");
-    if (![System.IO.File]::Exists($onboardingScript))
-    {
-        Write-Host -ForegroundColor Red "Onboarding script not found:" $onboardingScript
-        Trace("Onboarding script not found")
-        Exit 2;
-    }
-
-    $orgId = Get-OrgIdFromOnboardingScript($onboardingScript);
-    if ([string]::IsNullOrEmpty($orgId))
-    {
-        Write-Host -ForegroundColor Red "Could not deduct organization id from onboarding script:" $onboardingScript
-        Trace("Could not deduct organization id from onboarding script")
-        Exit 3;
-    }
-    Write-Host "Identified organization id:" $orgId
-
-    $computerName = GetComputerName;
-    Write-Host "Identified computer name:" $computerName
-
-    $id = $orgId + "_" + $computerName;
-    $senseGuid = CreateGuidFromString($id);
-    Write-Host "Generated senseGuid:" $senseGuid
-
-
-    $senseGuidRegPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Advanced Threat Protection"
-    $senseGuidValueName = "senseGuid";
-    $populatedSenseGuid = [Microsoft.Win32.Registry]::GetValue($senseGuidRegPath, $senseGuidValueName, $null)
-    if ($populatedSenseGuid)
-    {
-        Write-Host -ForegroundColor Red "SenseGuid already populated:" $populatedSenseGuid
-        Trace("SenseGuid already populated")
-        Exit 4;
-    }
-    [Microsoft.Win32.Registry]::SetValue($senseGuidRegPath, $senseGuidValueName, $senseGuid)
-    Write-Host "SenseGuid was set:" $senseGuid
-
-    $vdiTagRegPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Advanced Threat Protection\DeviceTagging"
-    $vdiTagValueName = "VDI";
-    $vdiTag = "NonPersistent";
-    [Microsoft.Win32.Registry]::SetValue($vdiTagRegPath, $vdiTagValueName, $vdiTag)
-    Write-Host "VDI tag was set:" $vdiTag
-
-    Write-Host "Starting onboarding"
-    &$onboardingScript
-    if ($LASTEXITCODE -ne 0)
-    {
-        Write-Host -ForegroundColor Red "Failed to onboard sense service from: $($onboardingScript). Exit code: $($LASTEXITCODE). To troubleshoot, please read https://technet.microsoft.com/en-us/itpro/windows/keep-secure/troubleshoot-onboarding-windows-defender-advanced-threat-protection"
-        Trace("Failed to onboard sense service. LASTEXITCODE=" + $LASTEXITCODE)
-        Exit 5;
-    }
-
-    Write-Host -ForegroundColor Green "Onboarding completed successfully"
-    Trace("SUCCESS")
-}
-
 function Main()
 {
 
@@ -260,6 +134,8 @@ function Main()
 
 }
 
+#endregion
+
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 
 $HypervisorManufacturer = (Get-WmiObject -Query 'select * from Win32_ComputerSystem').Manufacturer
@@ -276,7 +152,35 @@ If (($HypervisorManufacturer -like "Microsoft Corporation") -and ($SendBufferSiz
     Set-NetAdapterAdvancedProperty -DisplayName "Send Buffer Size" -DisplayValue 4MB -NoRestart
 }
 
-#Azure AD join
+# For Hybrid Azure AD joined machine catalogs, create a scheduled task in the master VM that executes the following commands at system startup using SYSTEM account.
+# Azure AD join - https://docs.citrix.com/en-us/citrix-daas/install-configure/machine-identities/hybrid-azure-active-directory-joined.html
+# https://support.citrix.com/article/CTX475187/windows-11-vda-machines-stuck-at-initializing-for-azure-ad-or-hybrid-azure-ad
+$VirtualDesktopKeyPath = 'HKLM:\Software\AzureAD\VirtualDesktop'
+$WorkplaceJoinKeyPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WorkplaceJoin'
+$MaxCount = 60
+
+for ($count = 1; $count -le $MaxCount; $count++)
+{
+    if ((Test-Path -Path $VirtualDesktopKeyPath) -eq $true)
+    {
+        $provider = (Get-Item -Path $VirtualDesktopKeyPath).GetValue("Provider", $null)
+        if ($provider -eq 'Citrix')
+        {
+            break;
+        }
+
+        if ($provider -eq 1)
+        {
+            Set-ItemProperty -Path $VirtualDesktopKeyPath -Name "Provider" -Value "Citrix" -Force
+            Set-ItemProperty -Path $WorkplaceJoinKeyPath -Name "autoWorkplaceJoin" -Value 1 -Force
+            Start-Sleep 5
+            dsregcmd /join
+            break
+        }
+    }
+
+    Start-Sleep 1
+}
 
 # Read HKLM:\SOFTWARE\Citrix\MachineIdentityServiceAgent).CleanOnBoot = 1
 
