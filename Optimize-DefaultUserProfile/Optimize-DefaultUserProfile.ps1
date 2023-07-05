@@ -379,6 +379,9 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersio
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MMTaskbarEnabled" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MMTaskbarMode" -Type DWord -Value "2"
 
+# Remove widgets from taskbar
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarDa" -Type DWord -Value "1"
+
 If ($envOSName -like "*Windows Server 2016")
 {
     # Show Windows Powershell on WinX menu instead of Command Prompt - https://blogs.msmvps.com/russel/2016/11/18/defaulting-to-powershell-instead-of-cmd/
@@ -449,6 +452,9 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersio
 # Advertising ID
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -Name "Enabled" -Type DWord -Value "0"
 
+# Disable News and Interests Taskbar widget
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Feeds" -Name "ShellFeedsTaskbarViewMode" -Type DWord -Value "2"
+
 # Set wallpaper
 #Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "WallPaper" -Type String -Value ""
 #Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "WallPaperStyle" -Type String -Value "10"
@@ -465,9 +471,21 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersio
 # Hide Windows Ink Workspace Button
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\PenWorkspace" -Name "PenWorkspaceButtonDesiredVisibility" -Type DWord -Value "0"
 
-# Disable Game DVR
+# Disable Xbox GameBar DVR
 Set-RegistryKey -Key "HKLM:\DefaultUser\System\GameConfigStore" -Name "GameDVR_Enabled" -Type DWord -Value "0"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\GameDVR" -Name "AppCaptureEnabled" -Type DWord -Value "0"
+
+# Enable light mode
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "SystemUsesLightTheme" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Type DWord -Value "1"
+# Enable automatic accent color on title bars and Windows borders
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "ColorPrevalence" -Type DWord -Value "1"
+
+# Enable the Border and title bar coloring - https://dybbugt.no/2020/1655
+If ($envOSName -like "*Windows Server 2019")
+{
+    Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "ColorPrevalence" -Type DWord -Value "1"
+}
 
 # Speed up logoff
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "AutoEndTasks" -Type String -Value "1"
@@ -521,9 +539,6 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "A
 # Black = 1513239
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "AccentColor" -Type DWord -Value "4292311040"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "ColorizationColor" -Type DWord -Value "4292311040"
-
-# Enable the Border and title bar coloring - https://dybbugt.no/2020/1655
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "ColorPrevalence" -Type DWord -Value "1"
 
 # Internet Explorer
 # Disable warning "Protected mode is turned off for the Local intranet zone" - https://www.carlstalhood.com/group-policy-objects-vda-user-settings
