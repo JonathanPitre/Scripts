@@ -523,15 +523,15 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "FontSmooth
 # Disable smooth scrolling
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "SmoothScroll" -Type DWord -Value "0"
 
+# Screensaver settings
 # Enable password protect the screen saver
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaverIsSecure" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaverIsSecure" -Type String -Value "1"
 # Enable screen saver
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaveActive" -Type DWord -Value "1"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaveActive" -Type String -Value "1"
 # Set screen saver timeout to 10 min
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaveTimeOut" -Type DWord -Value "600"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaveTimeOut" -Type String -Value "600"
 # Force specific screen saver
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "SCRNSAVE.EXE" -Type String -Value "C:\Windows\System32\scrnsave.scr"
-
 # Prevent changing screen saver
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "NoDispScrSavPage" -Type DWord -Value "1"
 
