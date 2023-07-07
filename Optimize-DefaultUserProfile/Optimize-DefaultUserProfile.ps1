@@ -523,8 +523,17 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "FontSmooth
 # Disable smooth scrolling
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop" -Name "SmoothScroll" -Type DWord -Value "0"
 
-# Disable password protect the screen saver - https://support.citrix.com/article/CTX207524
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaverIsSecure" -Type DWord -Value "0"
+# Enable password protect the screen saver
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaverIsSecure" -Type DWord -Value "1"
+# Enable screen saver
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaveActive" -Type DWord -Value "1"
+# Set screen saver timeout to 10 min
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "ScreenSaveTimeOut" -Type DWord -Value "600"
+# Force specific screen saver
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Windows\Control Panel\Desktop" -Name "SCRNSAVE.EXE" -Type String -Value "C:\Windows\System32\scrnsave.scr"
+
+# Prevent changing screen saver
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "NoDispScrSavPage" -Type DWord -Value "1"
 
 # Visual effects - Disable "Animate windows when minimizing and maximizing" - https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-vdi-recommendations-2004
 Set-RegistryKey -Key "HKLM:\DefaultUser\Control Panel\Desktop\WindowMetrics" -Name "MinAnimate" -Type String -Value "0"
@@ -579,7 +588,10 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CacheOthersMail" -Type DWord -Value "0"
 
 # Set Cached Exchange Mode sync setting for profiles to 1 month
+# https://learn.microsoft.com/en-us/azure/virtual-desktop/install-office-on-wvd-master-image
+# https://support.microsoft.com/en-us/topic/update-allows-administrators-to-set-additional-default-mail-and-calendar-synchronization-windows-for-new-exchange-accounts-in-outlook-2016-f56b88ff-0f5f-71c3-f75c-ab30d8ffee79
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "SyncWindowSetting" -Type DWord -Value "1"
+#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "SyncWindowSettingDays" -Type DWord -Value "0"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CalendarSyncWindowSetting" -Type DWord -Value "1"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Policies\Microsoft\Office\16.0\Outlook\Cached Mode" -Name "CalendarSyncWindowSettingMonths" -Type DWord -Value "1"
 
