@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DefaultAssociations>
-  <Association Identifier=".001" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".001" ProgId="7-Zip.001" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".3fr" ProgId="ImageGlass.AssocFile.3FR" ApplicationName="ImageGlass" />
   <Association Identifier=".3g2" ProgId="VLC.3g2" ApplicationName="VLC media player" />
   <Association Identifier=".3ga" ProgId="VLC.3ga" ApplicationName="VLC media player" />
@@ -8,7 +8,7 @@
   <Association Identifier=".3gp2" ProgId="VLC.3gp2" ApplicationName="VLC media player" />
   <Association Identifier=".3gpp" ProgId="VLC.3gpp" ApplicationName="VLC media player" />
   <Association Identifier=".669" ProgId="VLC.669" ApplicationName="VLC media player" />
-  <Association Identifier=".7z" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".7z" ProgId="7-Zip.7z" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".a52" ProgId="VLC.a52" ApplicationName="VLC media player" />
   <Association Identifier=".aac" ProgId="VLC.aac" ApplicationName="VLC media player" />
   <Association Identifier=".ac3" ProgId="VLC.ac3" ApplicationName="VLC media player" />
@@ -22,10 +22,10 @@
   <Association Identifier=".amv" ProgId="VLC.amv" ApplicationName="VLC media player" />
   <Association Identifier=".aob" ProgId="VLC.aob" ApplicationName="VLC media player" />
   <Association Identifier=".ape" ProgId="VLC.ape" ApplicationName="VLC media player" />
-  <Association Identifier=".apfs" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".apfs" ProgId="7-Zip.apfs" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".arg" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".ari" ProgId="ImageGlass.AssocFile.ARI" ApplicationName="ImageGlass" />
-  <Association Identifier=".arj" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".arj" ProgId="7-Zip.arj" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".arw" ProgId="ImageGlass.AssocFile.ARW" ApplicationName="ImageGlass" />
   <Association Identifier=".asf" ProgId="VLC.asf" ApplicationName="VLC media player" />
   <Association Identifier=".asx" ProgId="VLC.asx" ApplicationName="VLC media player" />
@@ -37,14 +37,14 @@
   <Association Identifier=".bay" ProgId="ImageGlass.AssocFile.BAY" ApplicationName="ImageGlass" />
   <Association Identifier=".bin" ProgId="VLC.bin" ApplicationName="VLC media player" />
   <Association Identifier=".bmp" ProgId="ImageGlass.AssocFile.BMP" ApplicationName="ImageGlass" />
-  <Association Identifier=".bz2" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".bzip2" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".cab" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".bz2" ProgId="7-Zip.bz2" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".bzip2" ProgId="7-Zip.bzip2" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".cab" ProgId="7-Zip.cab" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".caf" ProgId="VLC.caf" ApplicationName="VLC media player" />
   <Association Identifier=".cap" ProgId="ImageGlass.AssocFile.CAP" ApplicationName="ImageGlass" />
   <Association Identifier=".cda" ProgId="VLC.cda" ApplicationName="VLC media player" />
   <Association Identifier=".config" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
-  <Association Identifier=".cpio" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".cpio" ProgId="7-Zip.cpio" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".cr2" ProgId="ImageGlass.AssocFile.CR2" ApplicationName="ImageGlass" />
   <Association Identifier=".cr3" ProgId="ImageGlass.AssocFile.CR3" ApplicationName="ImageGlass" />
   <Association Identifier=".crw" ProgId="ImageGlass.AssocFile.CRW" ApplicationName="ImageGlass" />
@@ -56,10 +56,10 @@
   <Association Identifier=".dcr" ProgId="ImageGlass.AssocFile.DCR" ApplicationName="ImageGlass" />
   <Association Identifier=".dcs" ProgId="ImageGlass.AssocFile.DCS" ApplicationName="ImageGlass" />
   <Association Identifier=".dds" ProgId="ImageGlass.AssocFile.DDS" ApplicationName="ImageGlass" />
-  <Association Identifier=".deb" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".deb" ProgId="7-Zip.deb" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".dib" ProgId="ImageGlass.AssocFile.DIB" ApplicationName="ImageGlass" />
   <Association Identifier=".divx" ProgId="VLC.divx" ApplicationName="VLC media player" />
-  <Association Identifier=".dmg" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".dmg" ProgId="7-Zip.dmg" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".dng" ProgId="ImageGlass.AssocFile.DNG" ApplicationName="ImageGlass" />
   <Association Identifier=".drc" ProgId="VLC.drc" ApplicationName="VLC media player" />
   <Association Identifier=".drf" ProgId="ImageGlass.AssocFile.DRF" ApplicationName="ImageGlass" />
@@ -69,11 +69,11 @@
   <Association Identifier=".emf" ProgId="ImageGlass.AssocFile.EMF" ApplicationName="ImageGlass" />
   <Association Identifier=".epub" ProgId="AppXvepbp3z66accmsd0x877zbbxjctkpr6t" ApplicationName="Microsoft Edge" />
   <Association Identifier=".erf" ProgId="ImageGlass.AssocFile.ERF" ApplicationName="ImageGlass" />
-  <Association Identifier=".esd" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".esd" ProgId="7-Zip.esd" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".exif" ProgId="ImageGlass.AssocFile.EXIF" ApplicationName="ImageGlass" />
   <Association Identifier=".exr" ProgId="ImageGlass.AssocFile.EXR" ApplicationName="ImageGlass" />
   <Association Identifier=".f4v" ProgId="VLC.f4v" ApplicationName="VLC media player" />
-  <Association Identifier=".fat" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".fat" ProgId="7-Zip.fat" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".fdf" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".fff" ProgId="ImageGlass.AssocFile.FFF" ApplicationName="ImageGlass" />
   <Association Identifier=".flac" ProgId="VLC.flac" ApplicationName="VLC media player" />
@@ -81,13 +81,12 @@
   <Association Identifier=".gif" ProgId="ImageGlass.AssocFile.GIF" ApplicationName="ImageGlass" />
   <Association Identifier=".gpr" ProgId="ImageGlass.AssocFile.GPR" ApplicationName="ImageGlass" />
   <Association Identifier=".gxf" ProgId="VLC.gxf" ApplicationName="VLC media player" />
-  <Association Identifier=".gz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".gzip" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".gz" ProgId="7-Zip.gz" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".gzip" ProgId="7-Zip.gzip" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".hdr" ProgId="ImageGlass.AssocFile.HDR" ApplicationName="ImageGlass" />
   <Association Identifier=".heic" ProgId="ImageGlass.AssocFile.HEIC" ApplicationName="ImageGlass" />
   <Association Identifier=".heif" ProgId="ImageGlass.AssocFile.HEIF" ApplicationName="ImageGlass" />
-  <Association Identifier=".hfs" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".hfsx" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".hfs" ProgId="7-Zip.hfs" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".htm" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier=".html" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier=".icffav" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
@@ -96,7 +95,7 @@
   <Association Identifier=".iiq" ProgId="ImageGlass.AssocFile.IIQ" ApplicationName="ImageGlass" />
   <Association Identifier=".inf" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".ini" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
-  <Association Identifier=".iso" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".iso" ProgId="7-Zip.iso" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".it" ProgId="VLC.it" ApplicationName="VLC media player" />
   <Association Identifier=".jfif" ProgId="ImageGlass.AssocFile.JFIF" ApplicationName="ImageGlass" />
   <Association Identifier=".jp2" ProgId="ImageGlass.AssocFile.JP2" ApplicationName="ImageGlass" />
@@ -107,14 +106,10 @@
   <Association Identifier=".jxl" ProgId="ImageGlass.AssocFile.JXL" ApplicationName="ImageGlass" />
   <Association Identifier=".k25" ProgId="ImageGlass.AssocFile.K25" ApplicationName="ImageGlass" />
   <Association Identifier=".kdc" ProgId="ImageGlass.AssocFile.KDC" ApplicationName="ImageGlass" />
-  <Association Identifier=".lha" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".liz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".lha" ProgId="7-Zip.lha" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".log" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
-  <Association Identifier=".lz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".lz4" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".lz5" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".lzh" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".lzma" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".lzh" ProgId="7-Zip.lzh" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".lzma" ProgId="7-Zip.lzma" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".m1v" ProgId="VLC.m1v" ApplicationName="VLC media player" />
   <Association Identifier=".m2t" ProgId="VLC.m2t" ApplicationName="VLC media player" />
   <Association Identifier=".m2ts" ProgId="VLC.m2ts" ApplicationName="VLC media player" />
@@ -157,7 +152,7 @@
   <Association Identifier=".nef" ProgId="ImageGlass.AssocFile.NEF" ApplicationName="ImageGlass" />
   <Association Identifier=".nrw" ProgId="ImageGlass.AssocFile.NRW" ApplicationName="ImageGlass" />
   <Association Identifier=".nsv" ProgId="VLC.nsv" ApplicationName="VLC media player" />
-  <Association Identifier=".ntfs" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".ntfs" ProgId="7-Zip.ntfs" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".nuv" ProgId="VLC.nuv" ApplicationName="VLC media player" />
   <Association Identifier=".obm" ProgId="ImageGlass.AssocFile.OBM" ApplicationName="ImageGlass" />
   <Association Identifier=".oga" ProgId="VLC.oga" ApplicationName="VLC media player" />
@@ -188,13 +183,13 @@
   <Association Identifier=".r3d" ProgId="ImageGlass.AssocFile.R3D" ApplicationName="ImageGlass" />
   <Association Identifier=".raf" ProgId="ImageGlass.AssocFile.RAF" ApplicationName="ImageGlass" />
   <Association Identifier=".ram" ProgId="VLC.ram" ApplicationName="VLC media player" />
-  <Association Identifier=".rar" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".rar" ProgId="7-Zip.rar" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".raw" ProgId="ImageGlass.AssocFile.RAW" ApplicationName="ImageGlass" />
   <Association Identifier=".rec" ProgId="VLC.rec" ApplicationName="VLC media player" />
   <Association Identifier=".rm" ProgId="VLC.rm" ApplicationName="VLC media player" />
   <Association Identifier=".rmi" ProgId="VLC.rmi" ApplicationName="VLC media player" />
   <Association Identifier=".rmvb" ProgId="VLC.rmvb" ApplicationName="VLC media player" />
-  <Association Identifier=".rpm" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".rpm" ProgId="7-Zip.rpm" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".rw2" ProgId="ImageGlass.AssocFile.RW2" ApplicationName="ImageGlass" />
   <Association Identifier=".rwl" ProgId="ImageGlass.AssocFile.RWL" ApplicationName="ImageGlass" />
   <Association Identifier=".rwz" ProgId="ImageGlass.AssocFile.RWZ" ApplicationName="ImageGlass" />
@@ -205,28 +200,27 @@
   <Association Identifier=".sequ" ProgId="Acrobat.Sequence" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".snd" ProgId="VLC.snd" ApplicationName="VLC media player" />
   <Association Identifier=".spx" ProgId="VLC.spx" ApplicationName="VLC media player" />
-  <Association Identifier=".squashfs" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".squashfs" ProgId="7-Zip.squashfs" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".sr2" ProgId="ImageGlass.AssocFile.SR2" ApplicationName="ImageGlass" />
   <Association Identifier=".srf" ProgId="ImageGlass.AssocFile.SRF" ApplicationName="ImageGlass" />
   <Association Identifier=".srw" ProgId="ImageGlass.AssocFile.SRW" ApplicationName="ImageGlass" />
   <Association Identifier=".svg" ProgId="ImageGlass.AssocFile.SVG" ApplicationName="ImageGlass" />
-  <Association Identifier=".swm" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".tar" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".taz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".tbz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".tbz2" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".swm" ProgId="7-Zip.swm" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".tar" ProgId="7-Zip.tar" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".taz" ProgId="7-Zip.taz" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".tbz" ProgId="7-Zip.tbz" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".tbz2" ProgId="7-Zip.tbz2" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".tga" ProgId="ImageGlass.AssocFile.TGA" ApplicationName="ImageGlass"/>
-  <Association Identifier=".tgz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".thp" ProgId="VLC.thp" ApplicationName="VLC media player" />
+  <Association Identifier=".tgz" ProgId="7-Zip.tgz" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".tif" ProgId="ImageGlass.AssocFile.TIF" ApplicationName="ImageGlass" />
   <Association Identifier=".tiff" ProgId="ImageGlass.AssocFile.TIFF" ApplicationName="ImageGlass" />
-  <Association Identifier=".tlz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
   <Association Identifier=".tod" ProgId="VLC.tod" ApplicationName="VLC media player" />
-  <Association Identifier=".tpz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".tpz" ProgId="7-Zip.tpz" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".ts" ProgId="VLC.ts" ApplicationName="VLC media player" />
   <Association Identifier=".tta" ProgId="VLC.tta" ApplicationName="VLC media player" />
   <Association Identifier=".tts" ProgId="VLC.tts" ApplicationName="VLC media player" />
   <Association Identifier=".txt" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
+  <Association Identifier=".txz" ProgId="7-Zip.txz" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".url" ProgId="InternetShortcut" ApplicationName="Internet Browser" />
   <Association Identifier=".vhd" ProgId="Windows.VhdFile" ApplicationName="FSLogix Context Menu Handler" />
   <Association Identifier=".vhdx" ProgId="Windows.VhdFile" ApplicationName="FSLogix Context Menu Handler" />
@@ -241,7 +235,7 @@
   <Association Identifier=".webm" ProgId="VLC.webm" ApplicationName="VLC media player" />
   <Association Identifier=".webp" ProgId="ImageGlass.AssocFile.WEBP" ApplicationName="ImageGlass" />
   <Association Identifier=".website" ProgId="IE.AssocFile.WEBSITE" ApplicationName="Microsoft Edge" />
-  <Association Identifier=".wim" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".wim" ProgId="7-Zip.wim" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".wma" ProgId="VLC.wma" ApplicationName="VLC media player" />
   <Association Identifier=".wmf" ProgId="ImageGlass.AssocFile.WMF" ApplicationName="ImageGlass"/>
   <Association Identifier=".wmv" ProgId="VLC.wmv" ApplicationName="VLC media player" />
@@ -251,7 +245,7 @@
   <Association Identifier=".wv" ProgId="VLC.wv" ApplicationName="VLC media player" />
   <Association Identifier=".x3f" ProgId="ImageGlass.AssocFile.X3F" ApplicationName="ImageGlass" />
   <Association Identifier=".xa" ProgId="VLC.xa" ApplicationName="VLC media player" />
-  <Association Identifier=".xar" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".xar" ProgId="7-Zip.xar" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".xbm" ProgId="ImageGlass.AssocFile.XBM" ApplicationName="ImageGlass" />
   <Association Identifier=".xdp" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".xfdf" ProgId="Acrobat.XFDFDoc" ApplicationName="Adobe Acrobat" />
@@ -260,10 +254,10 @@
   <Association Identifier=".xm" ProgId="VLC.xm" ApplicationName="VLC media player" />
   <Association Identifier=".xml" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".xpm" ProgId="ImageGlass.AssocFile.XPM" ApplicationName="ImageGlass" />
-  <Association Identifier=".xz" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".z" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".zip" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
-  <Association Identifier=".zst" ProgId="AppXeaf2hm5h338xzz2st05gvx8xgnea24pd" ApplicationName="NanaZip Preview" />
+  <Association Identifier=".xspf" ProgId="VLC.xspf" ApplicationName="VLC media player" />
+  <Association Identifier=".xz" ProgId="7-Zip.xz" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".z" ProgId="7-Zip.z" ApplicationName="7-Zip File Manager" />
+  <Association Identifier=".zip" ProgId="7-Zip.zip" ApplicationName="7-Zip File Manager" />
   <Association Identifier="ACROBAT" ProgId="acrobat" ApplicationName="Adobe Acrobat" />
   <Association Identifier="CALLTO" ProgId="TeamsURL" ApplicationName="Microsoft Teams" />
   <Association Identifier="ftp" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
