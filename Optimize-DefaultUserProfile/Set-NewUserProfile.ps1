@@ -60,7 +60,7 @@ Function Initialize-Module
 # Install and import modules list
 Foreach ($Module in $Modules)
 {
-    Initialize-Module -Module $Module
+    #Initialize-Module -Module $Module
 }
 
 #endregion
@@ -70,7 +70,7 @@ Foreach ($Module in $Modules)
 #region Execution
 
 # Get user AD properties
-$UserProperties = Get-ADUser -Filter { SamAccountName -like $env:USERNAME } -Properties SamAccountName, ProfilePath | Select-Object SamAccountName, ProfilePath
+#$UserProperties = Get-ADUser -Filter { SamAccountName -like $env:USERNAME } -Properties SamAccountName, ProfilePath | Select-Object SamAccountName, ProfilePath
 
 If ($null -ne $UserProperties)
 {
@@ -97,32 +97,37 @@ If ($null -ne $UserProperties)
 }
 
 # Launch Microsoft Outlook
+$Key = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\OUTLOOK.EXE\'
+$exe = (Get-ItemProperty -Path $Key).'(default)'
 If (Get-Process | Where-Object Name -EQ Outlook)
 {
     Write-Verbose -Message 'Outlook is already running. No action needed.'
 }
+ElseIf (Test-Path -Path $exe)
+{
+    Write-Verbose -Message "Starting Microsoft Outlook application..."
+    Start-Process -FilePath $exe -ArgumentList "/resetfoldernames /recycle"
+}
 Else
 {
-    $Key = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\OUTLOOK.EXE\'
+    Throw "Microsoft Outlook executable was not found."
+}
 
-    If (-Not(Test-Path -Path $Key))
-    {
-        Throw "Microsoft Outlook executable was not found."
 
-    }
-    Else
-    {
-        $exe = (Get-ItemProperty -Path $Key).'(default)'
-        If (Test-Path -Path $exe)
-        {
-            Write-Verbose -Message "Starting Microsoft Outlook application..."
-            Start-Process -FilePath $exe -ArgumentList "/resetfoldernames /recycle"
-        }
-        Else
-        {
-            Throw "Microsoft Outlook executable was not found."
-        }
-    }
+# On Server 2019, fix Microsoft ADD Broker plugin before launching Microsoft OneDrive
+If (Get-Process | Where-Object name -EQ OneDrive)
+{
+    Write-Verbose -Message "Microsoft OneDrive is already running. Process will be killed."
+    Stop-Process -Name OneDrive -Force
+}
+ElseIf (Test-Path -Path "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe")
+{
+    Write-Verbose -Message "Starting Microsoft OneDrive..."
+    Start-Process -FilePath "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/background /setautostart"
+}
+Else
+{
+    Throw "Path to Microsoft OneDrive executable was not found."
 }
 
 # Launch Microsoft Teams twice to avoid the notification for the new meeting experience
@@ -135,43 +140,21 @@ If ((Get-Process | Where-Object Name -EQ Teams) -and (Test-Path -Path $exe))
     Write-Verbose -Message "Starting Microsoft Teams..."
     Start-Process -FilePath $exe
 }
-Else
+ElseIf ((Test-Path -Path $exe))
 {
-    If (-Not(Test-Path -Path $exe))
-    {
-        Throw "Microsoft Teams executable was not found."
+    Write-Verbose -Message "Starting Microsoft Teams..."
+    Start-Process -FilePath $exe -PassThru
+    Start-Sleep -Seconds 20
+    Stop-Process -Name Teams -Force
+    Start-Sleep -Seconds 2
+    Write-Verbose -Message "Starting Microsoft Teams..."
+    Start-Process -FilePath $exe -PassThru
 
-    }
-    Else
-    {
-        Write-Verbose -Message "Starting Microsoft Teams..."
-        Start-Process -FilePath $exe
-        Start-Sleep -Seconds 5
-        Stop-Process -Name Teams -Force
-        Start-Sleep -Seconds 2
-        Write-Verbose -Message "Starting Microsoft Teams..."
-        Start-Process -FilePath $exe
-    }
-}
-
-
-<# Fix Microsoft ADD Broker plugin before launching Microsoft OneDrive
-If (Get-Process | Where-Object name -eq OneDrive)
-{
-    Write-Verbose -Message "Microsoft OneDrive is already running. Process will be killed."
-    Stop-Process -Name OneDrive -Force
-}
-
-If (-Not(Test-Path -Path "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe"))
-{
-    Throw "Path to Microsoft OneDrive executable was not found."
 }
 Else
 {
-    Write-Verbose -Message "Starting Microsoft OneDrive..."
-    Start-Process -FilePath "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/background"
+    Throw "Microsoft Teams executable was not found."
 }
-#>
 
 <# Backup Mozilla Firefox bookmarks
 New-Item -Path "$env:USERPROFILE\Documents\Firefox" -ItemType Directory -Force
@@ -188,9 +171,9 @@ If (Test-Path -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Firefox 
     Remove-Item -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Firefox Private Browsing.lnk" -Force
 }
 
-If (Test-Path -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Navigation privée de Firefox.lnk" ) -Force
+If (Test-Path -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Navigation privée de Firefox.lnk")
 {
-    Remove-Item -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Navigation privée de Firefox.lnk"
+    Remove-Item -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Navigation privée de Firefox.lnk" -Force
 }
 
 #endregion
