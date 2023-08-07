@@ -626,6 +626,8 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Te
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "PPT_RecordVideoPresentation_Callout" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "PreviewPlaceUpdate" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "RibbonOverflowTeachingCalloutID" -Type DWord -Value "2"
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "RoamingSigTeachingCallout" -Type DWord -Value "2"
+
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "Search.TopResults" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "SLRToggleReplaceTeachingCalloutID" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "ThreadedCommentsCallout" -Type DWord -Value "2"
