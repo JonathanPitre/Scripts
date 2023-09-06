@@ -78,28 +78,85 @@ function Optimize-ScheduledTasks()
     }
 }
 
-function Detect-CitrixDiskMode ()
+Function Get-CitrixDiskMode
 {
-    Write-Host "Detect the Citrix Disk Mode 'Shared' or 'Private'"
-    If ( Test-Path -Path $Personality )
-    {
-        If ( Select-String -Path $Personality -Pattern "$DiskMode=Shared")
-        {
-            $DiskMode = "ReadOnly"
-            Write-Host "The current Disk Mode is SHARED (Read-Only)"
+    <#
+    .SYNOPSIS
+        Get Citrix disk mode.
+    .DESCRIPTION
+        Get Citrix disk mode.
+    .PARAMETER Personality
+        Specifies Citrix personality file location.
+    .EXAMPLE
+        Get-CitrixDiskMode
+    .INPUTS
+        None.
+    .OUTPUTS
+        None.
+    .NOTES
+        Created by Jonathan Pitre.
+    #>
+    [CmdletBinding()]
+    Param (
+        [Parameter(ValueFromPipeline = $true)]
+        [ValidateNotNullOrEmpty()]
+        $Personality = (Get-ChildItem -Path "$env:SystemDrive\*Personality.ini" | Select-Object -ExpandProperty FullName)
+    )
 
-        }
-        ElseIf ( Select-String -Path $Personality -Pattern "$DiskMode=Private")
-        {
-            $DiskMode = "ReadWrite"
-            Write-Host "The current Disk Mode is Private (Read/Write)"
-        }
-    }
-    Else
+    Begin
     {
-        Write-Host "The current machine is not a Citrix PVS nor MCS device."
+        [string]$script:citrixDiskMode = $null
     }
-    Return $DiskMode
+    Process
+    {
+        If (Test-Path -Path $Personality)
+        {
+            If (Select-String -Path $Personality -Pattern "$DiskMode=Shared")
+            {
+                Write-Host -Object "The current Citrix Disk Mode is Shared (Read-Only)." -ForegroundColor Red -Verbose
+                Write-Log -Message "The current Citrix Disk Mode is Shared (Read-Only)." -Severity 4 -LogType CMTrace -WriteHost $True
+                Write-Host -Object "This script can only be run in Private (Read/Write) mode!" -ForegroundColor Red -Verbose
+                [string]$script:citrixDiskMode = "ReadOnly"
+                Exit
+            }
+            ElseIf (Select-String -Path $Personality -Pattern "$DiskMode=Private")
+            {
+                Write-Host -Object "The current Citrix Disk Mode is Private (Read/Write)." -ForegroundColor Green -Verbose
+                Write-Log -Message "The current Citrix Disk Mode is Private (Read/Write)." -Severity 1 -LogType CMTrace
+                [string]$script:citrixDiskMode = "ReadWrite"
+            }
+        }
+        Else
+        {
+            Write-Host -Object "The current machine is not running Citrix PVS nor MCS." -ForegroundColor Red -Verbose
+        }
+
+    }
+    End
+    {
+    }
+}
+
+Write-Host "Detect the Citrix Disk Mode 'Shared' or 'Private'"
+If ( Test-Path -Path $Personality )
+{
+    If ( Select-String -Path $Personality -Pattern "$DiskMode=Shared")
+    {
+        $DiskMode = "ReadOnly"
+        Write-Host "The current Disk Mode is SHARED (Read-Only)"
+
+    }
+    ElseIf ( Select-String -Path $Personality -Pattern "$DiskMode=Private")
+    {
+        $DiskMode = "ReadWrite"
+        Write-Host "The current Disk Mode is Private (Read/Write)"
+    }
+}
+Else
+{
+    Write-Host "The current machine is not a Citrix PVS nor MCS device."
+}
+Return $DiskMode
 }
 
 function Main()
@@ -140,8 +197,7 @@ function Main()
 
 $HypervisorManufacturer = (Get-WmiObject -Query 'select * from Win32_ComputerSystem').Manufacturer
 $SendBufferSize = (Get-NetAdapterAdvancedProperty -DisplayName "Send Buffer Size").DisplayValue
-$Personality = "$env:SystemDrive\Personality.ini"
-$DiskMode = Detect-CitrixDiskMode
+$citrixDiskMode = Get-CitrixDiskMode
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
@@ -159,17 +215,17 @@ $VirtualDesktopKeyPath = 'HKLM:\Software\AzureAD\VirtualDesktop'
 $WorkplaceJoinKeyPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WorkplaceJoin'
 $MaxCount = 60
 
-for ($count = 1; $count -le $MaxCount; $count++)
+For ($count = 1; $count -le $MaxCount; $count++)
 {
-    if ((Test-Path -Path $VirtualDesktopKeyPath) -eq $true)
+    If ((Test-Path -Path $VirtualDesktopKeyPath) -eq $true)
     {
         $provider = (Get-Item -Path $VirtualDesktopKeyPath).GetValue("Provider", $null)
-        if ($provider -eq 'Citrix')
+        If ($provider -eq 'Citrix')
         {
             break;
         }
 
-        if ($provider -eq 1)
+        If ($provider -eq 1)
         {
             Set-ItemProperty -Path $VirtualDesktopKeyPath -Name "Provider" -Value "Citrix" -Force
             Set-ItemProperty -Path $WorkplaceJoinKeyPath -Name "autoWorkplaceJoin" -Value 1 -Force
@@ -191,11 +247,11 @@ for ($count = 1; $count -le $MaxCount; $count++)
 Main
 
 # Force GPupdate, useful for shitty domain
-Invoke-GPUpdate -Force
+#Invoke-GPUpdate -Force
 
 # Restart FSLogix Service
-Restart-Service frxsvc -Name -Force
-Restart-Service frxccds -Name -Force
+#Restart-Service frxsvc -Name -Force
+#Restart-Service frxccds -Name -Force
 
 # Launch process if image is in read-only mode
 # See https://github.com/JamesKindon/Citrix/blob/master/PreFetchStartApps.ps1
