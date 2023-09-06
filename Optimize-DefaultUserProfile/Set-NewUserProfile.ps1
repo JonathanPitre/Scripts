@@ -21,6 +21,38 @@ $env:SEE_MASK_NOZONECHECKS = 1
 [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
 $Modules = @("ActiveDirectory") # Modules list
 
+Function Get-ScriptPath
+{
+    <#
+    .SYNOPSIS
+        Get-ScriptPath returns the path of the current script.
+    .OUTPUTS
+        System.String
+    #>
+    [CmdletBinding()]
+    [OutputType([string])]
+    Param()
+
+    Begin
+    {
+        Remove-Variable appScriptPath
+    }
+    Process
+    {
+        If ($psEditor) { Split-Path -Path $psEditor.GetEditorContext().CurrentFile.Path } # Visual Studio Code
+        ElseIf ($MyInvocation.MyCommand.CommandType -eq "ExternalScript") { Split-Path -Path $My$MyInvocation.MyCommand.Source } # PS1 converted to EXE
+        ElseIf ($null -ne $HostInvocation) { $HostInvocation.MyCommand.Path } # SAPIEN PowerShell Studio
+        ElseIf ($psISE) { Split-Path -Path $psISE.CurrentFile.FullPath } # Windows PowerShell ISE
+        ElseIf ($MyInvocation.PSScriptRoot) { $MyInvocation.PSScriptRoot } # Windows PowerShell 3.0+
+        ElseIf ($MyInvocation.MyCommand.Path) { Split-Path -Path $MyInvocation.MyCommand.Path -Parent } # Windows PowerShell
+        Else
+        {
+            Write-Host -Object "Unable to resolve script's file path!" -ForegroundColor Red
+            Exit 1
+        }
+    }
+}
+
 Function Initialize-Module
 {
     <#
@@ -57,10 +89,12 @@ Function Initialize-Module
     }
 }
 
+[string]$appScriptPath = Get-ScriptPath # Get the current script path
+
 # Install and import modules list
 Foreach ($Module in $Modules)
 {
-    #Initialize-Module -Module $Module
+    Initialize-Module -Module $Module
 }
 
 #endregion
@@ -70,9 +104,9 @@ Foreach ($Module in $Modules)
 #region Execution
 
 # Get user AD properties
-#$UserProperties = Get-ADUser -Filter { SamAccountName -like $env:USERNAME } -Properties SamAccountName, ProfilePath | Select-Object SamAccountName, ProfilePath
+$userProperties = Get-ADUser -Filter { SamAccountName -like
 
-If ($null -ne $UserProperties)
+If ($null -ne $userProperties)
 {
     # Detect Microsoft Outlook signature location
     If (Test-Path -Path "$($UserProperties.ProfilePath)AppData\Roaming\Microsoft\Signatures")
@@ -92,38 +126,45 @@ If ($null -ne $UserProperties)
     }
     Else
     {
-        Write-Verbose -Message "No Microsoft Outlook signatures was found."
+        Write-Host -Object "No Microsoft Outlook signatures was found." -ForegroundColor Green
     }
 }
 
 # Launch Microsoft Outlook
-$Key = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\OUTLOOK.EXE\'
-$exe = (Get-ItemProperty -Path $Key).'(default)'
-If (Get-Process | Where-Object Name -EQ Outlook)
+[bool]$isOutlookRunning = [bool](Get-Process -Name 'Outlook' | Where-Object { $_.SI -eq (Get-Process -PID $PID).SessionId })
+$regKey = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\OUTLOOK.EXE\'
+$exe = (Get-ItemProperty -Path $regKey).'(default)'
+If ($isOutlookRunning)
 {
-    Write-Verbose -Message 'Outlook is already running. No action needed.'
+    Write-Host -Object "Microsoft Outlook is already running. Process will be killed." -ForegroundColor Yellow
+    Stop-Process -Name 'Outlook' -Force
+    Write-Host -Object "Starting Microsoft Outlook application..." -ForegroundColor Green
+    Start-Process -FilePath "$exe" -ArgumentList "/resetfoldernames /recycle" -WindowStyle Minimized
 }
 ElseIf (Test-Path -Path $exe)
 {
-    Write-Verbose -Message "Starting Microsoft Outlook application..."
-    Start-Process -FilePath $exe -ArgumentList "/resetfoldernames /recycle"
+    Write-Host -Object "Starting Microsoft Outlook application..." -ForegroundColor Green
+    Start-Process -FilePath "$exe" -ArgumentList "/resetfoldernames /recycle" -WindowStyle Minimized
 }
 Else
 {
     Throw "Microsoft Outlook executable was not found."
 }
 
-
 # On Server 2019, fix Microsoft ADD Broker plugin before launching Microsoft OneDrive
-If (Get-Process | Where-Object name -EQ OneDrive)
+[bool]$isOneDriveRunning = [bool](Get-Process -Name 'OneDrive' | Where-Object { $_.SI -eq (Get-Process -PID $PID).SessionId })
+$exe = "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe"
+If ($isOneDriveRunning)
 {
-    Write-Verbose -Message "Microsoft OneDrive is already running. Process will be killed."
-    Stop-Process -Name OneDrive -Force
+    Write-Host -Object "Microsoft OneDrive is already running. Process will be killed." -ForegroundColor Yellow
+    Stop-Process -Name 'OneDrive' -Force
+    Write-Host -Object "Starting Microsoft OneDrive..." -ForegroundColor Green
+    Start-Process -FilePath $exe -ArgumentList "/background /setautostart" -WindowStyle Minimized
 }
 ElseIf (Test-Path -Path "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe")
 {
-    Write-Verbose -Message "Starting Microsoft OneDrive..."
-    Start-Process -FilePath "${env:ProgramFiles}\Microsoft OneDrive\OneDrive.exe" -ArgumentList "/background /setautostart"
+    Write-Host -Object "Starting Microsoft OneDrive..." -ForegroundColor Green
+    Start-Process -FilePath $exe -ArgumentList "/background /setautostart" -WindowStyle Minimized
 }
 Else
 {
@@ -131,25 +172,26 @@ Else
 }
 
 # Launch Microsoft Teams twice to avoid the notification for the new meeting experience
+[bool]$isTeamsRunning = [bool](Get-Process -Name 'Teams' | Where-Object { $_.SI -eq (Get-Process -PID $PID).SessionId })
 $exe = "${env:ProgramFiles(x86)}\Microsoft\Teams\current\Teams.exe"
-If ((Get-Process | Where-Object Name -EQ Teams) -and (Test-Path -Path $exe))
+If (($isTeamsRunning) -and (Test-Path -Path $exe))
 {
-    Write-Verbose -Message 'Teams is already running. Process will be killed.'
-    Stop-Process -Name Teams -Force
+    Write-Host -Object 'Teams is already running. Process will be killed.' -ForegroundColor Yellow
+    Stop-Process -Name 'Teams' -Force
     Start-Sleep -Seconds 2
-    Write-Verbose -Message "Starting Microsoft Teams..."
-    Start-Process -FilePath $exe
+    Remove-Item -Path "$env:APPDATA\Microsoft\Teams\hooks.json"
+    Write-Host -Object "Starting Microsoft Teams..." -ForegroundColor Green
+    Start-Process -FilePath $exe -WindowStyle Minimized | Out-Null
 }
-ElseIf ((Test-Path -Path $exe))
+ElseIf (Test-Path -Path $exe)
 {
-    Write-Verbose -Message "Starting Microsoft Teams..."
-    Start-Process -FilePath $exe -PassThru
-    Start-Sleep -Seconds 20
-    Stop-Process -Name Teams -Force
+    Write-Host -Object "Starting Microsoft Teams..." -ForegroundColor Green
+    Start-Process -FilePath $exe -WindowStyle Minimized | Out-Null
+    Start-Sleep -Seconds 30
+    Stop-Process -Name 'Teams' -Force
     Start-Sleep -Seconds 2
-    Write-Verbose -Message "Starting Microsoft Teams..."
-    Start-Process -FilePath $exe -PassThru
-
+    Write-Host -Object "Starting Microsoft Teams..." -ForegroundColor Green
+    Start-Process -FilePath $exe -WindowStyle Minimized | Out-Null
 }
 Else
 {
@@ -170,8 +212,7 @@ If (Test-Path -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Firefox 
 {
     Remove-Item -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Firefox Private Browsing.lnk" -Force
 }
-
-If (Test-Path -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Navigation privée de Firefox.lnk")
+ElseIf (Test-Path -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Navigation privée de Firefox.lnk")
 {
     Remove-Item -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Navigation privée de Firefox.lnk" -Force
 }
