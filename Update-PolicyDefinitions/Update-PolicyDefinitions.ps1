@@ -566,12 +566,12 @@ Function Get-SchannelAdmx
 [string]$WindowsBuild = "22H2"
 [array]$Languages = @("en-US", "fr-FR")
 [string]$PolicyStore = "\\$envMachineADDomain\SYSVOL\$envMachineADDomain\Policies\PolicyDefinitions"
-[array]$IncludeProducts = @("Windows 10", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe Acrobat", "Adobe Reader", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox", "Zoom Desktop Client", "Custom Policy Store")
+[array]$IncludeProducts = @("Windows 11", "Microsoft Edge", "Microsoft OneDrive", "Microsoft Office", "FSLogix", "Adobe Acrobat", "Adobe Reader", "Citrix Workspace App", "Google Chrome", "Microsoft Desktop Optimization Pack", "Mozilla Firefox", "Zoom Desktop Client", "Custom Policy Store")
 [string]$WorkingDirectory = "C:\Scripts\EvergreenADMX"
 [string]$DownloadsDirectory = "$WorkingDirectory\downloads"
 [string]$CustomPolicyStore = "$WorkingDirectory\custom admx"
-[string]$CitrixADMXVersion = "2303"
-[boolean]$IsOneDriveInstalled = [boolean](Get-InstalledApplication -Name "Microsoft OneDrive")
+[string]$CitrixADMXVersion = "2305"
+[boolean]$isOneDriveInstalled = [boolean](Get-InstalledApplication -Name "Microsoft OneDrive")
 
 #endregion
 
@@ -620,7 +620,7 @@ If (-Not(Test-Path $PolicyStore)) { New-Folder -Path $PolicyStore }
 # Remove older Citrix Profile Management policy definitions files
 Remove-Item -Path $PolicyStore -Include ctxprofile*.admx, ctxprofile*.adml -Recurse -Force
 
-# Download custom Policy Definitions files
+# Download custom policy definitions files
 Write-Log -Message "Downloading custom Policy Definitions files..." -Severity 1 -LogType CMTrace -WriteHost $True
 # Citrix
 Get-CitrixAdmx -Version "2303"
@@ -633,43 +633,21 @@ Get-MicrosoftLAPSAdmx
 # SChannel
 Get-SchannelAdmx
 
-# Copy Policy Definitions files to Central Policy Store
+# Copy policy definitions files to Central Policy Store
 Set-Location -Path "$envProgramFiles\WindowsPowerShell\Scripts"
 
-$Windows10 = New-Object System.Management.Automation.Host.ChoiceDescription '&Windows 10', 'Windows 10'
-$Windows11 = New-Object System.Management.Automation.Host.ChoiceDescription '&Windows 11', 'Windows 11'
-$options = [System.Management.Automation.Host.ChoiceDescription[]]($Windows10, $Windows11)
-$title = 'Operating System'
-$message = "Which Operating System are you using for most of your endpoints ?"
-$result = $host.ui.PromptForChoice($title, $message, $options, 0)
-If (($result -eq 0) -and ($IsOneDriveInstalled))
+
+# Run EvergreenAdmx.ps1 to downloand and copy policy definitions files
+If ($isOneDriveInstalled)
 {
-    $choice = "Windows 10"
-    Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
-    .\EvergreenAdmx.ps1 -Windows10Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts -PreferLocalOneDrive
-}
-ElseIf (($result -eq 1) -and ($IsOneDriveInstalled))
-{
-    $choice = "Windows 11"
-    Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
-    $IncludeProducts = ($IncludeProducts).Replace("Windows 10", "Windows 11")
+    Write-Log -Message "Downloading and copying Policy Definitions files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
     .\EvergreenAdmx.ps1 -Windows11Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts -PreferLocalOneDrive
-}
-ElseIf (($result -eq 0) -and (-Not($IsOneDriveInstalled)))
-{
-    $choice = "Windows 10"
-    Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
-    .\EvergreenAdmx.ps1 -Windows10Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
-}
-ElseIf (($result -eq 1) -and (-Not($IsOneDriveInstalled)))
-{
-    $choice = "Windows 11"
-    Write-Log -Message "Downloading and copying Policy Definitions files for $choice to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
-    .\EvergreenAdmx.ps1 -Windows10Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
 }
 Else
 {
-    $choice = "Try again"
+    Write-Log -Message "Downloading and copying Policy Definitions files to Central Policy Store..." -Severity 1 -LogType CMTrace -WriteHost $True
+    $IncludeProducts = ($IncludeProducts).Replace("Windows 10", "Windows 11")
+    .\EvergreenAdmx.ps1 -Windows11Version $WindowsBuild -WorkingDirectory $WorkingDirectory -PolicyStore $PolicyStore -Languages $Languages -UseProductFolders -CustomPolicyStore $CustomPolicyStore -Include $IncludeProducts
 }
 
 # Cleanup Central Policy Store
