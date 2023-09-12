@@ -549,6 +549,10 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "A
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "AccentColor" -Type DWord -Value "4292311040"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "ColorizationColor" -Type DWord -Value "4292311040"
 
+# Turn Off Let Windows Manage Default Printer
+https://www.elevenforum.com/t/turn-on-or-off-let-windows-manage-default-printer-in-windows-11.7759
+Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows NT\CurrentVersion\Windows" -Name "LegacyDefaultPrinterMode" -Type DWord -Value "1"
+
 # Internet Explorer
 # Disable warning "Protected mode is turned off for the Local intranet zone" - https://www.carlstalhood.com/group-policy-objects-vda-user-settings
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\Main" -Name "NoProtectedModeBanner" -Type DWord -Value "1"
