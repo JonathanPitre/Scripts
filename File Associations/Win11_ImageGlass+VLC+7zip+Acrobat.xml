@@ -2,69 +2,69 @@
 <DefaultAssociations>
   <Association Identifier=".001" ProgId="7-Zip.001" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".3fr" ProgId="ImageGlass.AssocFile.3FR" ApplicationName="ImageGlass" />
-  <Association Identifier=".3g2" ProgId="VLC.3g2" ApplicationName="VLC media player" />
-  <Association Identifier=".3ga" ProgId="VLC.3ga" ApplicationName="VLC media player" />
-  <Association Identifier=".3gp" ProgId="VLC.3gp" ApplicationName="VLC media player" />
-  <Association Identifier=".3gp2" ProgId="VLC.3gp2" ApplicationName="VLC media player" />
-  <Association Identifier=".3gpp" ProgId="VLC.3gpp" ApplicationName="VLC media player" />
-  <Association Identifier=".669" ProgId="VLC.669" ApplicationName="VLC media player" />
+  <Association Identifier=".3g2" ProgId="VLC.3g2.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".3ga" ProgId="VLC.3ga.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".3gp" ProgId="VLC.3gp.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".3gp2" ProgId="VLC.3gp2.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".3gpp" ProgId="VLC.3gpp.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".669" ProgId="VLC.669.Document" ApplicationName="VLC media player" />
   <Association Identifier=".7z" ProgId="7-Zip.7z" ApplicationName="7-Zip File Manager" />
-  <Association Identifier=".a52" ProgId="VLC.a52" ApplicationName="VLC media player" />
-  <Association Identifier=".aac" ProgId="VLC.aac" ApplicationName="VLC media player" />
-  <Association Identifier=".ac3" ProgId="VLC.ac3" ApplicationName="VLC media player" />
+  <Association Identifier=".a52" ProgId="VLC.a52.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".aac" ProgId="VLC.aac.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".ac3" ProgId="VLC.ac3.Document" ApplicationName="VLC media player" />
   <Association Identifier=".acrobatsecuritysettings" ProgId="Acrobat.acrobatsecuritysettings" ApplicationName="Adobe Acrobat" />
-  <Association Identifier=".adt" ProgId="VLC.adt" ApplicationName="VLC media player" />
-  <Association Identifier=".adts" ProgId="VLC.adts" ApplicationName="VLC media player" />
-  <Association Identifier=".aif" ProgId="VLC.aif" ApplicationName="VLC media player" />
-  <Association Identifier=".aifc" ProgId="VLC.aifc" ApplicationName="VLC media player" />
-  <Association Identifier=".aiff" ProgId="VLC.aiff" ApplicationName="VLC media player" />
-  <Association Identifier=".amr" ProgId="VLC.amr" ApplicationName="VLC media player" />
-  <Association Identifier=".amv" ProgId="VLC.amv" ApplicationName="VLC media player" />
-  <Association Identifier=".aob" ProgId="VLC.aob" ApplicationName="VLC media player" />
-  <Association Identifier=".ape" ProgId="VLC.ape" ApplicationName="VLC media player" />
+  <Association Identifier=".adt" ProgId="VLC.adt.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".adts" ProgId="VLC.adts.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".aif" ProgId="VLC.aif.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".aifc" ProgId="VLC.aifc.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".aiff" ProgId="VLC.aiff.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".amr" ProgId="VLC.amr.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".amv" ProgId="VLC.amv.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".aob" ProgId="VLC.aob.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".ape" ProgId="VLC.ape.Document" ApplicationName="VLC media player" />
   <Association Identifier=".apfs" ProgId="7-Zip.apfs" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".arg" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".ari" ProgId="ImageGlass.AssocFile.ARI" ApplicationName="ImageGlass" />
   <Association Identifier=".arj" ProgId="7-Zip.arj" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".arw" ProgId="ImageGlass.AssocFile.ARW" ApplicationName="ImageGlass" />
-  <Association Identifier=".asf" ProgId="VLC.asf" ApplicationName="VLC media player" />
-  <Association Identifier=".asx" ProgId="VLC.asx" ApplicationName="VLC media player" />
-  <Association Identifier=".au" ProgId="VLC.au" ApplicationName="VLC media player" />
-  <Association Identifier=".avi" ProgId="VLC.avi" ApplicationName="VLC media player" />
+  <Association Identifier=".asf" ProgId="VLC.asf.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".asx" ProgId="VLC.asx.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".au" ProgId="VLC.au.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".avi" ProgId="VLC.avi.Document" ApplicationName="VLC media player" />
   <Association Identifier=".avif" ProgId="ImageGlass.AssocFile.AVIF" ApplicationName="ImageGlass" />
-  <Association Identifier=".b4s" ProgId="VLC.b4s" ApplicationName="VLC media player" />
+  <Association Identifier=".b4s" ProgId="VLC.b4s.Document" ApplicationName="VLC media player" />
   <Association Identifier=".b64" ProgId="ImageGlass.AssocFile.B64" ApplicationName="ImageGlass" />
   <Association Identifier=".bay" ProgId="ImageGlass.AssocFile.BAY" ApplicationName="ImageGlass" />
-  <Association Identifier=".bin" ProgId="VLC.bin" ApplicationName="VLC media player" />
+  <Association Identifier=".bin" ProgId="VLC.bin.Document" ApplicationName="VLC media player" />
   <Association Identifier=".bmp" ProgId="ImageGlass.AssocFile.BMP" ApplicationName="ImageGlass" />
   <Association Identifier=".bz2" ProgId="7-Zip.bz2" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".bzip2" ProgId="7-Zip.bzip2" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".cab" ProgId="7-Zip.cab" ApplicationName="7-Zip File Manager" />
-  <Association Identifier=".caf" ProgId="VLC.caf" ApplicationName="VLC media player" />
+  <Association Identifier=".caf" ProgId="VLC.caf.Document" ApplicationName="VLC media player" />
   <Association Identifier=".cap" ProgId="ImageGlass.AssocFile.CAP" ApplicationName="ImageGlass" />
-  <Association Identifier=".cda" ProgId="VLC.cda" ApplicationName="VLC media player" />
+  <Association Identifier=".cda" ProgId="VLC.cda.Document" ApplicationName="VLC media player" />
   <Association Identifier=".config" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".cpio" ProgId="7-Zip.cpio" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".cr2" ProgId="ImageGlass.AssocFile.CR2" ApplicationName="ImageGlass" />
   <Association Identifier=".cr3" ProgId="ImageGlass.AssocFile.CR3" ApplicationName="ImageGlass" />
   <Association Identifier=".crw" ProgId="ImageGlass.AssocFile.CRW" ApplicationName="ImageGlass" />
-  <Association Identifier=".cue" ProgId="VLC.cue" ApplicationName="VLC media player" />
+  <Association Identifier=".cue" ProgId="VLC.cue.Document" ApplicationName="VLC media player" />
   <Association Identifier=".cur" ProgId="ImageGlass.AssocFile.CUR" ApplicationName="ImageGlass" />
   <Association Identifier=".cut" ProgId="ImageGlass.AssocFile.CUT" ApplicationName="ImageGlass" />
   <Association Identifier=".dat" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
-  <Association Identifier=".dav" ProgId="VLC.dav" ApplicationName="VLC media player" />
+  <Association Identifier=".dav" ProgId="VLC.dav.Document" ApplicationName="VLC media player" />
   <Association Identifier=".dcr" ProgId="ImageGlass.AssocFile.DCR" ApplicationName="ImageGlass" />
   <Association Identifier=".dcs" ProgId="ImageGlass.AssocFile.DCS" ApplicationName="ImageGlass" />
   <Association Identifier=".dds" ProgId="ImageGlass.AssocFile.DDS" ApplicationName="ImageGlass" />
   <Association Identifier=".deb" ProgId="7-Zip.deb" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".dib" ProgId="ImageGlass.AssocFile.DIB" ApplicationName="ImageGlass" />
-  <Association Identifier=".divx" ProgId="VLC.divx" ApplicationName="VLC media player" />
+  <Association Identifier=".divx" ProgId="VLC.divx.Document" ApplicationName="VLC media player" />
   <Association Identifier=".dmg" ProgId="7-Zip.dmg" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".dng" ProgId="ImageGlass.AssocFile.DNG" ApplicationName="ImageGlass" />
-  <Association Identifier=".drc" ProgId="VLC.drc" ApplicationName="VLC media player" />
+  <Association Identifier=".drc" ProgId="VLC.drc.Document" ApplicationName="VLC media player" />
   <Association Identifier=".drf" ProgId="ImageGlass.AssocFile.DRF" ApplicationName="ImageGlass" />
-  <Association Identifier=".dts" ProgId="VLC.dts" ApplicationName="VLC media player" />
-  <Association Identifier=".dv" ProgId="VLC.dv" ApplicationName="VLC media player" />
+  <Association Identifier=".dts" ProgId="VLC.dts.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".dv" ProgId="VLC.dv.Document" ApplicationName="VLC media player" />
   <Association Identifier=".eip" ProgId="ImageGlass.AssocFile.EIP" ApplicationName="ImageGlass" />
   <Association Identifier=".emf" ProgId="ImageGlass.AssocFile.EMF" ApplicationName="ImageGlass" />
   <Association Identifier=".epub" ProgId="AppXvepbp3z66accmsd0x877zbbxjctkpr6t" ApplicationName="Microsoft Edge" />
@@ -72,15 +72,15 @@
   <Association Identifier=".esd" ProgId="7-Zip.esd" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".exif" ProgId="ImageGlass.AssocFile.EXIF" ApplicationName="ImageGlass" />
   <Association Identifier=".exr" ProgId="ImageGlass.AssocFile.EXR" ApplicationName="ImageGlass" />
-  <Association Identifier=".f4v" ProgId="VLC.f4v" ApplicationName="VLC media player" />
+  <Association Identifier=".f4v" ProgId="VLC.f4v.Document" ApplicationName="VLC media player" />
   <Association Identifier=".fat" ProgId="7-Zip.fat" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".fdf" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".fff" ProgId="ImageGlass.AssocFile.FFF" ApplicationName="ImageGlass" />
-  <Association Identifier=".flac" ProgId="VLC.flac" ApplicationName="VLC media player" />
-  <Association Identifier=".flv" ProgId="VLC.flv" ApplicationName="VLC media player" />
+  <Association Identifier=".flac" ProgId="VLC.flac.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".flv" ProgId="VLC.flv.Document" ApplicationName="VLC media player" />
   <Association Identifier=".gif" ProgId="ImageGlass.AssocFile.GIF" ApplicationName="ImageGlass" />
   <Association Identifier=".gpr" ProgId="ImageGlass.AssocFile.GPR" ApplicationName="ImageGlass" />
-  <Association Identifier=".gxf" ProgId="VLC.gxf" ApplicationName="VLC media player" />
+  <Association Identifier=".gxf" ProgId="VLC.gxf.Document" ApplicationName="VLC media player" />
   <Association Identifier=".gz" ProgId="7-Zip.gz" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".gzip" ProgId="7-Zip.gzip" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".hdr" ProgId="ImageGlass.AssocFile.HDR" ApplicationName="ImageGlass" />
@@ -91,12 +91,12 @@
   <Association Identifier=".html" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier=".icffav" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".ico" ProgId="ImageGlass.AssocFile.ICO" ApplicationName="ImageGlass" />
-  <Association Identifier=".ifo" ProgId="VLC.ifo" ApplicationName="VLC media player" />
+  <Association Identifier=".ifo" ProgId="VLC.ifo.Document" ApplicationName="VLC media player" />
   <Association Identifier=".iiq" ProgId="ImageGlass.AssocFile.IIQ" ApplicationName="ImageGlass" />
   <Association Identifier=".inf" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".ini" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".iso" ProgId="7-Zip.iso" ApplicationName="7-Zip File Manager" />
-  <Association Identifier=".it" ProgId="VLC.it" ApplicationName="VLC media player" />
+  <Association Identifier=".it" ProgId="VLC.it.Document" ApplicationName="VLC media player" />
   <Association Identifier=".jfif" ProgId="ImageGlass.AssocFile.JFIF" ApplicationName="ImageGlass" />
   <Association Identifier=".jp2" ProgId="ImageGlass.AssocFile.JP2" ApplicationName="ImageGlass" />
   <Association Identifier=".jpe" ProgId="ImageGlass.AssocFile.JPE" ApplicationName="ImageGlass" />
@@ -110,57 +110,57 @@
   <Association Identifier=".log" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".lzh" ProgId="7-Zip.lzh" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".lzma" ProgId="7-Zip.lzma" ApplicationName="7-Zip File Manager" />
-  <Association Identifier=".m1v" ProgId="VLC.m1v" ApplicationName="VLC media player" />
-  <Association Identifier=".m2t" ProgId="VLC.m2t" ApplicationName="VLC media player" />
-  <Association Identifier=".m2ts" ProgId="VLC.m2ts" ApplicationName="VLC media player" />
-  <Association Identifier=".m2v" ProgId="VLC.m2v" ApplicationName="VLC media player" />
-  <Association Identifier=".m3u" ProgId="VLC.m3u" ApplicationName="VLC media player" />
-  <Association Identifier=".m3u8" ProgId="VLC.m3u8" ApplicationName="VLC media player" />
-  <Association Identifier=".m4a" ProgId="VLC.m4a" ApplicationName="VLC media player" />
-  <Association Identifier=".m4p" ProgId="VLC.m4p" ApplicationName="VLC media player" />
-  <Association Identifier=".m4v" ProgId="VLC.m4v" ApplicationName="VLC media player" />
+  <Association Identifier=".m1v" ProgId="VLC.m1v.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".m2t" ProgId="VLC.m2t.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".m2ts" ProgId="VLC.m2ts.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".m2v" ProgId="VLC.m2v.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".m3u" ProgId="VLC.m3u.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".m3u8" ProgId="VLC.m3u8.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".m4a" ProgId="VLC.m4a.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".m4p" ProgId="VLC.m4p.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".m4v" ProgId="VLC.m4v.Document" ApplicationName="VLC media player" />
   <Association Identifier=".mdc" ProgId="ImageGlass.AssocFile.MDC" ApplicationName="ImageGlass" />
   <Association Identifier=".mef" ProgId="ImageGlass.AssocFile.MEF" ApplicationName="ImageGlass" />
   <Association Identifier=".mht" ProgId="MSEdgeMHT" ApplicationName="Microsoft Edge" />
   <Association Identifier=".mhtml" ProgId="MSEdgeMHT" ApplicationName="Microsoft Edge" />
-  <Association Identifier=".mid" ProgId="VLC.mid" ApplicationName="VLC media player" />
-  <Association Identifier=".mka" ProgId="VLC.mka" ApplicationName="VLC media player" />
-  <Association Identifier=".mkv" ProgId="VLC.mkv" ApplicationName="VLC media player" />
-  <Association Identifier=".mlp" ProgId="VLC.mlp" ApplicationName="VLC media player" />
-  <Association Identifier=".mod" ProgId="VLC.mod" ApplicationName="VLC media player" />
+  <Association Identifier=".mid" ProgId="VLC.mid.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mka" ProgId="VLC.mka.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mkv" ProgId="VLC.mkv.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mlp" ProgId="VLC.mlp.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mod" ProgId="VLC.mod.Document" ApplicationName="VLC media player" />
   <Association Identifier=".mos" ProgId="ImageGlass.AssocFile.MOS" ApplicationName="ImageGlass" />
-  <Association Identifier=".mov" ProgId="VLC.mov" ApplicationName="VLC media player" />
-  <Association Identifier=".mp1" ProgId="VLC.mp1" ApplicationName="VLC media player" />
-  <Association Identifier=".mp2" ProgId="VLC.mp2" ApplicationName="VLC media player" />
-  <Association Identifier=".mp2v" ProgId="VLC.mp2v" ApplicationName="VLC media player" />
-  <Association Identifier=".mp3" ProgId="VLC.mp3" ApplicationName="VLC media player" />
-  <Association Identifier=".mp4" ProgId="VLC.mp4" ApplicationName="VLC media player" />
-  <Association Identifier=".mp4v" ProgId="VLC.mp4v" ApplicationName="VLC media player" />
-  <Association Identifier=".mpa" ProgId="VLC.mpa" ApplicationName="VLC media player" />
-  <Association Identifier=".mpc" ProgId="VLC.mpc" ApplicationName="VLC media player" />
-  <Association Identifier=".mpe" ProgId="VLC.mpe" ApplicationName="VLC media player" />
-  <Association Identifier=".mpeg" ProgId="VLC.mpeg" ApplicationName="VLC media player" />
-  <Association Identifier=".mpeg1" ProgId="VLC.mpeg1" ApplicationName="VLC media player" />
-  <Association Identifier=".mpeg2" ProgId="VLC.mpeg2" ApplicationName="VLC media player" />
-  <Association Identifier=".mpeg4" ProgId="VLC.mpeg4" ApplicationName="VLC media player" />
-  <Association Identifier=".mpg" ProgId="VLC.mpg" ApplicationName="VLC media player" />
-  <Association Identifier=".mpv2" ProgId="VLC.mpv2" ApplicationName="VLC media player" />
+  <Association Identifier=".mov" ProgId="VLC.mov.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mp1" ProgId="VLC.mp1.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mp2" ProgId="VLC.mp2.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mp2v" ProgId="VLC.mp2v.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mp3" ProgId="VLC.mp3.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mp4" ProgId="VLC.mp4.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mp4v" ProgId="VLC.mp4v.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mpa" ProgId="VLC.mpa.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mpc" ProgId="VLC.mpc.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mpe" ProgId="VLC.mpe.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mpeg" ProgId="VLC.mpeg.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mpeg1" ProgId="VLC.mpeg1.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mpeg2" ProgId="VLC.mpeg2.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mpeg4" ProgId="VLC.mpeg4.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mpg" ProgId="VLC.mpg.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mpv2" ProgId="VLC.mpv2.Document" ApplicationName="VLC media player" />
   <Association Identifier=".mrw" ProgId="ImageGlass.AssocFile.MRW" ApplicationName="ImageGlass" />
-  <Association Identifier=".mts" ProgId="VLC.mts" ApplicationName="VLC media player" />
-  <Association Identifier=".mtv" ProgId="VLC.mtv" ApplicationName="VLC media player" />
-  <Association Identifier=".mxf" ProgId="VLC.mxf" ApplicationName="VLC media player" />
+  <Association Identifier=".mts" ProgId="VLC.mts.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mtv" ProgId="VLC.mtv.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".mxf" ProgId="VLC.mxf.Document" ApplicationName="VLC media player" />
   <Association Identifier=".nef" ProgId="ImageGlass.AssocFile.NEF" ApplicationName="ImageGlass" />
   <Association Identifier=".nrw" ProgId="ImageGlass.AssocFile.NRW" ApplicationName="ImageGlass" />
-  <Association Identifier=".nsv" ProgId="VLC.nsv" ApplicationName="VLC media player" />
+  <Association Identifier=".nsv" ProgId="VLC.nsv.Document" ApplicationName="VLC media player" />
   <Association Identifier=".ntfs" ProgId="7-Zip.ntfs" ApplicationName="7-Zip File Manager" />
-  <Association Identifier=".nuv" ProgId="VLC.nuv" ApplicationName="VLC media player" />
+  <Association Identifier=".nuv" ProgId="VLC.nuv.Document" ApplicationName="VLC media player" />
   <Association Identifier=".obm" ProgId="ImageGlass.AssocFile.OBM" ApplicationName="ImageGlass" />
-  <Association Identifier=".oga" ProgId="VLC.oga" ApplicationName="VLC media player" />
-  <Association Identifier=".ogg" ProgId="VLC.ogg" ApplicationName="VLC media player" />
-  <Association Identifier=".ogm" ProgId="VLC.ogm" ApplicationName="VLC media player" />
-  <Association Identifier=".ogv" ProgId="VLC.ogv" ApplicationName="VLC media player" />
-  <Association Identifier=".ogx" ProgId="VLC.ogx" ApplicationName="VLC media player" />
-  <Association Identifier=".oma" ProgId="VLC.oma" ApplicationName="VLC media player" />
+  <Association Identifier=".oga" ProgId="VLC.oga.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".ogg" ProgId="VLC.ogg.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".ogm" ProgId="VLC.ogm.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".ogv" ProgId="VLC.ogv.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".ogx" ProgId="VLC.ogx.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".oma" ProgId="VLC.oma.Document" ApplicationName="VLC media player" />
   <Association Identifier=".orf" ProgId="ImageGlass.AssocFile.ORF" ApplicationName="ImageGlass" />
   <Association Identifier=".pbm" ProgId="ImageGlass.AssocFile.PBM" ApplicationName="ImageGlass" />
   <Association Identifier=".pcx" ProgId="ImageGlass.AssocFile.PCX" ApplicationName="ImageGlass" />
@@ -169,7 +169,7 @@
   <Association Identifier=".pdx" ProgId="PDXFileType" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".pef" ProgId="ImageGlass.AssocFile.PEF" ApplicationName="ImageGlass" />
   <Association Identifier=".pgm" ProgId="ImageGlass.AssocFile.PGM" ApplicationName="ImageGlass" />
-  <Association Identifier=".pls" ProgId="VLC.pls" ApplicationName="VLC media player" />
+  <Association Identifier=".pls" ProgId="VLC.pls.Document" ApplicationName="VLC media player" />
   <Association Identifier=".png" ProgId="ImageGlass.AssocFile.PNG" ApplicationName="ImageGlass" />
   <Association Identifier=".ppm" ProgId="ImageGlass.AssocFile.PPM" ApplicationName="ImageGlass" />
   <Association Identifier=".ps1" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
@@ -179,27 +179,27 @@
   <Association Identifier=".psm1" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".ptx" ProgId="ImageGlass.AssocFile.PTX" ApplicationName="ImageGlass" />
   <Association Identifier=".pxn" ProgId="ImageGlass.AssocFile.PXN" ApplicationName="ImageGlass" />
-  <Association Identifier=".qcp" ProgId="VLC.qcp" ApplicationName="VLC media player" />
+  <Association Identifier=".qcp" ProgId="VLC.qcp.Document" ApplicationName="VLC media player" />
   <Association Identifier=".r3d" ProgId="ImageGlass.AssocFile.R3D" ApplicationName="ImageGlass" />
   <Association Identifier=".raf" ProgId="ImageGlass.AssocFile.RAF" ApplicationName="ImageGlass" />
-  <Association Identifier=".ram" ProgId="VLC.ram" ApplicationName="VLC media player" />
+  <Association Identifier=".ram" ProgId="VLC.ram.Document" ApplicationName="VLC media player" />
   <Association Identifier=".rar" ProgId="7-Zip.rar" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".raw" ProgId="ImageGlass.AssocFile.RAW" ApplicationName="ImageGlass" />
-  <Association Identifier=".rec" ProgId="VLC.rec" ApplicationName="VLC media player" />
-  <Association Identifier=".rm" ProgId="VLC.rm" ApplicationName="VLC media player" />
-  <Association Identifier=".rmi" ProgId="VLC.rmi" ApplicationName="VLC media player" />
-  <Association Identifier=".rmvb" ProgId="VLC.rmvb" ApplicationName="VLC media player" />
+  <Association Identifier=".rec" ProgId="VLC.rec.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".rm" ProgId="VLC.rm.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".rmi" ProgId="VLC.rmi.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".rmvb" ProgId="VLC.rmvb.Document" ApplicationName="VLC media player" />
   <Association Identifier=".rpm" ProgId="7-Zip.rpm" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".rw2" ProgId="ImageGlass.AssocFile.RW2" ApplicationName="ImageGlass" />
   <Association Identifier=".rwl" ProgId="ImageGlass.AssocFile.RWL" ApplicationName="ImageGlass" />
   <Association Identifier=".rwz" ProgId="ImageGlass.AssocFile.RWZ" ApplicationName="ImageGlass" />
-  <Association Identifier=".s3m" ProgId="VLC.s3m" ApplicationName="VLC media player" />
+  <Association Identifier=".s3m" ProgId="VLC.s3m.Document" ApplicationName="VLC media player" />
   <Association Identifier=".scp" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
-  <Association Identifier=".sdp" ProgId="VLC.sdp" ApplicationName="VLC media player" />
+  <Association Identifier=".sdp" ProgId="VLC.sdp.Document" ApplicationName="VLC media player" />
   <Association Identifier=".secstore" ProgId="Acrobat.SecStore" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".sequ" ProgId="Acrobat.Sequence" ApplicationName="Adobe Acrobat" />
-  <Association Identifier=".snd" ProgId="VLC.snd" ApplicationName="VLC media player" />
-  <Association Identifier=".spx" ProgId="VLC.spx" ApplicationName="VLC media player" />
+  <Association Identifier=".snd" ProgId="VLC.snd.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".spx" ProgId="VLC.spx.Document" ApplicationName="VLC media player" />
   <Association Identifier=".squashfs" ProgId="7-Zip.squashfs" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".sr2" ProgId="ImageGlass.AssocFile.SR2" ApplicationName="ImageGlass" />
   <Association Identifier=".srf" ProgId="ImageGlass.AssocFile.SRF" ApplicationName="ImageGlass" />
@@ -210,51 +210,51 @@
   <Association Identifier=".taz" ProgId="7-Zip.taz" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".tbz" ProgId="7-Zip.tbz" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".tbz2" ProgId="7-Zip.tbz2" ApplicationName="7-Zip File Manager" />
-  <Association Identifier=".tga" ProgId="ImageGlass.AssocFile.TGA" ApplicationName="ImageGlass"/>
+  <Association Identifier=".tga" ProgId="ImageGlass.AssocFile.TGA" ApplicationName="ImageGlass" />
   <Association Identifier=".tgz" ProgId="7-Zip.tgz" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".tif" ProgId="ImageGlass.AssocFile.TIF" ApplicationName="ImageGlass" />
   <Association Identifier=".tiff" ProgId="ImageGlass.AssocFile.TIFF" ApplicationName="ImageGlass" />
-  <Association Identifier=".tod" ProgId="VLC.tod" ApplicationName="VLC media player" />
+  <Association Identifier=".tod" ProgId="VLC.tod.Document" ApplicationName="VLC media player" />
   <Association Identifier=".tpz" ProgId="7-Zip.tpz" ApplicationName="7-Zip File Manager" />
-  <Association Identifier=".ts" ProgId="VLC.ts" ApplicationName="VLC media player" />
-  <Association Identifier=".tta" ProgId="VLC.tta" ApplicationName="VLC media player" />
-  <Association Identifier=".tts" ProgId="VLC.tts" ApplicationName="VLC media player" />
+  <Association Identifier=".ts" ProgId="VLC.ts.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".tta" ProgId="VLC.tta.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".tts" ProgId="VLC.tts.Document" ApplicationName="VLC media player" />
   <Association Identifier=".txt" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".txz" ProgId="7-Zip.txz" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".url" ProgId="InternetShortcut" ApplicationName="Internet Browser" />
   <Association Identifier=".vhd" ProgId="Windows.VhdFile" ApplicationName="FSLogix Context Menu Handler" />
   <Association Identifier=".vhdx" ProgId="Windows.VhdFile" ApplicationName="FSLogix Context Menu Handler" />
-  <Association Identifier=".vlc" ProgId="VLC.vlc" ApplicationName="VLC media player" />
-  <Association Identifier=".vob" ProgId="VLC.vob" ApplicationName="VLC media player" />
-  <Association Identifier=".voc" ProgId="VLC.voc" ApplicationName="VLC media player" />
-  <Association Identifier=".vqf" ProgId="VLC.vqf" ApplicationName="VLC media player" />
-  <Association Identifier=".vro" ProgId="VLC.vro" ApplicationName="VLC media player" />
-  <Association Identifier=".w64" ProgId="VLC.w64" ApplicationName="VLC media player" />
-  <Association Identifier=".wav" ProgId="VLC.wav" ApplicationName="VLC media player" />
+  <Association Identifier=".vlc" ProgId="VLC.vlc.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".vob" ProgId="VLC.vob.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".voc" ProgId="VLC.voc.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".vqf" ProgId="VLC.vqf.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".vro" ProgId="VLC.vro.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".w64" ProgId="VLC.w64.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".wav" ProgId="VLC.wav.Document" ApplicationName="VLC media player" />
   <Association Identifier=".wdp" ProgId="ImageGlass.AssocFile.WDP" ApplicationName="ImageGlass" />
-  <Association Identifier=".webm" ProgId="VLC.webm" ApplicationName="VLC media player" />
+  <Association Identifier=".webm" ProgId="VLC.webm.Document" ApplicationName="VLC media player" />
   <Association Identifier=".webp" ProgId="ImageGlass.AssocFile.WEBP" ApplicationName="ImageGlass" />
   <Association Identifier=".website" ProgId="IE.AssocFile.WEBSITE" ApplicationName="Microsoft Edge" />
   <Association Identifier=".wim" ProgId="7-Zip.wim" ApplicationName="7-Zip File Manager" />
-  <Association Identifier=".wma" ProgId="VLC.wma" ApplicationName="VLC media player" />
-  <Association Identifier=".wmf" ProgId="ImageGlass.AssocFile.WMF" ApplicationName="ImageGlass"/>
-  <Association Identifier=".wmv" ProgId="VLC.wmv" ApplicationName="VLC media player" />
+  <Association Identifier=".wma" ProgId="VLC.wma.Document" ApplicationName="VLC media player" />
+  <Association Identifier=".wmf" ProgId="ImageGlass.AssocFile.WMF" ApplicationName="ImageGlass" />
+  <Association Identifier=".wmv" ProgId="VLC.wmv.Document" ApplicationName="VLC media player" />
   <Association Identifier=".wpg" ProgId="ImageGlass.AssocFile.WPG" ApplicationName="ImageGlass" />
   <Association Identifier=".wsb" ProgId="Windows.Sandbox" ApplicationName="Windows Sandbox" />
   <Association Identifier=".wtx" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
-  <Association Identifier=".wv" ProgId="VLC.wv" ApplicationName="VLC media player" />
+  <Association Identifier=".wv" ProgId="VLC.wv.Document" ApplicationName="VLC media player" />
   <Association Identifier=".x3f" ProgId="ImageGlass.AssocFile.X3F" ApplicationName="ImageGlass" />
-  <Association Identifier=".xa" ProgId="VLC.xa" ApplicationName="VLC media player" />
+  <Association Identifier=".xa" ProgId="VLC.xa.Document" ApplicationName="VLC media player" />
   <Association Identifier=".xar" ProgId="7-Zip.xar" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".xbm" ProgId="ImageGlass.AssocFile.XBM" ApplicationName="ImageGlass" />
   <Association Identifier=".xdp" ProgId="Acrobat.FDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".xfdf" ProgId="Acrobat.XFDFDoc" ApplicationName="Adobe Acrobat" />
   <Association Identifier=".xht" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
   <Association Identifier=".xhtml" ProgId="MSEdgeHTM" ApplicationName="Microsoft Edge" />
-  <Association Identifier=".xm" ProgId="VLC.xm" ApplicationName="VLC media player" />
+  <Association Identifier=".xm" ProgId="VLC.xm.Document" ApplicationName="VLC media player" />
   <Association Identifier=".xml" ProgId="Applications\notepad3.exe" ApplicationName="Notepad3" />
   <Association Identifier=".xpm" ProgId="ImageGlass.AssocFile.XPM" ApplicationName="ImageGlass" />
-  <Association Identifier=".xspf" ProgId="VLC.xspf" ApplicationName="VLC media player" />
+  <Association Identifier=".xspf" ProgId="VLC.xspf.Document" ApplicationName="VLC media player" />
   <Association Identifier=".xz" ProgId="7-Zip.xz" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".z" ProgId="7-Zip.z" ApplicationName="7-Zip File Manager" />
   <Association Identifier=".zip" ProgId="7-Zip.zip" ApplicationName="7-Zip File Manager" />
