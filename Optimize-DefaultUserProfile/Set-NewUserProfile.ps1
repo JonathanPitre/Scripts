@@ -104,7 +104,7 @@ Foreach ($Module in $Modules)
 #region Execution
 
 # Get user AD properties
-$userProperties = Get-ADUser -Filter { SamAccountName -like
+$userProperties = Get-ADUser -Identity $env:USERNAME
 
 If ($null -ne $userProperties)
 {
