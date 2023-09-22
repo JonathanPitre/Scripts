@@ -184,8 +184,6 @@ Foreach ($Module in $Modules)
 #region Declarations
 
 $appProcesses = @("regedit", "reg")
-$appTeamsConfigURL = "https://raw.githubusercontent.com/JonathanPitre/Apps/master/Microsoft/Teams/desktop-config.json"
-$appTeamsConfig = Split-Path -Path $appTeamsConfigURL -Leaf
 $NewUserScript = "\\$envMachineADDomain\NETLOGON\Citrix\NewUserProfile\Set-NewUserProfile.ps1" # Modify according to your environment
 
 #endregion
@@ -549,8 +547,7 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "A
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "AccentColor" -Type DWord -Value "4292311040"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\DWM" -Name "ColorizationColor" -Type DWord -Value "4292311040"
 
-# Turn Off Let Windows Manage Default Printer
-https://www.elevenforum.com/t/turn-on-or-off-let-windows-manage-default-printer-in-windows-11.7759
+# Turn Off Let Windows Manage Default Printer - https://www.elevenforum.com/t/turn-on-or-off-let-windows-manage-default-printer-in-windows-11.7759
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows NT\CurrentVersion\Windows" -Name "LegacyDefaultPrinterMode" -Type DWord -Value "1"
 
 # Internet Explorer
@@ -631,7 +628,6 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Te
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "PreviewPlaceUpdate" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "RibbonOverflowTeachingCalloutID" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "RoamingSigTeachingCallout" -Type DWord -Value "2"
-
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "Search.TopResults" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "SLRToggleReplaceTeachingCalloutID" -Type DWord -Value "2"
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\TeachingCallouts" -Name "ThreadedCommentsCallout" -Type DWord -Value "2"
@@ -666,65 +662,6 @@ Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\16.0\Common\Gr
 # Disable Micrososoft OneDrive Notifications - https://docs.microsoft.com/en-us/archive/blogs/platforms_lync_cloud/disabling-windows-10-action-center-notifications
 Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Microsoft.SkyDrive.Desktop" -Name "Enabled" -Type DWord -Value "0"
 
-# Get Micrososoft OneDrive setups run keys
-$regOneDriveSetup = Get-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Value "OneDriveSetup"
-$regOneDrive = Get-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Value "OneDrive"
-
-# Remove Microsoft OneDrive setups from running on new user profile
-# https://byteben.com/bb/installing-the-onedrive-sync-client-in-per-machine-mode-during-your-task-sequence-for-a-lightening-fast-first-logon-experience
-If ($regOneDriveSetup) { Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run" -Name "OneDriveSetup" }
-
-# Prevent automatic launch of OneDrive on Windows Server since the ADD Plugin must be repaired first for the OneDrive SSO to work
-If (($envOSName -like "*Windows Server") -and ($regOneDrive -eq $True))
-{
-    Remove-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Name "OneDrive"
-}
-
-# Enable Storage Sense - https://james-rankin.com/all-posts/quickpost-setting-storage-sense-cloud-content-dehydration-on-server-2019
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" -Name "01" -Type DWord -Value "1"
-
-# Set Microsoft Teams as the default chat app for Office - https://www.msoutlook.info/question/setting-skype-or-other-im-client-to-integrate-with-outlook
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\IM Providers" -Name "DefaultIMApp" -Type String -Value "Teams"
-
-# Open Microsoft Teams links without prompts - https://james-rankin.com/articles/microsoft-teams-on-citrix-virtual-apps-and-desktops-part-2-default-settings-and-json-wrangling
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Classes\msteams\shell\open\command" -Name "(Default)" -Type String -Value "`"C:\Program Files (x86)\Microsoft\Teams\current\Teams.exe`" `"%1`""
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Classes\TeamsURL\shell\open\command" -Name "(Default)" -Type String -Value "`"C:\Program Files (x86)\Microsoft\Teams\current\Teams.exe`" `"%1`""
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Classes\msteams" -Name "DefaultIMApp" -Type String -Value "URL:msteams"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts" -Name "msteams_msteams" -Type DWord -Value "00000000"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Classes\msteams" -Name "URL Protocol" -Type String -Value ""
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Internet Explorer\ProtocolExecute\msteams" -Name "WarnOnOpen" -Type String -Value "00000000"
-
-# Download required Microsoft Teams config file
-If (-Not(Test-Path -Path $appScriptPath\$appTeamsConfig))
-{
-    Write-Log -Message "Downloading Microsoft Teams config file..." -Severity 1 -LogType CMTrace -WriteHost $True
-    Invoke-WebRequest -UseBasicParsing -Uri $appTeamsConfigURL -OutFile $appScriptPath\$appTeamsConfig
-}
-Else
-{
-    Write-Log -Message "File(s) already exists, download was skipped." -Severity 1 -LogType CMTrace -WriteHost $True
-}
-
-# Copy Microsoft Teams config file to the default profile
-If (-Not(Test-Path -Path "$envSystemDrive\Users\Default\AppData\Roaming\Microsoft\Teams\$appTeamsConfig"))
-{
-    Copy-File -Path "$appScriptPath\$appTeamsConfig" -Destination "$envSystemDrive\Users\Default\AppData\Roaming\Microsoft\Teams"
-    Write-Log -Message "$appVendor $appName settings were configured for the Default User profile." -Severity 1 -LogType CMTrace -WriteHost $True
-}
-Else
-{
-    Write-Log -Message "Default profile is already configured for Microsoft Teams." -Severity 1 -LogType CMTrace -WriteHost $True
-}
-
-# To validate (from the comments section)
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Classes\WOW6432Node\CLSID\{00425F68-FFC1-445F-8EDF-EF78B84BA1C7}\LocalServer" -Name "(Default)" -Type String -Value "`"C:\Program Files (x86)\Microsoft\Teams\current\Teams.exe`""
-#Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Classes\CLSID\{00425F68-FFC1-445F-8EDF-EF78B84BA1C7}\LocalServer" -Name "(Default)" -Type String -Value "`"C:\Program Files (x86)\Microsoft\Teams\current\Teams.exe`""
-
-# Prevent Microsoft Outlook from being stuck at launch due to Teams meeting addin
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\Outlook\AddIns\TeamsAddin.FastConnect" -Name "Description" -Type String -Value "Microsoft Teams Meeting Add-in for Microsoft Office"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\Outlook\AddIns\TeamsAddin.FastConnect" -Name "LoadBehavior" -Type DWord -Value "3"
-Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Microsoft\Office\Outlook\AddIns\TeamsAddin.FastConnect" -Name "FriendlyName" -Type String -Value "Microsoft Teams Meeting Add-in for Microsoft Office"
-
 # Add login script on new user creation
 $regRunOnceKey = "HKLM:\DefaultUser\Software\Microsoft\Windows\CurrentVersion\RunOnce"
 If (-not(Test-Path $regRunOnceKey))
@@ -733,9 +670,9 @@ If (-not(Test-Path $regRunOnceKey))
 }
 Set-RegistryKey -Key $regRunOnceKey -Name "NewUser" -Type String -Value "C:\Windows\System32\WindowsPowerShell\v1.0\Powershell.exe -Ex ByPass -File $NewUserScript"
 
-If (Test-Path -Path $envProgramFiles\Autodesk)
+If (Test-Path -Path "$envProgramFiles\Autodesk")
 {
-    # Prevent Autodesk desktop analitycs -  https://forums.autodesk.com/t5/installation-licensing/preventing-the-desktop-analytics-popup-on-first-start/td-p/5311565
+    # Prevent Autodesk desktop analitycs - https://forums.autodesk.com/t5/installation-licensing/preventing-the-desktop-analytics-popup-on-first-start/td-p/5311565
     Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Autodesk\MC3" -Name "ADAOptIn" -Type DWord -Value "0"
     Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Autodesk\MC3" -Name "ADARePrompted" -Type DWord -Value "1"
     Set-RegistryKey -Key "HKLM:\DefaultUser\Software\Autodesk\MC3" -Name "OverridedByHKLM" -Type DWord -Value "0"
@@ -748,6 +685,19 @@ Start-Sleep -Seconds 5
 
 # Unload the Default User registry hive
 Execute-Process -Path "$envWinDir\System32\reg.exe" -Parameters "UNLOAD HKLM\DefaultUser" -WindowStyle Hidden
+
+# Set default Start Layout
+If (($envOSName -like "*Windows 11*") -and (Test-Path -Path "$envLocalAppData\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start2.bin"))
+{
+    Copy-File -Path "$envLocalAppData\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start2.bin" -Destination
+    "$envSystemDrive\Users\Default\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState"
+}
+{
+ElseIf ($envOSName -like "*Windows 10*") -or ($envOSName -like "*Windows Server 2022*")
+    Export-StartLayout -UseDesktopApplicationID -Path "$envWinDir\System32\StartLayout.xml"
+    Set-RegistryKey -Key "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "LockedStartLayout" -Value "1" -Type DWord
+    Set-RegistryKey -Key "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "StartLayoutFile" -Value "$envWinDir\System32\StartLayout.xml" -Type ExpandString
+}
 
 # https://docs.microsoft.com/en-us/troubleshoot/windows-server/performance/performance-issues-custom-default-user-profile
 # https://docs.microsoft.com/en-us/troubleshoot/developer/browsers/security-privacy/apps-access-admin-web-cache
