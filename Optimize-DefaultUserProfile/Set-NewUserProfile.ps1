@@ -139,12 +139,12 @@ If ($isOutlookRunning)
     Write-Host -Object "Microsoft Outlook is already running. Process will be killed." -ForegroundColor Yellow
     Stop-Process -Name 'Outlook' -Force
     Write-Host -Object "Starting Microsoft Outlook application..." -ForegroundColor Green
-    Start-Process -FilePath "$exe" -ArgumentList "/resetfoldernames /recycle" -WindowStyle Minimized
+    Start-Process -FilePath "$exe" -ArgumentList "/resetfoldernames /recycle" -WindowStyle Hidden
 }
 ElseIf (Test-Path -Path $exe)
 {
     Write-Host -Object "Starting Microsoft Outlook application..." -ForegroundColor Green
-    Start-Process -FilePath "$exe" -ArgumentList "/resetfoldernames /recycle" -WindowStyle Minimized
+    Start-Process -FilePath "$exe" -ArgumentList "/resetfoldernames /recycle" -WindowStyle Hidden
 }
 Else
 {
@@ -177,21 +177,24 @@ $exe = "${env:ProgramFiles(x86)}\Microsoft\Teams\current\Teams.exe"
 If (($isTeamsRunning) -and (Test-Path -Path $exe))
 {
     Write-Host -Object 'Teams is already running. Process will be killed.' -ForegroundColor Yellow
-    Stop-Process -Name 'Teams' -Force
+    Get-Process -ProcessName Teams | Stop-Process -Force
     Start-Sleep -Seconds 2
-    Remove-Item -Path "$env:APPDATA\Microsoft\Teams\hooks.json"
     Write-Host -Object "Starting Microsoft Teams..." -ForegroundColor Green
-    Start-Process -FilePath $exe -WindowStyle Minimized | Out-Null
+    Start-Process -FilePath $exe -ArgumentList '--processStart "Teams.exe"' -WindowStyle Hidden | Out-Null
+    Start-Sleep -Seconds 2
+    Get-Process -ProcessName Teams | Stop-Process -Force
 }
 ElseIf (Test-Path -Path $exe)
 {
     Write-Host -Object "Starting Microsoft Teams..." -ForegroundColor Green
-    Start-Process -FilePath $exe -WindowStyle Minimized | Out-Null
+    Start-Process -FilePath $exe -ArgumentList '--processStart "Teams.exe"' -WindowStyle Hidden | Out-Null
     Start-Sleep -Seconds 30
-    Stop-Process -Name 'Teams' -Force
+    Get-Process -ProcessName Teams | Stop-Process -Force
     Start-Sleep -Seconds 2
     Write-Host -Object "Starting Microsoft Teams..." -ForegroundColor Green
-    Start-Process -FilePath $exe -WindowStyle Minimized | Out-Null
+    Start-Process -FilePath $exe -ArgumentList '--processStart "Teams.exe"' -WindowStyle Hidden | Out-Null
+    Start-Sleep -Seconds 2
+    Get-Process -ProcessName Teams | Stop-Process -Force
 }
 Else
 {
